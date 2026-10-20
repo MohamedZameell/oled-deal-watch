@@ -267,6 +267,7 @@ async function fetchCommunity() {
           const text = p.title + ' ' + p.body;
           // a post must be about an OLED monitor; on Reddit (questions, reviews, flexes) it must also read like a deal
           if (!/oled/i.test(text) || !/monitor/i.test(text) && !MONITOR_OK.test(p.title) || NOT_MONITOR.test(p.title.replace(/monitor/ig, ''))) continue;
+          if (!/oled|monitor/i.test(p.title) && !modelKey(p.title)) continue;   // OLED only in the body: a PC-build thread, not a deal
           if (src.needDealWords && !DEAL_WORDS.test(text)) continue;
           if (p.t && Date.now() - Date.parse(p.t) > 3 * DAY) continue;
           posts.push({ ...p, source: src.name });
