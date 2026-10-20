@@ -106,10 +106,34 @@
     },
     {
       "name": "DesiDime",
-      "kind": "desidime",
+      "kind": "tgchannel",
       "urls": [
-        "https://www.desidime.com/new",
-        "https://www.desidime.com/new?page=2"
+        "https://t.me/s/desidime",
+        "https://t.me/s/desidime?q=oled"
+      ]
+    },
+    {
+      "name": "Price History Deals",
+      "kind": "tgchannel",
+      "urls": [
+        "https://t.me/s/pricehistory",
+        "https://t.me/s/pricehistory?q=oled"
+      ]
+    },
+    {
+      "name": "Tech Offers Today",
+      "kind": "tgchannel",
+      "urls": [
+        "https://t.me/s/techofferstoday",
+        "https://t.me/s/techofferstoday?q=oled"
+      ]
+    },
+    {
+      "name": "Deal blast",
+      "kind": "tgchannel",
+      "urls": [
+        "https://t.me/s/dealblast",
+        "https://t.me/s/dealblast?q=oled"
       ]
     },
     {

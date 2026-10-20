@@ -1,0 +1,49 @@
+name: Deal channels
+
+on:
+  schedule:
+    # deal-channel / Reddit posts every 15 min between the hourly full scans (which run at :35 and check them too)
+    - cron: '5,20,50 * * * *'
+  workflow_dispatch:
+    inputs:
+      args:
+        description: 'Extra flags, e.g. "--dry" to print matches without pinging or saving'
+        required: false
+        default: ''
+
+permissions:
+  contents: write   # commits state/community.json so a post is only pinged once
+
+concurrency:
+  group: oled-scan   # same group as the full scan: never two jobs writing state/ at once
+  cancel-in-progress: false
+
+jobs:
+  channels:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - name: Check deal channels
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SCAN_ARGS: ${{ inputs.args }}
+        run: node scan.js --community-only $SCAN_ARGS
+      - name: Save seen posts
+        if: always() && !contains(inputs.args, '--dry')
+        run: |
+          git config user.name "oled-deal-watch"
+          git config user.email "actions@users.noreply.github.com"
+          git add state
+          git diff --staged --quiet && exit 0
+          git commit -m "state: seen community posts [skip ci]"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          exit 1
