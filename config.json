@@ -68,6 +68,7 @@
     {
       "name": "PCStudio",
       "kind": "text",
+      "knownBlocked": true,
       "urls": [
         "https://pcstudio.in/?s=oled+monitor&post_type=product"
       ]
@@ -94,6 +95,33 @@
       ]
     }
   ],
+  "community": [
+    {
+      "name": "Reddit",
+      "kind": "reddit",
+      "needDealWords": true,
+      "urls": [
+        "https://www.reddit.com/r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/search.rss?q=oled&restrict_sr=1&sort=new&limit=50"
+      ]
+    },
+    {
+      "name": "DesiDime",
+      "kind": "desidime",
+      "urls": [
+        "https://www.desidime.com/new",
+        "https://www.desidime.com/new?page=2"
+      ]
+    },
+    {
+      "name": "TechEnclave Deals",
+      "kind": "tgchannel",
+      "urls": [
+        "https://t.me/s/techenclavedeals",
+        "https://t.me/s/techenclavedeals?q=oled"
+      ]
+    }
+  ],
+  "brokenAfterRuns": 6,
   "streetPriceSeeds": {
     "LS27FG502SW": 42499,
     "LS27HG612SW": 46899,
