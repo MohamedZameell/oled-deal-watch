@@ -1,0 +1,15 @@
+{
+  "name": "oled-deal-watch",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Hourly OLED monitor price-anomaly scanner for India. Emails a digest via Gmail SMTP.",
+  "scripts": {
+    "scan": "node scan.js",
+    "dry": "node scan.js --dry"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.16",
+    "playwright": "^1.49.0"
+  }
+}

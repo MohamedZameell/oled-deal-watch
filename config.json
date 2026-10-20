@@ -1,0 +1,117 @@
+{
+  "region": {
+    "title": "OLED Deal Watch",
+    "subjectTag": "OLED",
+    "currency": "₹",
+    "numberLocale": "en-IN",
+    "browserLocale": "en-IN",
+    "timeZone": "Asia/Kolkata",
+    "tzLabel": "IST",
+    "minAmount": 5000,
+    "textParser": "minmax",
+    "dailyDigestHours": [],
+    "buyNote": "Move fast: deals like this have sold out within a day. Before paying: confirm stock, Chennai delivery, warranty, and whether it is open-box/repackaged.",
+    "footer": "Public sites only, so no corporate-store or hidden-SKU prices: check the Samsung Corporate Store by hand for -F style repackaged stock. Prices are read from listing pages and re-checked on the product page before an alert; verify before paying."
+  },
+  "emailMode": "always",
+  "crazyThreshold": 0.65,
+  "nearMissThreshold": 0.8,
+  "historyThreshold": 0.7,
+  "minPrice": 12000,
+  "maxPrice": 250000,
+  "sources": [
+    {
+      "name": "Amazon.in",
+      "kind": "amazon",
+      "mobile": true,
+      "retries": 5,
+      "urls": [
+        "https://www.amazon.in/s?k=oled+gaming+monitor",
+        "https://www.amazon.in/s?k=oled+monitor",
+        "https://www.amazon.in/s?k=qd-oled+monitor",
+        "https://www.amazon.in/s?k=oled+monitor+240hz",
+        "https://www.amazon.in/s?k=oled+monitor+renewed",
+        "https://www.amazon.in/s?k=oled+monitor+open+box"
+      ]
+    },
+    {
+      "name": "Flipkart",
+      "kind": "flipkart",
+      "urls": [
+        "https://www.flipkart.com/search?q=oled+monitor",
+        "https://www.flipkart.com/search?q=qd-oled+monitor",
+        "https://www.flipkart.com/search?q=oled+gaming+monitor+240hz",
+        "https://www.flipkart.com/search?q=oled+monitor+refurbished"
+      ]
+    },
+    {
+      "name": "Vedant Computers",
+      "kind": "text",
+      "urls": [
+        "https://www.vedantcomputers.com/index.php?route=product/search&search=oled%20monitor"
+      ]
+    },
+    {
+      "name": "Elitehubs",
+      "kind": "text",
+      "urls": [
+        "https://elitehubs.com/search?q=oled+monitor"
+      ]
+    },
+    {
+      "name": "PrimeABGB",
+      "kind": "text",
+      "urls": [
+        "https://www.primeabgb.com/?s=oled+monitor&post_type=product"
+      ]
+    },
+    {
+      "name": "PCStudio",
+      "kind": "text",
+      "urls": [
+        "https://pcstudio.in/?s=oled+monitor&post_type=product"
+      ]
+    },
+    {
+      "name": "Samsung India",
+      "kind": "text",
+      "urls": [
+        "https://www.samsung.com/in/monitors/all-monitors/?oled"
+      ]
+    },
+    {
+      "name": "Lenovo India",
+      "kind": "text",
+      "urls": [
+        "https://www.lenovo.com/in/en/search?text=oled%20monitor"
+      ]
+    },
+    {
+      "name": "LG India",
+      "kind": "text",
+      "urls": [
+        "https://www.lg.com/in/monitors/all-monitors/?oled="
+      ]
+    }
+  ],
+  "streetPriceSeeds": {
+    "LS27FG502SW": 42499,
+    "LS27HG612SW": 46899,
+    "LS32HG730SW": 69999,
+    "LS27HG800SW": 78999,
+    "LS49DG910SW": 79999,
+    "LS49DG930SW": 86999,
+    "AW2726DM": 40300,
+    "AW2725D": 53999,
+    "AG276QZD2": 51998,
+    "XG2738": 49999,
+    "LEGION27Q-10": 41999,
+    "27GX790A": 81999,
+    "FO27Q2": 62693,
+    "FO27Q3": 65698,
+    "MAG341CQP": 72998,
+    "MPG341CQPX": 77000,
+    "XG27AQDMES": 53199,
+    "PG27AQDM": 71349
+  }
+}
