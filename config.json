@@ -119,6 +119,14 @@
         "https://t.me/s/techenclavedeals",
         "https://t.me/s/techenclavedeals?q=oled"
       ]
+    },
+    {
+      "name": "Smartprix Deals",
+      "kind": "tgchannel",
+      "urls": [
+        "https://t.me/s/Smartprix_Deals",
+        "https://t.me/s/Smartprix_Deals?q=oled"
+      ]
     }
   ],
   "brokenAfterRuns": 6,
