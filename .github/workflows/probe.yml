@@ -1,0 +1,13 @@
+name: probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22, cache: npm }
+      - run: npm ci --no-audit --no-fund
+        env: { PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1' }
+      - run: node probe/probe.mjs
+        env: { BROWSER_CHANNEL: chrome }
