@@ -1,5 +1,5 @@
 {
- "t": "2026-10-21T14:14:06.115Z",
+ "t": "2026-10-21T18:53:50.449Z",
  "items": [
   {
    "key": "27G61SH",
@@ -62,6 +62,16 @@
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
   },
   {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 74750,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
+  },
+  {
    "key": "MAG321UP",
    "generic": false,
    "source": "Amazon.in",
@@ -80,6 +90,16 @@
    "risky": false,
    "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
    "url": "https://www.amazon.in/dp/B0GL83RWPV"
+  },
+  {
+   "key": "PG27AQDM",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 81849,
+   "risky": false,
+   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
+   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
    "key": "~LENOVO 27\" ",
@@ -192,16 +212,6 @@
    "url": "https://www.flipkart.com/dell-alienware-series-67-31-cm-27-inch-quad-hd-led-backlit-oled-panel-gaming-monitor-aw2726dm/p/itm0aac7235b02ce"
   },
   {
-   "key": "AW2725Q",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 85500,
-   "risky": false,
-   "title": "DELL AW Series 68.58 cm (27 inch) 4K Ultra HD OLED Panel Gaming Monitor (AW2725Q)",
-   "url": "https://www.flipkart.com/dell-aw-series-68-58-cm-27-inch-4k-ultra-hd-oled-panel-gaming-monitor-aw2725q/p/itmb308225441cb3"
-  },
-  {
    "key": "~ASUS 27\" ",
    "generic": true,
    "source": "Flipkart",
@@ -222,14 +232,14 @@
    "url": "https://www.flipkart.com/asus-rog-series-68-58-cm-27-inch-full-hd-oled-panel-custom-heatsink-intelligent-voltage-optimization-uniform-brightness-displaywidget-center-anti-glare-gaming-monitor-pg27aqdm/p/itmfe1473bbb0a30"
   },
   {
-   "key": "MPG341CQPX",
+   "key": "AW2725Q",
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 106561,
+   "price": 85500,
    "risky": false,
-   "title": "MSI 86.82 cm (34 inch) Curved Full HD IPS Panel Gaming Monitor (MPG341CQPX QD OLED)",
-   "url": "https://www.flipkart.com/msi-86-82-cm-34-inch-curved-full-hd-ips-panel-gaming-monitor-mpg341cqpx-qd-oled/p/itm0b7c69be2943b"
+   "title": "DELL AW Series 68.58 cm (27 inch) 4K Ultra HD OLED Panel Gaming Monitor (AW2725Q)",
+   "url": "https://www.flipkart.com/dell-aw-series-68-58-cm-27-inch-4k-ultra-hd-oled-panel-gaming-monitor-aw2725q/p/itmb308225441cb3"
   },
   {
    "key": "AG276QZD2",
@@ -522,171 +532,11 @@
    "url": "https://elitehubs.com/products/samsung-odyssey-g5-ls27fg502swxxl-27-inch-2k-qhd-180hz-oled-panel-99-srgb-0-03ms-nvidia-gsync-gaming-monitor"
   },
   {
-   "key": "~DELL 32\" 4K 120Hz",
-   "generic": true,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 75790,
-   "risky": false,
-   "title": "Dell S3225QC 32 inch 120Hz 4K QD-OLED Monitor HDR Dolby Vision",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/dell-s3225qc-32-inch-120hz-4k-qd-oled-monitor-hdr-dolby-vision/"
-  },
-  {
-   "key": "32G80SH",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 90520,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G8 LS32HG800SWXXL 32-inch 4K UHD QD-OLED Gaming Monitor LS32HG800SWXXL",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/samsung-odyssey-g8-32-inch-oled-4k-gaming-monitor-ls32hg800swxxl/"
-  },
-  {
-   "key": "XG27ACDMS",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 61335,
-   "risky": false,
-   "title": "Asus XG27ACDMS (OLED) 26.5 Inch 280Hz ROG Strix Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/asus-xg27acdms-oled-26-5-inch-280hz-rog-strix-monitor/"
-  },
-  {
-   "key": "PG27AQWP",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 145080,
-   "risky": false,
-   "title": "ASUS ROG Swift OLED PG27AQWP-G Edition 20 27 Inch QHD 540Hz Gaming Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/asus-rog-swift-oled-pg27aqwp-g-edition-20-27-inch-qhd-540hz-gaming-monitor/"
-  },
-  {
-   "key": "XG32UCWG",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 110980,
-   "risky": false,
-   "title": "Asus ROG Strix OLED XG32UCWG gaming monitor ―32-inch",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/asus-xg32ucwg-oled-4k-31-5-inch-330hz-rog-strix-monitor/"
-  },
-  {
-   "key": "FO32U2P",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 97650,
-   "risky": false,
-   "title": "Gigabyte Aorus FO32U2P 32 Inch UHD OLED 240Hz HDR Gaming Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/gigabyte-aorus-fo32u2p-32-inch-uhd-oled-240hz-hdr-gaming-monitor/"
-  },
-  {
-   "key": "XG27AQDMES",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 53199,
-   "risky": false,
-   "title": "ASUS ROG Strix OLED 27 inch XG27AQDMES QHD 240Hz Gaming Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/asus-rog-strix-oled-27-inch-xg27aqdmes-qhd-240hz-gaming-monitor/"
-  },
-  {
-   "key": "39GS95QE",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 123760,
-   "risky": false,
-   "title": "LG 39GS95QE 39 inch Ultragear OLED Curved Gaming Monitor Black",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/lg-39gs95qe-39-inch-ultragear-oled-curved-gaming-monitor-black/"
-  },
-  {
-   "key": "~ASUS 32\" 240Hz",
-   "generic": true,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 200279,
-   "risky": false,
-   "title": "Asus PA32UCDM (OLED) 32 Inch 240Hz Pro Art Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/asus-pa32ucdm-oled-32-inch-240hz-pro-art-monitor/"
-  },
-  {
-   "key": "49G93SD",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 91000,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G9 2K DQHD 49 Inch 240Hz 5120 x 1440 Resolution Panel Gaming Monitors LS49DG930SWXXL",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/samsung-odyssey-g8-32-inch-oled-4k-gaming-monitor-ls32hg800swxxl/"
-  },
-  {
-   "key": "49G91SD",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 79560,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G9 49 Inch 144Hz 5120 x 1440 Resolution 0.03ms Response Time OLED Panel Gaming Monitors LS49DG910SWXXL",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/samsung-odyssey-g8-32-inch-oled-4k-gaming-monitor-ls32hg800swxxl/"
-  },
-  {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 86996,
-   "risky": false,
-   "title": "LG UltraGear 27GX790A-B 27 inch 480Hz OLED QHD 1440P Gaming Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/lg-ultragear-27gx790a-b-27-inch-480hz-oled-qhd-1440p-gaming-monitor/"
-  },
-  {
-   "key": "FO27Q2",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 62693,
-   "risky": false,
-   "title": "Gigabyte AORUS FO27Q2 27 inch Inch OLED 1440p 240 Hz Gaming Monitor Black",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/gigabyte-aorus-fo27q2-27-inch-inch-oled-1440p-240-hz-gaming-monitor-black/"
-  },
-  {
-   "key": "CO49DQ",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 89374,
-   "risky": false,
-   "title": "Gigabyte Aorus CO49DQ 49 Inch QD OLED 144Hz DQHD Ultrawide Curved Gaming Monitor",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/gigabyte-aorus-co49dq-49-inch-qd-oled-144hz-dqhd-ultrawide-curved-gaming-monitor-2/"
-  },
-  {
-   "key": "34G85SB",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 71349,
-   "risky": false,
-   "title": "Samsung Odyssey G8 34 Inch 175Hz OLED Gaming Monitor LS34BG850SWXXL",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/samsung-odyssey-g8-34-inch-175hz-oled-gaming-monitor-ls34bg850swxxl/"
-  },
-  {
-   "key": "EX271UZ",
-   "generic": false,
-   "source": "PrimeABGB",
-   "retailer": "primeabgb",
-   "price": 87516,
-   "risky": false,
-   "title": "BenQ MOBIUZ EX271UZ 27″ 4K HDR 240 Hz OLED Gaming Monitor (White)",
-   "url": "https://www.primeabgb.com/online-price-reviews-india/benq-mobiuz-ex271uz-27-4k-hdr-240-hz-oled-gaming-monitor-white/"
-  },
-  {
    "key": "LEGION27Q-10",
    "generic": false,
    "source": "Lenovo India",
    "retailer": "lenovoindia",
-   "price": 42998,
+   "price": 42139,
    "risky": false,
    "title": "Legion 27Q-10 OLED 67.31cms (26.5) Monitor",
    "url": "https://www.lenovo.com/in/en/p/accessories-and-software/monitors/gaming/67e1gac1in"
