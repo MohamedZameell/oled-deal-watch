@@ -17,6 +17,7 @@
   "crazyThreshold": 0.65,
   "nearMissThreshold": 0.8,
   "historyThreshold": 0.7,
+  "priceAlertBelow": 35000,
   "minPrice": 12000,
   "maxPrice": 250000,
   "sources": [

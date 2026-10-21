@@ -454,12 +454,31 @@ async function main() {
     console.log('VERIFY', c.key, c.source, fmt(c.price), '->', c.check);
     if (c.check === 'out of stock' || (c.suspect && c.check !== 'verified')) dropped.push(c); else fresh.push(c);
   }
+  // price-target alerts: any desktop OLED below a fixed price, whatever the "normal" price says
+  // (size check keeps small portable OLED panels out; titles give inches or cm)
+  const inches = (t) => { const m = t.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i); if (m) return +m[1];
+    const c = t.match(/(\d{2,3}(?:\.\d+)?)\s*cm/i); return c ? +c[1] / 2.54 : 0; };
+  const below = [];
+  if (cfg.priceAlertBelow) {
+    const shown = new Set(fresh.map(aKey));
+    const targets = mine.filter((x) => !x.feed && x.price < cfg.priceAlertBelow && !/portable/i.test(x.title) &&
+      (inches(x.title) >= 24 || (!inches(x.title) && !x.generic)) && !shown.has(aKey(x)))
+      .filter((x) => { const p = alerted['below|' + aKey(x)]; return !p || x.price < p.price * 0.95 || Date.now() - Date.parse(p.t) > 7 * DAY; })
+      .sort((a, b) => a.price - b.price);
+    for (const c of targets.slice(0, 5)) {
+      const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
+      c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
+      console.log('VERIFY-BELOW', c.key, c.source, fmt(c.price), '->', c.check);
+      if (c.check !== 'out of stock') below.push(c);
+    }
+  }
   if (VERIFY_SAMPLE) {
     for (const c of mine.filter((x) => !x.feed).sort((a, b) => a.price - b.price).slice(0, 3)) console.log('SAMPLE-VERIFY', c.key, c.source, fmt(c.price), '->', await verifyDeal(ctx, c), c.url);
   }
   if (CDP) { /* leave the user's browser running */ } else await browser.close();
 
   for (const c of fresh) alerted[aKey(c)] = { price: c.price, t: now };
+  for (const c of below) alerted['below|' + aKey(c)] = { price: c.price, t: now };
   writeJson('history.json', history); writeJson('alerted.json', alerted);
   writeJson('snapshot.json', { t: now, items: mine.filter((x) => !x.feed).map(({ key, generic, source, retailer, price, risky, title, url }) => ({ key, generic, source, retailer, price, risky, title, url })) });
 
@@ -481,6 +500,7 @@ async function main() {
   let html = `<div style="font:14px Arial;max-width:820px;color:#111"><h2 style="margin:0 0 4px">${esc(R.title)}</h2><div style="color:#6b7280">${stamp} ${R.tzLabel}</div>`;
   html += fresh.length ? `<h3 style="color:#b91c1c">🚨 Crazy deals (≥${Math.round((1 - cfg.crazyThreshold) * 100)}% below what other sellers charge)</h3>${tbl(fresh)}<p>${esc(R.buyNote)}</p>`
     : `<h3>No new crazy deal this run.</h3>`;
+  if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (dropped.length) html += `<p style="color:#6b7280">Skipped ${dropped.length} deal${dropped.length > 1 ? 's' : ''} that failed the page check: ${dropped.map((c) => `${esc(c.key)} ${fmt(c.price)} at ${esc(c.source)} (${esc(c.check)})`).join('; ')}.</p>`;
   if (near.length) html += `<h3>Near-misses (${Math.round((1 - cfg.nearMissThreshold) * 100)}%+ below, or a bigger drop with only one price to compare)</h3>${tbl(near.sort((a, b) => b.pct - a.pct).slice(0, 8))}`;
   if (newPosts.length) html += `<h3>💬 New community posts</h3><ul>${newPosts.map((p) => `<li><a href="${esc(p.url)}">${postLine(p)}</a></li>`).join('')}</ul>`;
@@ -490,12 +510,14 @@ async function main() {
   if (cfg.peerSnapshot) html += `<li>${peerAgeH < 26 ? '✅' : '⚠️'} ${esc(cfg.peerLabel)}: ${peer ? `last ran ${peerAgeH < 1 ? 'under an hour' : Math.round(peerAgeH) + 'h'} ago, ${peer.items.length} listings` : 'no run recorded yet'}${peerAgeH >= 26 ? ' (not running: is the laptop on?)' : ''}</li>`;
   html += `</ul><p style="color:#6b7280">${esc(R.footer)}</p></div>`;
   const subject = fresh.length ? `🚨 ${R.subjectTag} crazy deal: ${fresh[0].title.slice(0, 40)} ${fmt(fresh[0].price)} (${fresh[0].pct}% below)`
+    : below.length ? `🎯 ${R.subjectTag} under ${fmt(cfg.priceAlertBelow)}: ${below[0].title.slice(0, 40)} ${fmt(below[0].price)}`
     : newPosts.length ? `💬 ${R.subjectTag} community post: ${newPosts[0].title.slice(0, 60)}`
     : `${R.subjectTag} digest ${stamp}: no crazy deal (${cheapest[0] ? 'low ' + fmt(cheapest[0].price) : 'no data'})${bad.length > 3 ? ' ⚠ many sources failed' : ''}${broken.length ? ' ⚠ ' + broken.map((h) => h.name).join(', ') + ' stopped working' : ''}`;
 
   // Telegram: instant phone ping for what's worth acting on (deals, posts, broken sources); digests stay in email
   const tg = [
     ...fresh.map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...below.map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     ...newPosts.map(postTg), ...broken.map(brokenTg),
   ].join('\n\n');
 
@@ -511,7 +533,7 @@ async function main() {
   const today = new Date().toLocaleDateString('en-CA', { timeZone: R.timeZone });
   const dailyDigest = (R.dailyDigestHours || []).includes(hourNow) && readJson('digest.json', {}).date !== today;
   await sendTelegram(tg);
-  if (cfg.emailMode === 'alerts-only' && !fresh.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
+  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
   if (process.env.MAIL_VIA_GH) {
     const { execFileSync } = await import('node:child_process');
     execFileSync('gh', ['workflow', 'run', 'mail.yml', '-R', process.env.MAIL_VIA_GH, '--json'], { input: JSON.stringify({ subject, html }) });
