@@ -1,12 +1,102 @@
 {
- "t": "2026-10-21T02:05:40.409Z",
+ "t": "2026-10-21T08:03:26.903Z",
  "items": [
+  {
+   "key": "27G61SH",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 46899,
+   "risky": false,
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync| Free Sync| LS27HG612SWXXL| Black",
+   "url": "https://www.amazon.in/dp/B0GXL1STL2"
+  },
+  {
+   "key": "~LENOVO 26\" 4K 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 68399,
+   "risky": false,
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+  },
+  {
+   "key": "AW2725D",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 53999,
+   "risky": false,
+   "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
+   "url": "https://www.amazon.in/dp/B0FHB4KWBF"
+  },
+  {
+   "key": "49G93SD",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 86999,
+   "risky": false,
+   "title": "Samsung 49\" (124.4cm) Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD 5120 x 1440|240Hz|0.03ms|DCI 99%|OLED Safeguard|FreeSync Premium Pro|G-Sync| HDR10+ Gaming|HAS|LS49DG930SWXXL|Silver",
+   "url": "https://www.amazon.in/dp/B0F99Y979X"
+  },
+  {
+   "key": "PG27AQDM",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 81849,
+   "risky": false,
+   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
+   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
+  },
+  {
+   "key": "XG2738",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 49800,
+   "risky": false,
+   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
+   "url": "https://www.amazon.in/dp/B0GL83RWPV"
+  },
+  {
+   "key": "27G80SH",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 78999,
+   "risky": false,
+   "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
+   "url": "https://www.amazon.in/dp/B0H41XJ8JF"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 93500,
+   "risky": false,
+   "title": "LG 27GX790A-B Smartchoice 27 inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz, 0.03ms, DisplayPort 2.1, True Black 400, NVIDIA G-Sync, AMD FreeSync Premium Pro, USB, Tilt/Height/Swivel/Pivot Stand",
+   "url": "https://www.amazon.in/dp/B0FJFT8FM1"
+  },
+  {
+   "key": "~LENOVO 31\" 4K 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 73599,
+   "risky": false,
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+  },
   {
    "key": "~LENOVO 27\" ",
    "generic": true,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 41999,
+   "price": 42999,
    "risky": false,
    "title": "Lenovo Legion 67.31 cm (27 inch) Quad HD OLED Panel Gam...",
    "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
@@ -16,7 +106,7 @@
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 41999,
+   "price": 42999,
    "risky": false,
    "title": "Lenovo Legion 67.31 cm (27 inch) Quad HD OLED Panel Gaming Monitor (Legion 27Q-10)",
    "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
@@ -72,26 +162,6 @@
    "url": "https://www.flipkart.com/samsung-odyssey-oled-g8-67-69-cm-27-inches-4k-ultra-hd-led-backlit-panel-gaming-monitor-ls27hg800swxxl/p/itm3eea75d256490"
   },
   {
-   "key": "~SAMSUNG 27\" ",
-   "generic": true,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 90118,
-   "risky": false,
-   "title": "Samsung Odyssey G6 68.58 cm (27 inch) Quad HD OLED Pane...",
-   "url": "https://www.flipkart.com/samsung-odyssey-g6-68-58-cm-27-inch-quad-hd-oled-panel-dynamic-cooling-sleek-metal-design-glare-free-height-adjustable-gaming-monitor-ls27dg600swxxl/p/itm598778fd9c547"
-  },
-  {
-   "key": "27G60SD",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 90118,
-   "risky": false,
-   "title": "Samsung Odyssey G6 68.58 cm (27 inch) Quad HD OLED Panel with Dynamic Cooling, Sleek Metal Design, Glare Free, Height Adjustable Gaming Monitor (LS27DG600SWXXL)",
-   "url": "https://www.flipkart.com/samsung-odyssey-g6-68-58-cm-27-inch-quad-hd-oled-panel-dynamic-cooling-sleek-metal-design-glare-free-height-adjustable-gaming-monitor-ls27dg600swxxl/p/itm598778fd9c547"
-  },
-  {
    "key": "27GS95QE",
    "generic": false,
    "source": "Flipkart",
@@ -130,16 +200,6 @@
    "risky": false,
    "title": "DELL Alienware Series 67.31 cm (27 inch) Quad HD LED Backlit OLED Panel Gaming Monitor (AW2726DM)",
    "url": "https://www.flipkart.com/dell-alienware-series-67-31-cm-27-inch-quad-hd-led-backlit-oled-panel-gaming-monitor-aw2726dm/p/itm0aac7235b02ce"
-  },
-  {
-   "key": "~DELL 32\" 4K",
-   "generic": true,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 69990,
-   "risky": false,
-   "title": "DELL S Series 81.28 cm (32 inch) 4K Ultra HD OLED Panel with AI-enhanced 3D Spatial Audio, 99% DCI-P3, 1,500,000:1, 1000 nits, 5 Speakers, Ergo, Integrated USB Hub,2 USB Type-C (90w upstream,15w downstream) Monitor (S3225QC)",
-   "url": "https://www.flipkart.com/dell-s-series-81-28-cm-32-inch-4k-ultra-hd-oled-panel-ai-enhanced-3d-spatial-audio-99-dci-p3-1-500-000-1-1000-nits-5-speakers-ergo-integrated-usb-hub-2-type-c-90w-upstream-15w-downstream-monitor-s3225qc/p/itm1df1c13a53515"
   },
   {
    "key": "~ASUS 27\" ",
@@ -616,7 +676,7 @@
    "generic": false,
    "source": "Lenovo India",
    "retailer": "lenovoindia",
-   "price": 49890,
+   "price": 42998,
    "risky": false,
    "title": "Legion 27Q-10 OLED 67.31cms (26.5) Monitor",
    "url": "https://www.lenovo.com/in/en/p/accessories-and-software/monitors/gaming/67e1gac1in"
