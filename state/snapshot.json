@@ -1,16 +1,6 @@
 {
- "t": "2026-10-23T01:58:06.311Z",
+ "t": "2026-10-23T08:01:04.834Z",
  "items": [
-  {
-   "key": "AW2726DM",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 39799,
-   "risky": false,
-   "title": "Alienware AW2726DM (Smartchoice) 26.5\" QD OLED Monitor|99% DCI-P3,0.03ms GTG,240Hz|AMD FreeSync Premium|HDMI*2,DP 1.4|Infinite Contrast, 200cd/m2(typical), 400cd/m2 (HDR peak, APL 10%) Brightness|Ergo",
-   "url": "https://www.amazon.in/dp/B0GYG3VLMR"
-  },
   {
    "key": "27G61SH",
    "generic": false,
@@ -22,44 +12,14 @@
    "url": "https://www.amazon.in/dp/B0GXL1STL2"
   },
   {
-   "key": "AW2725D",
+   "key": "AW2726DM",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 56999,
+   "price": 39799,
    "risky": false,
-   "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
-   "url": "https://www.amazon.in/dp/B0FHB4KWBF"
-  },
-  {
-   "key": "MAG341CQP",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 85999,
-   "risky": false,
-   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
-   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
-  },
-  {
-   "key": "MAG321UP",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 89999,
-   "risky": false,
-   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
-  },
-  {
-   "key": "MAG321UPX",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 113999,
-   "risky": false,
-   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+   "title": "Alienware AW2726DM (Smartchoice) 26.5\" QD OLED Monitor|99% DCI-P3,0.03ms GTG,240Hz|AMD FreeSync Premium|HDMI*2,DP 1.4|Infinite Contrast, 200cd/m2(typical), 400cd/m2 (HDR peak, APL 10%) Brightness|Ergo",
+   "url": "https://www.amazon.in/dp/B0GYG3VLMR"
   },
   {
    "key": "49G93SD",
@@ -72,24 +32,34 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "XG2738",
-   "generic": false,
+   "key": "~LENOVO 26\" 4K 240Hz",
+   "generic": true,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 49800,
+   "price": 68399,
    "risky": false,
-   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
-   "url": "https://www.amazon.in/dp/B0GL83RWPV"
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
-   "key": "PG27UCDM",
+   "key": "AW2725D",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 208916,
+   "price": 56999,
    "risky": false,
-   "title": "ASUS ROG Swift 27” 4K QD-OLED Gaming Monitor (PG27UCDM) - 240Hz, 0.03ms, Custom Heatsink, Neo Proximity Sensor, G-SYNC Compatible, 99% DCI-P3, True 10-bit color, DisplayPort 2.1a UHBR20, 3 yr warranty",
-   "url": "https://www.amazon.in/dp/B0DM6SHQTN"
+   "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
+   "url": "https://www.amazon.in/dp/B0FHB4KWBF"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 93500,
+   "risky": false,
+   "title": "LG 27GX790A-B Smartchoice 27 inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz, 0.03ms, DisplayPort 2.1, True Black 400, NVIDIA G-Sync, AMD FreeSync Premium Pro, USB, Tilt/Height/Swivel/Pivot Stand",
+   "url": "https://www.amazon.in/dp/B0FJFT8FM1"
   },
   {
    "key": "~LENOVO 27\" ",
