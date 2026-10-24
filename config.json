@@ -11,7 +11,7 @@
     "textParser": "minmax",
     "dailyDigestHours": [],
     "buyNote": "Move fast: deals like this have sold out within a day. Before paying: confirm stock, Chennai delivery, warranty, and whether it is open-box/repackaged.",
-    "footer": "Public sites only, so no corporate-store or hidden-SKU prices: check the Samsung Corporate Store by hand for -F style repackaged stock. Prices are read from listing pages and re-checked on the product page before an alert; verify before paying."
+    "footer": "Corporate Store prices need a Samsung corporate login to buy. Other prices are read from public listing pages and re-checked on the product page before an alert; verify before paying."
   },
   "emailMode": "always",
   "crazyThreshold": 0.65,
@@ -33,7 +33,8 @@
         "https://www.amazon.in/s?k=oled+monitor+240hz",
         "https://www.amazon.in/s?k=oled+monitor+renewed",
         "https://www.amazon.in/s?k=oled+monitor+open+box"
-      ]
+      ],
+      "warmup": "https://www.amazon.in/"
     },
     {
       "name": "Flipkart",
@@ -75,10 +76,31 @@
       ]
     },
     {
-      "name": "Samsung India",
+      "name": "TPS Technologies",
       "kind": "text",
       "urls": [
-        "https://www.samsung.com/in/monitors/all-monitors/?oled"
+        "https://www.tpstech.in/search?q=oled+monitor"
+      ]
+    },
+    {
+      "name": "MD Computers",
+      "kind": "text",
+      "urls": [
+        "https://mdcomputers.in/index.php?route=product/search&search=oled%20monitor"
+      ]
+    },
+    {
+      "name": "Samsung India",
+      "kind": "samsungapi",
+      "stores": [
+        {
+          "id": "in",
+          "name": "Samsung.com"
+        },
+        {
+          "id": "in_corporate",
+          "name": "Corporate Store"
+        }
       ]
     },
     {

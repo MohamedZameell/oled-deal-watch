@@ -30,7 +30,9 @@ const SKIP_LINE = /emi|\/mo|per month|month|cashback|sav(e|ing)|\boff\b|coupon|e
 const OUT_OF_STOCK = /out of stock|sold out|currently unavailable|no longer available|temporarily unavailable|notify me when available/i;
 
 const CUR = R.currency;                                        // '₹' or '$'
-const CUR_RE = CUR === '₹' ? /(?:₹|Rs\.?)\s?([\d,]{4,10}(?:\.\d+)?)/g : /\$\s?([\d,]{3,7}(?:\.\d{2})?)/g;
+// ₹ amounts must follow Indian digit grouping (1,65,920): Flipkart prints "₹49,89013% off", which a loose
+// [\d,]+ read as ₹49,89,013
+const CUR_RE = CUR === '₹' ? /(?:₹|Rs\.?)\s?(\d{1,3}(?:,\d{2})*,\d{3}(?:\.\d+)?|\d{4,7}(?:\.\d+)?)/g : /\$\s?([\d,]{3,7}(?:\.\d{2})?)/g;
 const CUR_IN_LINE = CUR === '₹' ? /₹|Rs\./ : /\$/;
 const money = (s) => { const m = String(s).replace(/,/g, '').match(/\d+(?:\.\d+)?/); return m ? Math.round(parseFloat(m[0])) : 0; };
 const amountsIn = (line) => [...line.matchAll(CUR_RE)].map((m) => Math.round(parseFloat(m[1].replace(/,/g, '')))).filter((n) => n >= R.minAmount);
@@ -38,6 +40,10 @@ const fmt = (n) => CUR + Math.round(n).toLocaleString(R.numberLocale);
 const median = (a) => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 // "Amazon.com", "DealSea · Amazon" and "amazon" are the same retailer
 const retailerOf = (name) => String(name).toLowerCase().replace(/^dealsea · /, '').replace(/\.(com|in)$/, '').replace(/[^a-z0-9&]/g, '');
+// product URLs often carry the full name + model code that a cut-off listing title lost
+// (Samsung "Odyssey OLED G9 Gaming Monitor with 240..." -> ".../odyssey-oled-g9-g93sd-49-inch-oled-dual-qhd-ls49dg930swxxl/")
+const urlWords = (u) => { try { return decodeURIComponent(new URL(u).pathname).replace(/[-_/.]+/g, ' '); } catch { return ''; } };
+const UA_DESKTOP = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 function modelKey(title) {
@@ -168,15 +174,47 @@ function parseTextBlocks(text, anchors, fallbackUrl) {
 // ---------- scrape ----------
 const BLOCKED = /captcha|robot check|access denied|unusual traffic|enter the characters|security verification|verify you are (a )?human|are you a human|just a moment|robot or human|503 - service unavailable|rush hour and traffic/i;
 
-async function scrapeSource(ctx, src) {
+// Samsung India: the finder API lists every monitor model; the shop API gives the public AND the Corporate Store
+// price plus live stock for each, including hidden "-F" repackaged SKUs (the ₹25,680 G5 was one).
+// Plain HTTP, no login, no browser. Stock comes from the API, so these listings skip the product-page check.
+async function samsungApi(src) {
   const items = []; const errors = [];
+  const get = async (u) => { const r = await fetch(u, { headers: { 'user-agent': UA_DESKTOP, 'accept-language': 'en-IN,en;q=0.9' } }); if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); };
+  const plain = (s) => String(s || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+  try {
+    const f = await get('https://searchapi.samsung.com/v6/front/b2c/product/finder/global?type=07010000&siteCode=in&start=1&num=200&sort=newest&onlyFilterInfoYN=N&keySummaryYN=N&specHighlightYN=N');
+    const models = f.response.resultData.productList.flatMap((fam) => fam.modelList || []).filter((m) => /oled/i.test(plain(m.displayName) + ' ' + m.pdpUrl));
+    const pdp = Object.fromEntries(models.map((m) => [m.modelCode.replace(/XXL$/, ''), 'https://www.samsung.com' + m.pdpUrl]));
+    const codes = Object.keys(pdp).flatMap((c) => [c, c + '-F']);
+    for (const store of src.stores) {
+      for (let i = 0; i < codes.length; i += 20) {
+        const list = await get(`https://p1-smi-api-cdn.shop.samsung.com/tokocommercewebservices/v2/${store.id}/products?productCodes=${codes.slice(i, i + 20).join(',')}&fields=FULL`);
+        for (const p of list) {
+          if (!p.code || !p.stock || p.stock.stockLevelStatus === 'outOfStock') continue;
+          const price = p.promotionPrice?.value || p.price?.value; if (!price) continue;
+          const base = p.code.replace(/-F$/, '');
+          items.push({ title: `${plain(p.name)} ${base}${p.productType === 'REPACKAGED' ? ' (repackaged)' : ''}`, price: Math.round(price),
+            mrp: Math.round(p.price?.value || 0), url: pdp[base], store: store.name, apiChecked: true });
+        }
+      }
+    }
+  } catch (e) { errors.push(String(e.message).slice(0, 60)); }
+  return { items, errors, blockedUrls: [] };
+}
+
+async function scrapeSource(ctx, src) {
+  if (src.kind === 'samsungapi') return samsungApi(src);
+  const items = []; const errors = []; const blockedUrls = [];
   const page = await ctx.newPage();
+  // Amazon serves a bot wall to a cold session far more often than to one that opened the homepage first
+  const warmup = async () => { if (src.warmup) { await page.goto(src.warmup, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {}); await page.waitForTimeout(3000); } };
+  await warmup();
   for (const url of src.urls) {
     try {
       // some sites (Amazon from datacenter IPs) block at random: retry with fresh cookies and a growing pause
       let body = '', blocked = true, tries = 0;
       while (blocked && tries < (src.retries || 1)) {
-        if (tries) { await ctx.clearCookies(); await page.waitForTimeout(4000 + tries * 3000); }
+        if (tries) { await ctx.clearCookies(); await page.waitForTimeout(4000 + tries * 3000); await warmup(); }
         tries++;
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
         await page.waitForTimeout(4000);
@@ -190,7 +228,7 @@ async function scrapeSource(ctx, src) {
         blocked = BLOCKED.test(body.slice(0, 1500)) || BLOCKED.test(await page.title());
       }
       if (src.retries) console.log('TRIES', src.name, url, tries, blocked ? 'still blocked' : 'ok');
-      if (blocked) { errors.push('blocked/captcha'); continue; }
+      if (blocked) { errors.push('blocked/captcha'); blockedUrls.push(url); continue; }
       const before = items.length;
       if (src.kind === 'amazon') {
         for (const r of (await page.evaluate(amazonExtract)).filter((x) => x.price.includes(CUR))) items.push({ title: r.title, price: money(r.price), mrp: money(r.mrp), url: r.url });
@@ -224,7 +262,7 @@ async function scrapeSource(ctx, src) {
     } catch (e) { errors.push(String(e.message).slice(0, 60)); }
   }
   await page.close();
-  return { items, errors };
+  return { items, errors, blockedUrls };
 }
 
 // ---------- community posts ----------
@@ -345,6 +383,7 @@ async function communityOnly() {
 // Re-open a deal's product page: is the price really there, and is it in stock?
 // A misread price (B&H once parsed as $60 for a $699 monitor) or a sold-out listing must not become an alert.
 async function verifyDeal(ctx, it) {
+  if (it.apiChecked) return 'verified';   // price + stock came from the store's own API this run (Samsung)
   const page = await ctx.newPage();
   try {
     await page.goto(it.url, { waitUntil: 'domcontentloaded', timeout: 40000 });
@@ -372,14 +411,26 @@ async function main() {
     userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' });
 
   const health = []; const all = [];
-  for (const src of cfg.sources) {
-    const { items, errors } = await scrapeSource(src.mobile ? mobileCtx : ctx, src);
+  const scraped = [];
+  for (const src of cfg.sources) scraped.push([src, await scrapeSource(src.mobile ? mobileCtx : ctx, src)]);
+  // Amazon.in blocks GitHub's IPs in waves: the searches that hit the wall often go through a few minutes later
+  for (const [src, r] of scraped) {
+    if (!r.blockedUrls.length || !src.retries) continue;
+    const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls });
+    console.log('SECOND PASS', src.name, r.blockedUrls.length, 'blocked ->', again.blockedUrls.length, 'still blocked');
+    r.items.push(...again.items);
+    if (!again.blockedUrls.length) r.errors = r.errors.filter((e) => e !== 'blocked/captcha');
+  }
+  for (const [src, { items, errors }] of scraped) {
     if (process.env.DEBUG_ITEMS) console.log(src.name, JSON.stringify(items.slice(0, 6)).slice(0, 1800));
-    const good = items.filter((i) => i.title && MONITOR_OK.test(i.title) && !NOT_MONITOR.test(i.title) && /oled/i.test(i.title) &&
-      i.price >= cfg.minPrice && i.price <= cfg.maxPrice);
+    // one product per URL (+ store): Flipkart lists each product twice, once with a cut-off title
+    const byUrl = new Map();
+    for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
+    const good = [...byUrl.values()].filter((i) => { const full = i.title + ' ' + urlWords(i.url);
+      return i.title && MONITOR_OK.test(full) && !NOT_MONITOR.test(i.title) && /oled/i.test(full) && i.price >= cfg.minPrice && i.price <= cfg.maxPrice; });
     for (const g of good) {
       const source = g.store ? `${src.name} · ${g.store}` : src.name;
-      const key = modelKey(g.title); const spec = key ? null : specKey(g.title);
+      const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
       all.push({ ...g, source, retailer: retailerOf(source), feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) });
     }
     health.push({ name: src.name, found: good.length, errors: [...new Set(errors)] });
@@ -414,6 +465,18 @@ async function main() {
   const alerted = readJson('alerted.json', {});
   const peerAlerted = cfg.peerSnapshot ? readJsonAt(path.join(path.dirname(cfg.peerSnapshot), 'alerted.json'), {}) : {};
   const now = new Date().toISOString();
+  // since when each shop has listed each model at (about) today's price: a "deal" one shop has sat on for days is
+  // that shop's normal price, not a flash sale (Elitehubs listed the PG27AQWP-G ~40% under PrimeABGB for weeks).
+  // First run: whatever the last snapshot already showed counts as old.
+  const steady = readJson('steady.json', null) || Object.fromEntries((readJson('snapshot.json', { items: [] }).items)
+    .filter((x) => !x.generic).map((x) => [x.key + '|' + x.retailer, { price: x.price, since: '2026-01-01T00:00:00.000Z', seen: now }]));
+  for (const it of mine) {
+    if (it.generic) continue;
+    const k = it.key + '|' + it.retailer; const p = steady[k];
+    if (!p || Math.abs(it.price - p.price) > p.price * 0.02) steady[k] = { price: it.price, since: now, seen: now }; else p.seen = now;
+    it.steadyDays = (Date.parse(now) - Date.parse(steady[k].since)) / DAY;
+  }
+  for (const [k, p] of Object.entries(steady)) if (Date.parse(now) - Date.parse(p.seen) > 14 * DAY) delete steady[k];
   const crazy = []; const near = [];
   for (const [key, list] of Object.entries(byModel)) {
     const hist = (history[key] || []).map((h) => h.price);
@@ -432,7 +495,7 @@ async function main() {
       // an alert needs 2+ independent prices: a single comparison is often a brand store's list price
       // (Samsung.com "From $499" vs a normal $329 street price) and would cry wolf
       const isCrazy = vsRef <= cfg.crazyThreshold || (vsHist <= cfg.historyThreshold && vsRef < 0.9);
-      if (isCrazy && signals.length >= 2) crazy.push(rec);
+      if (isCrazy && signals.length >= 2 && !(it.steadyDays >= 3)) crazy.push(rec);
       else if (isCrazy || vsRef <= cfg.nearMissThreshold) near.push(rec);
     }
     // history tracks the best NORMAL price (no open-box, no deal-feed) from this scanner's own sources
@@ -479,7 +542,7 @@ async function main() {
 
   for (const c of fresh) alerted[aKey(c)] = { price: c.price, t: now };
   for (const c of below) alerted['below|' + aKey(c)] = { price: c.price, t: now };
-  writeJson('history.json', history); writeJson('alerted.json', alerted);
+  writeJson('history.json', history); writeJson('alerted.json', alerted); writeJson('steady.json', steady);
   writeJson('snapshot.json', { t: now, items: mine.filter((x) => !x.feed).map(({ key, generic, source, retailer, price, risky, title, url }) => ({ key, generic, source, retailer, price, risky, title, url })) });
 
   const newPosts = newCommunityPosts(community, history, now);
@@ -492,7 +555,7 @@ async function main() {
   const badge = (c) => !c.check ? '' : c.check === 'verified' ? '<span style="color:#15803d">✓ price + stock checked</span>' : `<span style="color:#b45309">⚠ ${esc(c.check)}</span>`;
   const row = (c) => `<tr><td ${td}><b>${esc(c.title.slice(0, 90))}</b>${c.risky ? ' <span style="color:#b45309">⚠ open-box/refurb/used?</span>' : ''}<br>${badge(c)}</td>` +
     `<td ${td}><b>${fmt(c.price)}</b></td><td ${td}>${fmt(c.ref)}<br><small style="color:#6b7280">from ${c.basis} price${c.basis > 1 ? 's' : ''}</small></td>` +
-    `<td ${td}>${c.pct}% below${c.lowestSeen ? `<br><small style="color:#6b7280">lowest seen ${fmt(c.lowestSeen)}</small>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`;
+    `<td ${td}>${c.pct}% below${c.lowestSeen ? `<br><small style="color:#6b7280">lowest seen ${fmt(c.lowestSeen)}</small>` : ''}${c.steadyDays >= 3 ? `<br><small style="color:#6b7280">this price for ${c.steadyDays > 200 ? 'a while' : Math.floor(c.steadyDays) + ' days'}</small>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`;
   const tbl = (rows) => `<table style="border-collapse:collapse;font:14px Arial;width:100%"><tr><th ${th}>Item</th><th ${th}>Price</th><th ${th}>Normal</th><th ${th}></th><th ${th}>Where</th></tr>${rows.map(row).join('')}</table>`;
   const cheapest = Object.entries(byModel).map(([key, list]) => ({ key, ...list.filter((x) => !x.peer && !x.risky).sort((a, b) => a.price - b.price)[0] }))
     .filter((x) => x.price).sort((a, b) => a.price - b.price).slice(0, 8);
