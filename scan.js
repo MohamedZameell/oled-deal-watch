@@ -327,6 +327,12 @@ const parsers = {
   desidime: (s) => [...s.matchAll(/<a[^>]+href="(\/deals\/[a-z0-9-]+-(\d+))"[^>]*>([^<]{10,250})<\/a>/g)]
     .map((m) => ({ id: 'dd' + m[2], title: unhtml(m[3]), body: '', url: 'https://www.desidime.com' + m[1], where: 'DesiDime' })),
   // public Telegram channel preview (t.me/s/<channel>): readable without logging in
+  // plain RSS 2.0 (TechEnclave's Flash Deals category: new deal threads)
+  rss: (s, src) => s.split('<item>').slice(1).map((e) => {
+    const link = (e.match(/<link>([^<]+)/) || [])[1] || '';
+    return { id: 'rss' + link, title: unhtml((e.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''), body: unhtml((e.match(/<description>([\s\S]*?)<\/description>/) || [])[1] || '').slice(0, 1500),
+      url: link, t: (e.match(/<pubDate>([^<]+)/) || [])[1], where: src.name };
+  }),
   // Discourse forum search (TechEnclave): newest posts matching the query, incl. replies inside long deal threads
   discourse: (s, src) => {
     const j = JSON.parse(s); const origin = new URL(src.urls[0]).origin;
@@ -360,6 +366,8 @@ async function fetchCommunity() {
           if (!/oled/i.test(text) || !/monitor/i.test(text) && !MONITOR_OK.test(p.title) || NOT_MONITOR.test(p.title.replace(/monitor/ig, ''))) continue;
           if (!/oled|monitor/i.test(p.title) && !modelKey(p.title)) continue;   // OLED only in the body: a PC-build thread, not a deal
           if (src.needDealWords && !DEAL_WORDS.test(text)) continue;
+          // forum replies inside a "deals" thread are mostly chat: the reply itself must name a price
+          if (src.needPrice && !amountsIn(p.body).length && !/\b\d{2,3}\s?k\b/i.test(p.body)) continue;
           if (p.t && Date.now() - Date.parse(p.t) > 3 * DAY) continue;
           posts.push({ ...p, source: src.name });
         }
