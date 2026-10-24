@@ -196,25 +196,6 @@
         "https://t.me/s/Smartprix_Deals",
         "https://t.me/s/Smartprix_Deals?q=oled"
       ]
-    },
-    {
-      "name": "TechEnclave forum",
-      "kind": "discourse",
-      "categories": [
-        61
-      ],
-      "urls": [
-        "https://techenclave.com/search.json?q=oled%20order%3Alatest",
-        "https://techenclave.com/search.json?q=monitor%20%23flash-deals%20order%3Alatest"
-      ],
-      "needPrice": true
-    },
-    {
-      "name": "TechEnclave Flash Deals",
-      "kind": "rss",
-      "urls": [
-        "https://techenclave.com/c/trading-post/flash-deals/61.rss"
-      ]
     }
   ],
   "brokenAfterRuns": 6,

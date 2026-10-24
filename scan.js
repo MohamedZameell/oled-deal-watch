@@ -327,7 +327,7 @@ const parsers = {
   desidime: (s) => [...s.matchAll(/<a[^>]+href="(\/deals\/[a-z0-9-]+-(\d+))"[^>]*>([^<]{10,250})<\/a>/g)]
     .map((m) => ({ id: 'dd' + m[2], title: unhtml(m[3]), body: '', url: 'https://www.desidime.com' + m[1], where: 'DesiDime' })),
   // public Telegram channel preview (t.me/s/<channel>): readable without logging in
-  // plain RSS 2.0 (TechEnclave's Flash Deals category: new deal threads)
+  // plain RSS 2.0 feeds. (TechEnclave's site, RSS and search alike, answers GitHub IPs with 403: its Telegram channel covers it)
   rss: (s, src) => s.split('<item>').slice(1).map((e) => {
     const link = (e.match(/<link>([^<]+)/) || [])[1] || '';
     return { id: 'rss' + link, title: unhtml((e.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''), body: unhtml((e.match(/<description>([\s\S]*?)<\/description>/) || [])[1] || '').slice(0, 1500),
