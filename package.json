@@ -9,7 +9,7 @@
     "dry": "node scan.js --dry"
   },
   "dependencies": {
-    "nodemailer": "^6.9.16",
+    "nodemailer": "^10.2.1",
     "playwright": "^1.49.0"
   }
 }
