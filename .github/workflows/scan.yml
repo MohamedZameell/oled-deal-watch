@@ -2,7 +2,8 @@ name: OLED deal scan
 
 on:
   schedule:
-    # every hour at :35 UTC = :05 IST (UTC+5:30), off the :00 mark to dodge GitHub's busiest minute
+    # fallback only: cron-job.org dispatches this every 15 min with --if-due (full scan hourly, every 15 min in a
+    # sale season, channel check otherwise); GitHub's own cron drops most runs on a free account
     - cron: '35 * * * *'
   workflow_dispatch:
     inputs:
@@ -22,7 +23,7 @@ jobs:
   scan:
     # pinned: ubuntu-latest moves to 26.04 in Oct 2026; 24.04 ships Google Chrome, so no browser download or apt install per run
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -41,7 +42,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           BROWSER_CHANNEL: chrome   # the runner's real Google Chrome: retailers refuse bare headless Chromium on product pages
           FORCE_EMAIL: ${{ github.event_name == 'workflow_dispatch' && !contains(inputs.args, '--dry') && '1' || '' }}
-          SCAN_ARGS: ${{ inputs.args }}
+          SCAN_ARGS: ${{ github.event_name == 'schedule' && '--if-due' || inputs.args }}
         run: node scan.js $SCAN_ARGS
       - name: Keep debug screenshots
         if: always()

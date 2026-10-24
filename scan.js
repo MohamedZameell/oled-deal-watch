@@ -22,9 +22,16 @@ const readJsonAt = (p, d) => { try { return JSON.parse(fs.readFileSync(p, 'utf8'
 const readJson = (f, d) => readJsonAt(`${STATE}/${f}`, d);
 const writeJson = (f, v) => { if (!DRY) fs.writeFileSync(`${STATE}/${f}`, JSON.stringify(v, null, 1)); };
 const HOUR = 3600e3; const DAY = 24 * HOUR;
+// sale seasons (Big Billion Days, Great Indian Festival, ...): full scans every 15 min instead of hourly, smaller discounts alert
+const SALE = (cfg.saleWindows || []).find((w) => Date.now() >= Date.parse(w.from) && Date.now() < Date.parse(w.to) + DAY);
+if (SALE) Object.assign(cfg, cfg.saleOverrides || {});
 
 const MONITOR_OK = /monitor|odyssey|ultragear|alienware|aorus|\brog\b|mpg|mag\s?\d|agon|legion|evnia|mobiuz|xeneon|viewfinity|predator|nitro|xg\d{4}|\bAW\d{4}/i;
 const NOT_MONITOR = /watch|laptop|notebook|\btv\b|television|smartphone|phone|zenbook|ideapad|vivobook|cooler|ryujin|portable monitor|tablet|soundbar|headphone|projector|keyboard|mouse/i;
+// model-code searches ("PG27AQWP", "27Q-10") also return parts and look-alike models: a VESA adapter "compatible with"
+// the monitor, Lenovo's IPS LOQ 27Q-10, Samsung's IPS G5. Titles naming a non-OLED panel or an accessory are dropped.
+const ACCESSORY = /compatible with|\badapter\b|bracket|wall mount|monitor arm|mount kit|screen (protector|guard)|replacement|power supply|charger|\bcable\b|dust cover/i;
+const NON_OLED_PANEL = /\b(IPS|VA|TN|mini[\s-]?LED)\b/i;
 const RISKY_CONDITION = /open[\s-]?box|refurb|renewed|repackag|pre[\s-]?owned|\bused\b|b[\s-]?grade|display unit|demo/i;
 const SKIP_LINE = /emi|\/mo|per month|month|cashback|sav(e|ing)|\boff\b|coupon|exchange|discount|delivery|shipping|instant|bonus|joining/i;
 const OUT_OF_STOCK = /out of stock|sold out|currently unavailable|no longer available|temporarily unavailable|notify me when available/i;
@@ -69,7 +76,7 @@ function modelKey(title) {
     [/\bF[OC]\d{2}[A-Z]\d[A-Z]?\b/, (m) => m[0]],                           // Gigabyte
     [/\bCO\d{2}DQ\b/, (m) => m[0]],
     [/\bEX\d{3}UZ\b/, (m) => m[0]],                                         // BenQ
-    [/27Q-10/, () => 'LEGION27Q-10'],
+    [/^(?!.*\bLOQ\b).*27Q-10/, () => 'LEGION27Q-10'],                       // Legion OLED, not the IPS LOQ 27Q-10
   ];
   for (const [re, f] of pats) { const m = t.match(re); if (m) return f(m); }
   return null;
@@ -87,6 +94,10 @@ function specKey(title) {
   return `~${brand} ${size}" ${res}${hz ? ' ' + hz + 'Hz' : ''}`.replace(/\s+/g, ' ');
 }
 const seeds = Object.fromEntries(Object.entries(cfg.streetPriceSeeds || {}).map(([k, v]) => [modelKey(k) || k, v]));
+// models already known to be OLED: a model-code search ("AW2726DM") also finds listings whose title never says OLED
+const savedHistory = readJson('history.json', {});
+const knownOled = new Set([...Object.keys(seeds), ...Object.keys(savedHistory)].filter((k) => !k.startsWith('~')).map((k) => modelKey(k) || k));
+const usualPrice = (key) => seeds[key] || (savedHistory[key]?.length ? median(savedHistory[key].slice(-48).map((h) => h.price)) : 0);
 
 // ---------- page extractors (run inside the browser) ----------
 const amazonExtract = () => [...document.querySelectorAll('[data-component-type="s-search-result"]')].map((e) => ({
@@ -94,6 +105,13 @@ const amazonExtract = () => [...document.querySelectorAll('[data-component-type=
   price: (e.querySelector('.a-price .a-offscreen') || {}).textContent || '',
   mrp: (e.querySelector('.a-price.a-text-price .a-offscreen') || {}).textContent || '',
   url: e.dataset.asin ? location.origin + '/dp/' + e.dataset.asin : '',
+}));
+
+// Amazon "all offers" panel: every seller below the buy box, with its condition (New / Renewed / Used - Like New)
+const aodExtract = () => [...document.querySelectorAll('#aod-offer')].map((o) => ({
+  price: ((o.querySelector('.apex-pricetopay-value') || o.querySelector('.a-price .a-offscreen') || {}).innerText || '').trim(),
+  cond: ((o.querySelector('#aod-offer-heading') || {}).innerText || '').replace(/\s+/g, ' ').trim(),
+  seller: ((o.querySelector('#aod-offer-soldBy a') || o.querySelector('#aod-offer-soldBy .a-col-right') || {}).innerText || '').replace(/\s+/g, ' ').trim(),
 }));
 
 const flipkartExtract = () => [...document.querySelectorAll('a[href*="/p/itm"]')].map((a) => {
@@ -186,23 +204,33 @@ async function samsungApi(src) {
     const models = f.response.resultData.productList.flatMap((fam) => fam.modelList || []).filter((m) => /oled/i.test(plain(m.displayName) + ' ' + m.pdpUrl));
     const pdp = Object.fromEntries(models.map((m) => [m.modelCode.replace(/XXL$/, ''), 'https://www.samsung.com' + m.pdpUrl]));
     const codes = Object.keys(pdp).flatMap((c) => [c, c + '-F']);
+    // a store is one shop id, or a group of staff stores (Corporate / Student / Business bulk) that usually share
+    // prices: the group reports its cheapest offer per SKU and names the stores that have it
     for (const store of src.stores) {
-      for (let i = 0; i < codes.length; i += 20) {
-        const list = await get(`https://p1-smi-api-cdn.shop.samsung.com/tokocommercewebservices/v2/${store.id}/products?productCodes=${codes.slice(i, i + 20).join(',')}&fields=FULL`);
-        for (const p of list) {
-          if (!p.code || !p.stock || p.stock.stockLevelStatus === 'outOfStock') continue;
-          const price = p.promotionPrice?.value || p.price?.value; if (!price) continue;
-          const base = p.code.replace(/-F$/, '');
-          items.push({ title: `${plain(p.name)} ${base}${p.productType === 'REPACKAGED' ? ' (repackaged)' : ''}`, price: Math.round(price),
-            mrp: Math.round(p.price?.value || 0), url: pdp[base], store: store.name, apiChecked: true });
+      const ids = store.ids || { [store.id]: '' };
+      const cheapest = {};
+      for (const [id, label] of Object.entries(ids)) {
+        for (let i = 0; i < codes.length; i += 20) {
+          const list = await get(`https://p1-smi-api-cdn.shop.samsung.com/tokocommercewebservices/v2/${id}/products?productCodes=${codes.slice(i, i + 20).join(',')}&fields=FULL`);
+          for (const p of list) {
+            if (!p.code || !p.stock || p.stock.stockLevelStatus === 'outOfStock') continue;
+            const price = Math.round(p.promotionPrice?.value || p.price?.value || 0); if (!price) continue;
+            const c = cheapest[p.code];
+            if (!c || price < c.price) cheapest[p.code] = { p, price, where: [label] }; else if (price === c.price) c.where.push(label);
+          }
         }
+      }
+      for (const { p, price, where } of Object.values(cheapest)) {
+        const base = p.code.replace(/-F$/, '');
+        items.push({ title: `${plain(p.name)} ${base}${p.productType === 'REPACKAGED' ? ' (repackaged)' : ''}${where.filter(Boolean).length ? ` [${where.join('/')}]` : ''}`,
+          price, mrp: Math.round(p.price?.value || 0), url: pdp[base], store: store.name, apiChecked: true });
       }
     }
   } catch (e) { errors.push(String(e.message).slice(0, 60)); }
   return { items, errors, blockedUrls: [] };
 }
 
-async function scrapeSource(ctx, src) {
+async function scrapeSource(ctx, src, deskCtx = ctx) {
   if (src.kind === 'samsungapi') return samsungApi(src);
   const items = []; const errors = []; const blockedUrls = [];
   const page = await ctx.newPage();
@@ -262,6 +290,23 @@ async function scrapeSource(ctx, src) {
     } catch (e) { errors.push(String(e.message).slice(0, 60)); }
   }
   await page.close();
+  // Amazon search shows only the buy-box price; cheaper other sellers, Renewed and used units sit in each product's
+  // offer panel, which Amazon only fills for a desktop browser (a phone-shaped one gets the buy box alone)
+  if (src.offers) {
+    const origin = new URL(src.urls[0] || src.warmup).origin;
+    const asins = [...new Map(items.map((i) => [(i.url.match(/\/dp\/(\w{10})/) || [])[1], i]).filter(([a, i]) => a && knownOled.has(modelKey(i.title)))).entries()];
+    const op = await deskCtx.newPage(); let found = 0;
+    for (const [asin, base] of asins.slice(0, src.offers)) {
+      try {
+        await op.goto(`${origin}/gp/product/ajax/aodAjaxMain/ref=auto_load_aod?asin=${asin}&pc=dp`, { waitUntil: 'domcontentloaded', timeout: 30000 });
+        await op.waitForTimeout(1500);
+        (await op.evaluate(aodExtract)).forEach((o, n) => { if (!o.price) return; found++;
+          items.push({ title: `${base.title} [${o.cond || 'offer'}${o.seller ? ' · ' + o.seller : ''}]`, price: money(o.price), mrp: 0, url: `${base.url}?aod=1&offer=${n}`, store: 'other sellers' }); });
+      } catch {}
+    }
+    await op.close();
+    console.log('OFFERS', src.name, Math.min(asins.length, src.offers), 'products checked,', found, 'other-seller offers');
+  }
   return { items, errors, blockedUrls };
 }
 
@@ -282,6 +327,13 @@ const parsers = {
   desidime: (s) => [...s.matchAll(/<a[^>]+href="(\/deals\/[a-z0-9-]+-(\d+))"[^>]*>([^<]{10,250})<\/a>/g)]
     .map((m) => ({ id: 'dd' + m[2], title: unhtml(m[3]), body: '', url: 'https://www.desidime.com' + m[1], where: 'DesiDime' })),
   // public Telegram channel preview (t.me/s/<channel>): readable without logging in
+  // Discourse forum search (TechEnclave): newest posts matching the query, incl. replies inside long deal threads
+  discourse: (s, src) => {
+    const j = JSON.parse(s); const origin = new URL(src.urls[0]).origin;
+    const topics = Object.fromEntries((j.topics || []).map((t) => [t.id, t]));
+    return (j.posts || []).filter((p) => !src.categories || src.categories.includes(topics[p.topic_id]?.category_id))
+      .map((p) => ({ id: 'dc' + p.id, title: `${unhtml(topics[p.topic_id]?.title || '')}: ${unhtml(p.blurb || '')}`.slice(0, 200), body: unhtml(p.blurb || ''), url: `${origin}/t/${p.topic_id}/${p.post_number}`, t: p.created_at, where: src.name }));
+  },
   tgchannel: (s) => s.split('data-post="').slice(1).map((e) => {
     const post = e.slice(0, e.indexOf('"')); const text = unhtml((e.match(/tgme_widget_message_text[^>]*>([\s\S]*?)<\/div>/) || [])[1] || '');
     return { id: 'tg' + post, title: text.slice(0, 160), body: text, url: 'https://t.me/' + post, t: (e.match(/<time datetime="([^"]+)"/) || [])[1], where: 'Telegram @' + post.split('/')[0] };
@@ -301,7 +353,7 @@ async function fetchCommunity() {
           await new Promise((ok) => setTimeout(ok, 15000));
         }
         if (!r.ok) { errors.push('HTTP ' + r.status); continue; }
-        for (const p of parsers[src.kind](await r.text())) {
+        for (const p of parsers[src.kind](await r.text(), src)) {
           if (!p.id || !p.title) continue; n++;
           const text = p.title + ' ' + p.body;
           // a post must be about an OLED monitor; on Reddit (questions, reviews, flexes) it must also read like a deal
@@ -399,7 +451,40 @@ async function verifyDeal(ctx, it) {
   } finally { await page.close().catch(() => {}); }
 }
 
+// --samsung-only: the Samsung shop API alone, every 5 min, Telegram only. Plain HTTP, ~5 s. Samsung's
+// repackaged/staff-store stock is the kind that sells out within hours (the ₹25,680 G5 lasted about a day).
+// Pings: any repackaged unit in stock, a crazy price vs the usual one, a 10%+ drop, or anything under the price target.
+async function samsungOnly() {
+  const src = cfg.sources.find((s) => s.kind === 'samsungapi');
+  const { items, errors } = await samsungApi(src);
+  console.log('Samsung API items', items.length, errors.join(','));
+  const history = readJson('history.json', {}); const steady = readJson('steady.json', {}); const fast = readJson('fast.json', {});
+  const now = new Date().toISOString(); const pings = [];
+  for (const it of items) {
+    const key = modelKey(it.title); if (!key) continue;
+    const source = `${src.name} · ${it.store}`; const k = key + '|' + retailerOf(source);
+    const hist = (history[key] || []).slice(-48).map((h) => h.price);
+    const usual = hist.length >= 6 ? median(hist) : seeds[key] || 0;
+    const prev = steady[k];
+    const why = RISKY_CONDITION.test(it.title) ? 'repackaged unit in stock'
+      : usual && it.price <= usual * cfg.crazyThreshold ? `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`
+      : prev && it.price <= prev.price * (cfg.dropThreshold || 0.9) ? `dropped from ${fmt(prev.price)}`
+      : cfg.priceAlertBelow && it.price < cfg.priceAlertBelow ? `under ${fmt(cfg.priceAlertBelow)}` : '';
+    console.log(' ', key, it.store, fmt(it.price), usual ? 'usual ' + fmt(usual) : '', why || '-');
+    if (!why) continue;
+    const last = fast[k];
+    if (last && it.price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
+    fast[k] = { price: it.price, t: now };
+    pings.push(`⚡ <b>Samsung</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)} · <a href="${esc(it.url)}">${esc(source)}</a>`);
+  }
+  writeJson('fast.json', fast);
+  console.log('pings', pings.length);
+  if (DRY) { console.log(pings.join('\n\n') || '(nothing to send)'); return; }
+  await sendTelegram(pings.join('\n\n'));
+}
+
 async function main() {
+  writeJson('lastscan.json', { t: new Date().toISOString() });
   const CDP = process.env.CDP_URL;
   const ua = { locale: R.browserLocale, timezoneId: R.timeZone };
   const browser = CDP ? await chromium.connectOverCDP(CDP)
@@ -412,11 +497,11 @@ async function main() {
 
   const health = []; const all = [];
   const scraped = [];
-  for (const src of cfg.sources) scraped.push([src, await scrapeSource(src.mobile ? mobileCtx : ctx, src)]);
+  for (const src of cfg.sources) scraped.push([src, await scrapeSource(src.mobile ? mobileCtx : ctx, src, ctx)]);
   // Amazon.in blocks GitHub's IPs in waves: the searches that hit the wall often go through a few minutes later
   for (const [src, r] of scraped) {
     if (!r.blockedUrls.length || !src.retries) continue;
-    const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls });
+    const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls }, ctx);
     console.log('SECOND PASS', src.name, r.blockedUrls.length, 'blocked ->', again.blockedUrls.length, 'still blocked');
     r.items.push(...again.items);
     if (!again.blockedUrls.length) r.errors = r.errors.filter((e) => e !== 'blocked/captcha');
@@ -426,8 +511,14 @@ async function main() {
     // one product per URL (+ store): Flipkart lists each product twice, once with a cut-off title
     const byUrl = new Map();
     for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
-    const good = [...byUrl.values()].filter((i) => { const full = i.title + ' ' + urlWords(i.url);
-      return i.title && MONITOR_OK.test(full) && !NOT_MONITOR.test(i.title) && /oled/i.test(full) && i.price >= cfg.minPrice && i.price <= cfg.maxPrice; });
+    const good = [...byUrl.values()].filter((i) => {
+      const full = i.title + ' ' + urlWords(i.url);
+      if (!i.title || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
+      if (/oled/i.test(full)) return true;
+      // no "OLED" anywhere: only a known OLED model, no other panel type named, and not absurdly cheap for that model
+      const key = modelKey(full); const usual = usualPrice(key);
+      return knownOled.has(key) && !NON_OLED_PANEL.test(i.title) && (!usual || i.price >= usual * 0.5);
+    });
     for (const g of good) {
       const source = g.store ? `${src.name} · ${g.store}` : src.name;
       const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
@@ -473,6 +564,8 @@ async function main() {
   for (const it of mine) {
     if (it.generic) continue;
     const k = it.key + '|' + it.retailer; const p = steady[k];
+    // a shop cutting its own price 10%+ since it was last seen listing it is how flash sales start
+    if (p && it.price <= p.price * (cfg.dropThreshold || 0.9) && Date.parse(now) - Date.parse(p.seen) < 3 * DAY) it.dropFrom = p.price;
     if (!p || Math.abs(it.price - p.price) > p.price * 0.02) steady[k] = { price: it.price, since: now, seen: now }; else p.seen = now;
     it.steadyDays = (Date.parse(now) - Date.parse(steady[k].since)) / DAY;
   }
@@ -506,7 +599,10 @@ async function main() {
   // alert only on new or ≥5% lower prices, or the same deal again after a week; skip what the other scanner already sent
   const aKey = (c) => c.key + '|' + c.retailer;
   const prevOf = (store, c) => { const v = store[aKey(c)]; return typeof v === 'number' ? { price: v, t: now } : v; };
-  const isFresh = (c) => [prevOf(alerted, c), prevOf(peerAlerted, c)].every((p) => !p || c.price < p.price * 0.95 || Date.now() - Date.parse(p.t) > 7 * DAY);
+  const notRecent = (p, price) => !p || price < p.price * 0.95 || Date.now() - Date.parse(p.t) > 7 * DAY;
+  // the 5-minute Samsung check (--samsung-only) may already have pinged this one
+  const fastPinged = readJson('fast.json', {});
+  const isFresh = (c) => [prevOf(alerted, c), prevOf(peerAlerted, c), fastPinged[aKey(c)]].every((p) => notRecent(p, c.price));
   const candidates = crazy.filter(isFresh).sort((a, b) => b.pct - a.pct);
 
   // verify on the product page before alerting
@@ -526,7 +622,7 @@ async function main() {
     const shown = new Set(fresh.map(aKey));
     const targets = mine.filter((x) => !x.feed && x.price < cfg.priceAlertBelow && !/portable/i.test(x.title) &&
       (inches(x.title) >= 24 || (!inches(x.title) && !x.generic)) && !shown.has(aKey(x)))
-      .filter((x) => { const p = alerted['below|' + aKey(x)]; return !p || x.price < p.price * 0.95 || Date.now() - Date.parse(p.t) > 7 * DAY; })
+      .filter((x) => notRecent(alerted['below|' + aKey(x)], x.price) && notRecent(fastPinged[aKey(x)], x.price))
       .sort((a, b) => a.price - b.price);
     for (const c of targets.slice(0, 5)) {
       const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
@@ -535,6 +631,17 @@ async function main() {
       if (c.check !== 'out of stock') below.push(c);
     }
   }
+  // sudden drops (dropFrom, set above): smaller than a crazy deal, but often the first sign of a flash sale
+  const drops = [];
+  const shownAlready = new Set([...fresh, ...below].map(aKey));
+  const dropCands = mine.filter((x) => x.dropFrom && !x.feed && !shownAlready.has(aKey(x)) &&
+    notRecent(alerted['drop|' + aKey(x)], x.price) && notRecent(fastPinged[aKey(x)], x.price)).sort((a, b) => a.price / a.dropFrom - b.price / b.dropFrom);
+  for (const c of dropCands.slice(0, 5)) {
+    const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
+    c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
+    console.log('VERIFY-DROP', c.key, c.source, fmt(c.dropFrom), '->', fmt(c.price), c.check);
+    if (c.check !== 'out of stock') drops.push(c);
+  }
   if (VERIFY_SAMPLE) {
     for (const c of mine.filter((x) => !x.feed).sort((a, b) => a.price - b.price).slice(0, 3)) console.log('SAMPLE-VERIFY', c.key, c.source, fmt(c.price), '->', await verifyDeal(ctx, c), c.url);
   }
@@ -542,6 +649,7 @@ async function main() {
 
   for (const c of fresh) alerted[aKey(c)] = { price: c.price, t: now };
   for (const c of below) alerted['below|' + aKey(c)] = { price: c.price, t: now };
+  for (const c of drops) alerted['drop|' + aKey(c)] = { price: c.price, t: now };
   writeJson('history.json', history); writeJson('alerted.json', alerted); writeJson('steady.json', steady);
   writeJson('snapshot.json', { t: now, items: mine.filter((x) => !x.feed).map(({ key, generic, source, retailer, price, risky, title, url }) => ({ key, generic, source, retailer, price, risky, title, url })) });
 
@@ -561,9 +669,11 @@ async function main() {
     .filter((x) => x.price).sort((a, b) => a.price - b.price).slice(0, 8);
   const bad = health.filter((h) => !h.found);
   let html = `<div style="font:14px Arial;max-width:820px;color:#111"><h2 style="margin:0 0 4px">${esc(R.title)}</h2><div style="color:#6b7280">${stamp} ${R.tzLabel}</div>`;
+  if (SALE) html += `<p style="background:#fef3c7;padding:6px 8px">🛍️ <b>${esc(SALE.name)}</b>: scanning every 15 min, alerting from ${Math.round((1 - cfg.crazyThreshold) * 100)}% below.</p>`;
   html += fresh.length ? `<h3 style="color:#b91c1c">🚨 Crazy deals (≥${Math.round((1 - cfg.crazyThreshold) * 100)}% below what other sellers charge)</h3>${tbl(fresh)}<p>${esc(R.buyNote)}</p>`
     : `<h3>No new crazy deal this run.</h3>`;
   if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  if (drops.length) html += `<h3 style="color:#b45309">📉 Sudden price drops</h3><ul>${drops.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.dropFrom)}</s> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (dropped.length) html += `<p style="color:#6b7280">Skipped ${dropped.length} deal${dropped.length > 1 ? 's' : ''} that failed the page check: ${dropped.map((c) => `${esc(c.key)} ${fmt(c.price)} at ${esc(c.source)} (${esc(c.check)})`).join('; ')}.</p>`;
   if (near.length) html += `<h3>Near-misses (${Math.round((1 - cfg.nearMissThreshold) * 100)}%+ below, or a bigger drop with only one price to compare)</h3>${tbl(near.sort((a, b) => b.pct - a.pct).slice(0, 8))}`;
   if (newPosts.length) html += `<h3>💬 New community posts</h3><ul>${newPosts.map((p) => `<li><a href="${esc(p.url)}">${postLine(p)}</a></li>`).join('')}</ul>`;
@@ -574,6 +684,7 @@ async function main() {
   html += `</ul><p style="color:#6b7280">${esc(R.footer)}</p></div>`;
   const subject = fresh.length ? `🚨 ${R.subjectTag} crazy deal: ${fresh[0].title.slice(0, 40)} ${fmt(fresh[0].price)} (${fresh[0].pct}% below)`
     : below.length ? `🎯 ${R.subjectTag} under ${fmt(cfg.priceAlertBelow)}: ${below[0].title.slice(0, 40)} ${fmt(below[0].price)}`
+    : drops.length ? `📉 ${R.subjectTag} price drop: ${drops[0].title.slice(0, 40)} ${fmt(drops[0].dropFrom)} → ${fmt(drops[0].price)}`
     : newPosts.length ? `💬 ${R.subjectTag} community post: ${newPosts[0].title.slice(0, 60)}`
     : `${R.subjectTag} digest ${stamp}: no crazy deal (${cheapest[0] ? 'low ' + fmt(cheapest[0].price) : 'no data'})${bad.length > 3 ? ' ⚠ many sources failed' : ''}${broken.length ? ' ⚠ ' + broken.map((h) => h.name).join(', ') + ' stopped working' : ''}`;
 
@@ -581,10 +692,12 @@ async function main() {
   const tg = [
     ...fresh.map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     ...below.map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...drops.map((c) => `📉 <b>Price drop</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, was ${fmt(c.dropFrom)} here${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     ...newPosts.map(postTg), ...broken.map(brokenTg),
   ].join('\n\n');
 
   if (DRY) {
+    console.log('DROPS', drops.map((c) => `${c.key} ${c.dropFrom}->${c.price} ${c.source}`), 'SALE', SALE ? SALE.name : '-');
     console.log('\nCOMMUNITY (all matching posts, shown as if new):\n' + community.posts.map((p) => '  ' + postLine(p) + ' ' + p.url).join('\n'));
     console.log('\nTELEGRAM:', tg || '(nothing to send)');
     console.log('\nSUBJECT:', subject, '\nCRAZY', fresh.length, 'DROPPED', dropped.length, 'NEAR', near.length, 'PEER', peerItems.length,
@@ -596,7 +709,7 @@ async function main() {
   const today = new Date().toLocaleDateString('en-CA', { timeZone: R.timeZone });
   const dailyDigest = (R.dailyDigestHours || []).includes(hourNow) && readJson('digest.json', {}).date !== today;
   await sendTelegram(tg);
-  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
+  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !drops.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
   if (process.env.MAIL_VIA_GH) {
     const { execFileSync } = await import('node:child_process');
     execFileSync('gh', ['workflow', 'run', 'mail.yml', '-R', process.env.MAIL_VIA_GH, '--json'], { input: JSON.stringify({ subject, html }) });
@@ -610,4 +723,11 @@ async function main() {
   if (dailyDigest) writeJson('digest.json', { date: today });
   console.log('email sent:', subject);
 }
-(process.argv.includes('--community-only') ? communityOnly() : main()).then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });
+// --if-due: the outside timer fires every 15 min; a full scan runs when the last one is an hour old (15 min in a
+// sale season), and the runs in between only check the deal channels
+const lastScan = readJson('lastscan.json', {}).t;
+const due = !lastScan || Date.now() - Date.parse(lastScan) >= (SALE ? 14 : 55) * 60e3;
+const has = (f) => process.argv.includes(f);
+const run = has('--samsung-only') ? samsungOnly : has('--community-only') || (has('--if-due') && !due) ? communityOnly : main;
+console.log('mode', run.name, SALE ? '(sale: ' + SALE.name + ')' : '');
+run().then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });

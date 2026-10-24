@@ -11,7 +11,7 @@
     "textParser": "minmax",
     "dailyDigestHours": [],
     "buyNote": "Move fast: deals like this have sold out within a day. Before paying: confirm stock, Chennai delivery, warranty, and whether it is open-box/repackaged.",
-    "footer": "Corporate Store prices need a Samsung corporate login to buy. Other prices are read from public listing pages and re-checked on the product page before an alert; verify before paying."
+    "footer": "Staff-store prices (Samsung Corporate / Student / Business) need that store's login to buy. Other prices are read from public listing pages and re-checked on the product page before an alert; verify before paying."
   },
   "emailMode": "always",
   "crazyThreshold": 0.65,
@@ -32,9 +32,18 @@
         "https://www.amazon.in/s?k=qd-oled+monitor",
         "https://www.amazon.in/s?k=oled+monitor+240hz",
         "https://www.amazon.in/s?k=oled+monitor+renewed",
-        "https://www.amazon.in/s?k=oled+monitor+open+box"
+        "https://www.amazon.in/s?k=oled+monitor+open+box",
+        "https://www.amazon.in/s?k=AW2726DM+monitor",
+        "https://www.amazon.in/s?k=G50SF+monitor",
+        "https://www.amazon.in/s?k=G60SF+monitor",
+        "https://www.amazon.in/s?k=G61SH+monitor",
+        "https://www.amazon.in/s?k=Legion+27Q-10+monitor",
+        "https://www.amazon.in/s?k=XG27ACDMS+monitor",
+        "https://www.amazon.in/s?k=AG276QZD2+monitor",
+        "https://www.amazon.in/s?k=MAG+271QPX+monitor"
       ],
-      "warmup": "https://www.amazon.in/"
+      "warmup": "https://www.amazon.in/",
+      "offers": 12
     },
     {
       "name": "Flipkart",
@@ -43,7 +52,16 @@
         "https://www.flipkart.com/search?q=oled+monitor",
         "https://www.flipkart.com/search?q=qd-oled+monitor",
         "https://www.flipkart.com/search?q=oled+gaming+monitor+240hz",
-        "https://www.flipkart.com/search?q=oled+monitor+refurbished"
+        "https://www.flipkart.com/search?q=oled+monitor+refurbished",
+        "https://www.flipkart.com/search?q=oled+monitor+open+box",
+        "https://www.flipkart.com/search?q=AW2726DM+monitor",
+        "https://www.flipkart.com/search?q=G50SF+monitor",
+        "https://www.flipkart.com/search?q=G60SF+monitor",
+        "https://www.flipkart.com/search?q=G61SH+monitor",
+        "https://www.flipkart.com/search?q=Legion+27Q-10+monitor",
+        "https://www.flipkart.com/search?q=XG27ACDMS+monitor",
+        "https://www.flipkart.com/search?q=AG276QZD2+monitor",
+        "https://www.flipkart.com/search?q=MAG+271QPX+monitor"
       ]
     },
     {
@@ -98,8 +116,12 @@
           "name": "Samsung.com"
         },
         {
-          "id": "in_corporate",
-          "name": "Corporate Store"
+          "name": "Staff stores",
+          "ids": {
+            "in_corporate": "Corporate",
+            "in_campus": "Student",
+            "in_bulk": "Business"
+          }
         }
       ]
     },
@@ -174,6 +196,17 @@
         "https://t.me/s/Smartprix_Deals",
         "https://t.me/s/Smartprix_Deals?q=oled"
       ]
+    },
+    {
+      "name": "TechEnclave forum",
+      "kind": "discourse",
+      "categories": [
+        61
+      ],
+      "urls": [
+        "https://techenclave.com/search.json?q=oled%20order%3Alatest",
+        "https://techenclave.com/search.json?q=monitor%20%23flash-deals%20order%3Alatest"
+      ]
     }
   ],
   "brokenAfterRuns": 6,
@@ -196,5 +229,33 @@
     "MPG341CQPX": 77000,
     "XG27AQDMES": 53199,
     "PG27AQDM": 71349
+  },
+  "dropThreshold": 0.9,
+  "saleWindows": [
+    {
+      "name": "Diwali sales",
+      "from": "2026-10-24",
+      "to": "2026-11-09"
+    },
+    {
+      "name": "Black Friday / Cyber Monday",
+      "from": "2026-11-26",
+      "to": "2026-12-01"
+    },
+    {
+      "name": "Christmas / year-end sales",
+      "from": "2026-12-20",
+      "to": "2026-12-31"
+    },
+    {
+      "name": "Republic Day sales",
+      "from": "2027-01-12",
+      "to": "2027-01-20"
+    }
+  ],
+  "saleOverrides": {
+    "crazyThreshold": 0.75,
+    "nearMissThreshold": 0.88,
+    "dropThreshold": 0.93
   }
 }
