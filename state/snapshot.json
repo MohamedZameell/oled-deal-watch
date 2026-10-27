@@ -1,95 +1,65 @@
 {
- "t": "2026-10-27T17:03:09.288Z",
+ "t": "2026-10-27T21:38:19.444Z",
  "items": [
-  {
-   "key": "27G61SH",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 46899,
-   "risky": false,
-   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync| Free Sync| LS27HG612SWXXL| Black",
-   "url": "https://www.amazon.in/dp/B0GXL1STL2"
-  },
   {
    "key": "AW2726DM",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 39799,
+   "price": 42585,
    "risky": false,
    "title": "Alienware AW2726DM (Smartchoice) 26.5\" QD OLED Monitor|99% DCI-P3,0.03ms GTG,240Hz|AMD FreeSync Premium|HDMI*2,DP 1.4|Infinite Contrast, 200cd/m2(typical), 400cd/m2 (HDR peak, APL 10%) Brightness|Ergo",
    "url": "https://www.amazon.in/dp/B0GYG3VLMR"
   },
   {
-   "key": "49G93SD",
+   "key": "27G61SH",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 86999,
+   "price": 50182,
    "risky": false,
-   "title": "Samsung 49\" (124.4cm) Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD 5120 x 1440|240Hz|0.03ms|DCI 99%|OLED Safeguard|FreeSync Premium Pro|G-Sync| HDR10+ Gaming|HAS|LS49DG930SWXXL|Silver",
-   "url": "https://www.amazon.in/dp/B0F99Y979X"
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync| Free Sync| LS27HG612SWXXL| Black",
+   "url": "https://www.amazon.in/dp/B0GXL1STL2"
   },
   {
    "key": "AW2725D",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 56999,
+   "price": 60989,
    "risky": false,
    "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
    "url": "https://www.amazon.in/dp/B0FHB4KWBF"
   },
   {
-   "key": "27GX790A",
+   "key": "MAG341CQP",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 89900,
+   "price": 85999,
    "risky": false,
-   "title": "LG 27GX790A-B Smartchoice 27 inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz, 0.03ms, DisplayPort 2.1, True Black 400, NVIDIA G-Sync, AMD FreeSync Premium Pro, USB, Tilt/Height/Swivel/Pivot Stand",
-   "url": "https://www.amazon.in/dp/B0FJFT8FM1"
+   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
+   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
   },
   {
-   "key": "AW2725DF",
+   "key": "49G93SD",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 95990,
+   "price": 93089,
    "risky": false,
-   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment",
-   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
+   "title": "Samsung 49\" (124.4cm) Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD 5120 x 1440|240Hz|0.03ms|DCI 99%|OLED Safeguard|FreeSync Premium Pro|G-Sync| HDR10+ Gaming|HAS|LS49DG930SWXXL|Silver",
+   "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "~LENOVO 26\" 4K 240Hz",
-   "generic": true,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 68399,
-   "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
-  },
-  {
-   "key": "EX271UZ",
+   "key": "MAG321UP",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 86449,
+   "price": 89999,
    "risky": false,
-   "title": "BenQ MOBIUZ EX271UZ (Smartchoice) 27” 4K UHD 4th Gen QD-OLED 240Hz Gaming Monitor| 0.03ms GtG|HDMI 2.0, DP 1.4|USB-C(90W)|99% DCI-P3|AMD FreeSync Premium Pro|KVM|Height,Swivel, Tilt Adjustable(White)",
-   "url": "https://www.amazon.in/dp/B0G1BRCP3V"
-  },
-  {
-   "key": "~LENOVO 31\" 4K 240Hz",
-   "generic": true,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 73599,
-   "risky": false,
-   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
-   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
   },
   {
    "key": "XG2738",
@@ -100,6 +70,36 @@
    "risky": false,
    "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
    "url": "https://www.amazon.in/dp/B0GL83RWPV"
+  },
+  {
+   "key": "EX271UZ",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 92501,
+   "risky": false,
+   "title": "BenQ MOBIUZ EX271UZ (Smartchoice) 27” 4K UHD 4th Gen QD-OLED 240Hz Gaming Monitor| 0.03ms GtG|HDMI 2.0, DP 1.4|USB-C(90W)|99% DCI-P3|AMD FreeSync Premium Pro|KVM|Height,Swivel, Tilt Adjustable(White)",
+   "url": "https://www.amazon.in/dp/B0G1BRCP3V"
+  },
+  {
+   "key": "MAG321UPX",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 113999,
+   "risky": false,
+   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+  },
+  {
+   "key": "~LENOVO 26\" 4K 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 73187,
+   "risky": false,
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
    "key": "PG27AQDM",
@@ -114,9 +114,49 @@
   {
    "key": "27GX790A",
    "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 74750,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
+  },
+  {
+   "key": "MAG321UP",
+   "generic": false,
    "source": "Amazon.in · other sellers",
    "retailer": "amazoninothersellers",
-   "price": 75999,
+   "price": 98999,
+   "risky": false,
+   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C [New · TradeZoneIndia©]",
+   "url": "https://www.amazon.in/dp/B0BSLPJP2L?aod=1&offer=0"
+  },
+  {
+   "key": "~LENOVO 31\" 4K 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 78751,
+   "risky": false,
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+  },
+  {
+   "key": "32GS95UV",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 110999,
+   "risky": false,
+   "title": "LG ‎32GS95UV 32 Inch Ultragear OLED Gaming Monitor, UHD, 3840 x 2160, 240Hz, 0.03ms, DisplayHDR, True Black 400, AMD FreeSync Premium Pro, NVIDIA G-Sync, HDMI 2.1, DP, Tilt/Height/Swivel Stand, Black",
+   "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon.in · other sellers",
+   "retailer": "amazoninothersellers",
+   "price": 81319,
    "risky": false,
    "title": "LG 27GX790A-B Smartchoice 27 inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz, 0.03ms, DisplayPort 2.1, True Black 400, NVIDIA G-Sync, AMD FreeSync Premium Pro, USB, Tilt/Height/Swivel/Pivot Stand [New · Clicktech Retail Private Ltd]",
    "url": "https://www.amazon.in/dp/B0FJFT8FM1?aod=1&offer=0"
@@ -126,7 +166,7 @@
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 42999,
+   "price": 49890,
    "risky": false,
    "title": "Lenovo Legion 67.31 cm (27 inch) Quad HD OLED Panel Gaming Monitor (Legion 27Q-10)",
    "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
@@ -136,7 +176,7 @@
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 77999,
+   "price": 74999,
    "risky": false,
    "title": "Samsung Odyssey OLED G9 124.31 cm (49 inches) Curved DQHD OLED Panel Gaming Monitor (LS49DG910SWXXL)",
    "url": "https://www.flipkart.com/samsung-odyssey-oled-g9-124-31-cm-49-inches-curved-dqhd-panel-gaming-monitor-ls49dg910swxxl/p/itme0c676f11bb98"
@@ -200,6 +240,16 @@
    "risky": false,
    "title": "ASUS ROG Series 68.58 cm (27 Inch) Full HD OLED Panel with custom heatsink, intelligent voltage optimization, uniform brightness, DisplayWidget Center, anti-glare Gaming Monitor (PG27AQDM)",
    "url": "https://www.flipkart.com/asus-rog-series-68-58-cm-27-inch-full-hd-oled-panel-custom-heatsink-intelligent-voltage-optimization-uniform-brightness-displaywidget-center-anti-glare-gaming-monitor-pg27aqdm/p/itmfe1473bbb0a30"
+  },
+  {
+   "key": "AW2725Q",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 85500,
+   "risky": false,
+   "title": "DELL AW Series 68.58 cm (27 inch) 4K Ultra HD OLED Panel Gaming Monitor (AW2725Q)",
+   "url": "https://www.flipkart.com/dell-aw-series-68-58-cm-27-inch-4k-ultra-hd-oled-panel-gaming-monitor-aw2725q/p/itmb308225441cb3"
   },
   {
    "key": "AG276QZD2",
@@ -632,6 +682,16 @@
    "url": "https://www.primeabgb.com/online-price-reviews-india/asus-xg32ucwmg-oled-4k-31-5-inch-480hz-rog-strix-monitor/"
   },
   {
+   "key": "AW3225QF",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 98559,
+   "risky": false,
+   "title": "Dell Alienware AW3225QF 32\" 4K 240HZ QD-OLED Curved Gaming Monitor",
+   "url": "https://www.tpstech.in/products/dell-alienware-aw3225qf-32-4k-240hz-qd-oled-curved-monitor?_pos=1&_sid=7abb46f13&_ss=r"
+  },
+  {
    "key": "MAG321UP",
    "generic": false,
    "source": "TPS Technologies",
@@ -639,17 +699,7 @@
    "price": 79859,
    "risky": false,
    "title": "MSI MAG 321UP QD-OLED 31.5\" 4K UHD 165Hz 0.3ms OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/msi-mag-321up-qd-oled-31-5-4k-uhd-165hz-0-3ms-oled-gaming-monitor?_pos=1&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "~SAMSUNG 49\" QHD 240Hz",
-   "generic": true,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 97814,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G9 49\" 240Hz 0.03ms Dual QHD Curved Gaming Monitor",
-   "url": "https://www.tpstech.in/products/samsung-odyssey-oled-g9-49-inch-gaming-monitor?_pos=2&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/msi-mag-321up-qd-oled-31-5-4k-uhd-165hz-0-3ms-oled-gaming-monitor?_pos=2&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "AW2725D",
@@ -659,17 +709,17 @@
    "price": 59950,
    "risky": false,
    "title": "Dell Alienware AW2725D 27\" 280Hz 0.03ms QHD QD-OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/alienware-aw2725d-27-inch-qd-oled-gaming-monitor?_pos=3&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/alienware-aw2725d-27-inch-qd-oled-gaming-monitor?_pos=3&_sid=7abb46f13&_ss=r"
   },
   {
-   "key": "39GX900A",
-   "generic": false,
+   "key": "~SAMSUNG 49\" QHD 240Hz",
+   "generic": true,
    "source": "TPS Technologies",
    "retailer": "tpstechnologies",
-   "price": 126276,
+   "price": 97814,
    "risky": false,
-   "title": "LG 39GX900A-B 39\" OLED WQHD Gaming Monitor 240Hz",
-   "url": "https://www.tpstech.in/products/lg-39gx900a-b-39-inch-oled-wqhd-gaming-monitor?_pos=5&_sid=c10f1c8f0&_ss=r"
+   "title": "Samsung Odyssey OLED G9 49\" 240Hz 0.03ms Dual QHD Curved Gaming Monitor",
+   "url": "https://www.tpstech.in/products/samsung-odyssey-oled-g9-49-inch-gaming-monitor?_pos=4&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "PG27AQWP",
@@ -679,7 +729,7 @@
    "price": 144719,
    "risky": false,
    "title": "ASUS ROG Swift OLED 27-inch QHD OLED Gaming Monitor PG27AQWP-W",
-   "url": "https://www.tpstech.in/products/asus-rog-pg27aqwp-w-540hz-qhd-oled-gaming-monitor?_pos=6&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/asus-rog-pg27aqwp-w-540hz-qhd-oled-gaming-monitor?_pos=5&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "AW3425DW",
@@ -689,7 +739,7 @@
    "price": 86736,
    "risky": false,
    "title": "Dell Alienware AW3425DW 34\" 240Hz 0.03ms WQHD Curved QD-OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/alienware-aw3425dw-34-inch-qd-oled-gaming-monitor?_pos=7&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/alienware-aw3425dw-34-inch-qd-oled-gaming-monitor?_pos=6&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "34GS95QE",
@@ -699,77 +749,7 @@
    "price": 99311,
    "risky": false,
    "title": "LG UltraGear 34GS95QE-B 34\" 240Hz WQHD OLED 800R Curved Gaming Monitor",
-   "url": "https://www.tpstech.in/products/lg-ultragear-34gs95qe-b-34-240hz-wqhd-oled-800r-curved-gaming-monitor?_pos=8&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "FO32U2P",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 105896,
-   "risky": false,
-   "title": "GIGABYTE AORUS FO32U2P 32\" 4K UHD 240Hz QD-OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/gigabyte-aorus-fo32u2p-32-4k-uhd-240hz-qd-oled-gaming-monitor?_pos=9&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "XG32UCWG",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 120769,
-   "risky": false,
-   "title": "ASUS ROG Strix OLED XG32UCWG 31.5 Inch 4K Gaming Monitor",
-   "url": "https://www.tpstech.in/products/asus-rog-xg32ucwg-31-5-inch-4k-oled-gaming-monitor?_pos=10&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "AW3225QF",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 98559,
-   "risky": false,
-   "title": "Dell Alienware AW3225QF 32\" 4K 240HZ QD-OLED Curved Gaming Monitor",
-   "url": "https://www.tpstech.in/products/dell-alienware-aw3225qf-32-4k-240hz-qd-oled-curved-monitor?_pos=11&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "27G61SH",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 55897,
-   "risky": false,
-   "title": "Samsung Odyssey G6 27\" QD-OLED Gaming Monitor 240Hz LS27HG612SWXXL",
-   "url": "https://www.tpstech.in/products/samsung-odyssey-g6-27-inch-qd-oled-gaming-monitor-240hz?_pos=12&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "PG32UCDM3",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 179950,
-   "risky": false,
-   "title": "ASUS ROG PG32UCDM3 4K 240Hz OLED Gaming Monitor for PC & Console",
-   "url": "https://www.tpstech.in/products/asus-rog-pg32ucdm3-4k-240hz-oled-gaming-monitor-for-pc-console?_pos=14&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "MAG341CQP",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 76775,
-   "risky": false,
-   "title": "MSI MAG 341CQP QD-OLED 34\" UWQHD 175Hz 0.03ms Curved OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/msi-mag341cqp-qd-oled-34-uwqhd-175hz-0-03ms-curved-oled-gaming-monitor?_pos=15&_sid=c10f1c8f0&_ss=r"
-  },
-  {
-   "key": "32GS95UV",
-   "generic": false,
-   "source": "TPS Technologies",
-   "retailer": "tpstechnologies",
-   "price": 115797,
-   "risky": false,
-   "title": "LG 32GS95UV-B 32\" 240Hz 4K OLED Dual-Mode UltraGear Gaming Monitor",
-   "url": "https://www.tpstech.in/products/lg-32gs95uv-b-32-240hz-4k-oled-dual-mode-ultragear-gaming-monitor?_pos=16&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/lg-ultragear-34gs95qe-b-34-240hz-wqhd-oled-800r-curved-gaming-monitor?_pos=7&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "LEGION27Q-10",
@@ -779,27 +759,77 @@
    "price": 43941,
    "risky": false,
    "title": "Lenovo Legion 27Q-10 OLED 26.5-inch QHD 240Hz Gaming Monitor",
-   "url": "https://www.tpstech.in/products/lenovo-legion-27q-10-oled-26-5-inch-qhd-240hz-gaming-monitor?_pos=17&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/lenovo-legion-27q-10-oled-26-5-inch-qhd-240hz-gaming-monitor?_pos=9&_sid=7abb46f13&_ss=r"
   },
   {
-   "key": "27G50SF",
+   "key": "XG32UCWG",
    "generic": false,
    "source": "TPS Technologies",
    "retailer": "tpstechnologies",
-   "price": 46959,
+   "price": 120769,
    "risky": false,
-   "title": "Samsung Odyssey OLED LS27FG502SWXXL G5 27\" 80Hz 0.03ms QD‑OLED QHD Gaming Monitor",
-   "url": "https://www.tpstech.in/products/samsung-odyssey-oled-g5-ls27fg502swxxl-27-inch-gaming-monitor?_pos=18&_sid=c10f1c8f0&_ss=r"
+   "title": "ASUS ROG Strix OLED XG32UCWG 31.5 Inch 4K Gaming Monitor",
+   "url": "https://www.tpstech.in/products/asus-rog-xg32ucwg-31-5-inch-4k-oled-gaming-monitor?_pos=10&_sid=7abb46f13&_ss=r"
   },
   {
-   "key": "27GX790A",
+   "key": "AW2726DM",
    "generic": false,
    "source": "TPS Technologies",
    "retailer": "tpstechnologies",
-   "price": 79350,
+   "price": 49850,
    "risky": false,
-   "title": "LG UltraGear 27GX790A-B 27\" 480Hz OLED QHD 1440P Gaming Monitor",
-   "url": "https://www.tpstech.in/products/lg-27gx790a-oled-gaming-monitor?_pos=19&_sid=c10f1c8f0&_ss=r"
+   "title": "Alienware AW2726DM 27-Inch QD-OLED Gaming Monitor 240Hz QHD Display",
+   "url": "https://www.tpstech.in/products/alienware-aw2726dm-27-inch-240hz-qd-oled-gaming-monitor?_pos=11&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 126276,
+   "risky": false,
+   "title": "LG 39GX900A-B 39\" OLED WQHD Gaming Monitor 240Hz",
+   "url": "https://www.tpstech.in/products/lg-39gx900a-b-39-inch-oled-wqhd-gaming-monitor?_pos=12&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "27G61SH",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 55897,
+   "risky": false,
+   "title": "Samsung Odyssey G6 27\" QD-OLED Gaming Monitor 240Hz LS27HG612SWXXL",
+   "url": "https://www.tpstech.in/products/samsung-odyssey-g6-27-inch-qd-oled-gaming-monitor-240hz?_pos=13&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "MAG341CQP",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 76775,
+   "risky": false,
+   "title": "MSI MAG 341CQP QD-OLED 34\" UWQHD 175Hz 0.03ms Curved OLED Gaming Monitor",
+   "url": "https://www.tpstech.in/products/msi-mag341cqp-qd-oled-34-uwqhd-175hz-0-03ms-curved-oled-gaming-monitor?_pos=14&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "FO32U2P",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 105896,
+   "risky": false,
+   "title": "GIGABYTE AORUS FO32U2P 32\" 4K UHD 240Hz QD-OLED Gaming Monitor",
+   "url": "https://www.tpstech.in/products/gigabyte-aorus-fo32u2p-32-4k-uhd-240hz-qd-oled-gaming-monitor?_pos=15&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "AW2725Q",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 94311,
+   "risky": false,
+   "title": "Alienware AW2725Q 27 Inch 4K QD-OLED Gaming Monitor 240Hz",
+   "url": "https://www.tpstech.in/products/alienware-aw2725q-27-inch-4k-qd-oled-gaming-monitor?_pos=16&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "AW2725DF",
@@ -809,17 +839,17 @@
    "price": 77799,
    "risky": false,
    "title": "Dell Alienware AW2725DF 27\" QHD 360Hz QD-OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/dell-alienware-aw2725df-27-qhd-360hz-qd-oled-gaming-monitor?_pos=20&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/dell-alienware-aw2725df-27-qhd-360hz-qd-oled-gaming-monitor?_pos=18&_sid=7abb46f13&_ss=r"
   },
   {
-   "key": "27G81SF",
+   "key": "PG32UCDM3",
    "generic": false,
    "source": "TPS Technologies",
    "retailer": "tpstechnologies",
-   "price": 89839,
+   "price": 179950,
    "risky": false,
-   "title": "Samsung Odyssey G8 LS27FG810SWXXL 27\" 240Hz 0.03ms 4K QD‑OLED Gaming Monitor Glare‑Free",
-   "url": "https://www.tpstech.in/products/samsung-odyssey-g8-ls27fg810swxxl-27-4k-oled-monitor?_pos=21&_sid=c10f1c8f0&_ss=r"
+   "title": "ASUS ROG PG32UCDM3 4K 240Hz OLED Gaming Monitor for PC & Console",
+   "url": "https://www.tpstech.in/products/asus-rog-pg32ucdm3-4k-240hz-oled-gaming-monitor-for-pc-console?_pos=19&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "MPG341CQPX",
@@ -829,17 +859,27 @@
    "price": 86799,
    "risky": false,
    "title": "MSI MPG 341CQPX QD-OLED 34\" 2K UWQHD 240Hz 0.03ms Curved OLED Gaming Monitor",
-   "url": "https://www.tpstech.in/products/msi-mag341cqpx-qd-oled-34-2k-uwqhd-240hz-0-03ms-curved-oled-gaming-monitor?_pos=22&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/msi-mag341cqpx-qd-oled-34-2k-uwqhd-240hz-0-03ms-curved-oled-gaming-monitor?_pos=20&_sid=7abb46f13&_ss=r"
   },
   {
-   "key": "~SAMSUNG 32\" ",
-   "generic": true,
+   "key": "32GS95UV",
+   "generic": false,
    "source": "TPS Technologies",
    "retailer": "tpstechnologies",
-   "price": 124261,
+   "price": 115797,
    "risky": false,
-   "title": "Samsung 32-inch M9 OLED Vision AI Smart Monitor LS32FM900SWXXL",
-   "url": "https://www.tpstech.in/products/samsung-m9-ls32fm900swxxl-32-inch-4k-oled-smart-monitor?_pos=23&_sid=c10f1c8f0&_ss=r"
+   "title": "LG 32GS95UV-B 32\" 240Hz 4K OLED Dual-Mode UltraGear Gaming Monitor",
+   "url": "https://www.tpstech.in/products/lg-32gs95uv-b-32-240hz-4k-oled-dual-mode-ultragear-gaming-monitor?_pos=21&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 79350,
+   "risky": false,
+   "title": "LG UltraGear 27GX790A-B 27\" 480Hz OLED QHD 1440P Gaming Monitor",
+   "url": "https://www.tpstech.in/products/lg-27gx790a-oled-gaming-monitor?_pos=22&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "27G61SD",
@@ -849,7 +889,17 @@
    "price": 73372,
    "risky": false,
    "title": "Samsung Odyssey G6 LS27DG610SWXXL 27\" 240Hz 0.03ms OLED 2K QHD Gaming Monitor",
-   "url": "https://www.tpstech.in/products/samsung-odyssey-g6-ls27dg610swxxl-27inch-oled-monitor?_pos=24&_sid=c10f1c8f0&_ss=r"
+   "url": "https://www.tpstech.in/products/samsung-odyssey-g6-ls27dg610swxxl-27inch-oled-monitor?_pos=23&_sid=7abb46f13&_ss=r"
+  },
+  {
+   "key": "27G50SF",
+   "generic": false,
+   "source": "TPS Technologies",
+   "retailer": "tpstechnologies",
+   "price": 46959,
+   "risky": false,
+   "title": "Samsung Odyssey OLED LS27FG502SWXXL G5 27\" 80Hz 0.03ms QD‑OLED QHD Gaming Monitor",
+   "url": "https://www.tpstech.in/products/samsung-odyssey-oled-g5-ls27fg502swxxl-27-inch-gaming-monitor?_pos=24&_sid=7abb46f13&_ss=r"
   },
   {
    "key": "LEGION27Q-10",
@@ -916,7 +966,7 @@
    "generic": false,
    "source": "Samsung India · Samsung.com",
    "retailer": "samsungindiasamsung",
-   "price": 69999,
+   "price": 104900,
    "risky": false,
    "title": "80 cm (32) Odyssey OLED G7 G73SH 4K 165Hz / FHD 330Hz Gaming Monitor LS32HG730SW",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g7-g73sh-32-inch-dual-mode-4k-165hz-fhd-330hz-ls32hg730swxxl/"
@@ -926,27 +976,17 @@
    "generic": false,
    "source": "Samsung India · Samsung.com",
    "retailer": "samsungindiasamsung",
-   "price": 89999,
+   "price": 116900,
    "risky": false,
    "title": "68.5 cm (27) Odyssey OLED G8 G80SH 4K 240Hz Gaming Monitor LS27HG800SW",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g8-g80sh-27-inch-4k-uhd-240hz-ls27hg800swxxl/"
-  },
-  {
-   "key": "32G80SH",
-   "generic": false,
-   "source": "Samsung India · Samsung.com",
-   "retailer": "samsungindiasamsung",
-   "price": 89899,
-   "risky": false,
-   "title": "80 cm (32) Odyssey OLED G8 G80SH 4K 240Hz Gaming Monitor LS32HG800SW",
-   "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g8-g80sh-32-inch-4k-uhd-240hz-ls32hg800swxxl/"
   },
   {
    "key": "27G50SF",
    "generic": false,
    "source": "Samsung India · Samsung.com",
    "retailer": "samsungindiasamsung",
-   "price": 41999,
+   "price": 49500,
    "risky": false,
    "title": "68.5 cm (27) Odyssey QD-OLED G5 Gaming Monitor with 180 Hz refresh rate and 0.03ms response time LS27FG502SW",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g5-g50sf-27-inch-180hz-oled-qhd-ls27fg502swxxl/"
@@ -956,7 +996,7 @@
    "generic": false,
    "source": "Samsung India · Samsung.com",
    "retailer": "samsungindiasamsung",
-   "price": 86999,
+   "price": 227700,
    "risky": false,
    "title": "1.24 m (49) Odyssey OLED G9 2K DQHD Gaming Monitor with 240Hz refresh rate LS49DG930SW",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g9-g93sd-49-inch-oled-dual-qhd-ls49dg930swxxl/"
@@ -966,7 +1006,7 @@
    "generic": false,
    "source": "Samsung India · Samsung.com",
    "retailer": "samsungindiasamsung",
-   "price": 79999,
+   "price": 165920,
    "risky": false,
    "title": "1.24 m Odyssey OLED G9 Gaming Monitor with 0.03 ms response time and 144 Hz refresh rate LS49DG910SW",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g9-g91sd-49-inch-144hz-curved-dual-qhd-ls49dg910swxxl/"
@@ -990,16 +1030,6 @@
    "risky": false,
    "title": "68.5 cm (27) Odyssey OLED G8 G80SH 4K 240Hz Gaming Monitor LS27HG800SW [Corporate/Student/Business]",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g8-g80sh-27-inch-4k-uhd-240hz-ls27hg800swxxl/"
-  },
-  {
-   "key": "32G80SH",
-   "generic": false,
-   "source": "Samsung India · Staff stores",
-   "retailer": "samsungindiastaffstores",
-   "price": 87299,
-   "risky": false,
-   "title": "80 cm (32) Odyssey OLED G8 G80SH 4K 240Hz Gaming Monitor LS32HG800SW [Corporate]",
-   "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g8-g80sh-32-inch-4k-uhd-240hz-ls32hg800swxxl/"
   },
   {
    "key": "27G50SF",
@@ -1050,16 +1080,6 @@
    "risky": false,
    "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
-  },
-  {
-   "key": "32GS95UV",
-   "generic": false,
-   "source": "LG India",
-   "retailer": "lgindia",
-   "price": 110999,
-   "risky": false,
-   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
-   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
   }
  ]
 }
