@@ -14,5 +14,13 @@
  "drop|MAG321UP|amazon": {
   "price": 80999,
   "t": "2026-10-29T06:27:59.018Z"
+ },
+ "drop|LEGION27Q-10|lenovoindia": {
+  "price": 42998,
+  "t": "2026-10-29T13:53:57.533Z"
+ },
+ "drop|LEGION27Q-10|flipkart": {
+  "price": 42999,
+  "t": "2026-10-29T13:53:57.533Z"
  }
 }
