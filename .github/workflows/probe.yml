@@ -1,0 +1,14 @@
+name: probe
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: buyhatke from GitHub IPs
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+          H=(-A "$UA" -H "origin: https://buyhatke.com" -H "referer: https://buyhatke.com/")
+          echo "== priceData"; curl -s -m 20 "${H[@]}" -H "content-type: application/json" -X POST https://search-new.bitbns.com/buyhatke/thunder/priceData -d '{"param":[[63,"B0GYG3VLMR"],[2,"MONHZTZQRYHJGWGR"]]}' | head -c 300; echo
+          echo "== category"; curl -s -m 20 "${H[@]}" "https://search-new.bitbns.com/buyhatke/getCategoryProducts?ln=1398&sort=aiscore-desc&limit=3&page=1" -o c.json -w "%{http_code} %{size_download}\n"
+          echo "== product page"; curl -s -m 20 "${H[@]}" -L "https://buyhatke.com/https://www.amazon.in/dp/B0GYG3VLMR" -o p.html -w "%{http_code} %{size_download} %{url_effective}\n"; grep -o 'maxall:[0-9.]*,min:[0-9.]*' p.html | head -1
+          for i in 1 2 3 4 5 6 7 8; do curl -s -m 20 "${H[@]}" -H "content-type: application/json" -X POST https://search-new.bitbns.com/buyhatke/thunder/priceData -d '{"param":[[63,"B0GYG3VLMR"]]}' -o /dev/null -w "burst $i %{http_code}\n"; done
