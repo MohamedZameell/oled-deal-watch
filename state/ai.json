@@ -175,9 +175,201 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-02"
+  },
+  "alienware aw2726dm (smartchoice) 26.5\" qd oled monitor|99% dci-p3,0.03ms gtg,240hz|amd freesync premium|hdmi*2,dp 1.4|infinite contrast, 200cd/m2(typical), 400cd/m2 (hdr peak, apl 10%) brightness|ergo": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "alienware aw2725d 27\" (68.58 cm) qd-oled gaming monitor with 280hz refresh rate, 0.03ms response, nvidia g-sync compatible, hdcp supported, interstellar indigo design & adjustable stand": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725D",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung 49\" (124.4cm) odyssey oled g9 curved gaming monitor (smartchoice) dual qhd 5120 x 1440|240hz|0.03ms|dci 99%|oled safeguard|freesync premium pro|g-sync| hdr10+ gaming|has|ls49dg930swxxl|silver": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "lg 27gx790a-b smartchoice 27 inch ultragear oled gaming monitor qhd 1440p 480hz, 0.03ms, displayport 2.1, true black 400, nvidia g-sync, amd freesync premium pro, usb, tilt/height/swivel/pivot stand": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lenovo legion pro 27ud-10 26.5\" 4k uhd (3840x2160) oled gaming monitor, 240hz, 0.03ms, displayhdr true black 400, freesync premium pro, 99% dci-p3, usb-c pd, hdmi 2.1, 68cegacbin": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "68CEGACBIN",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "msi mag 321up qd-oled 31.5 inch 4k uhd gaming monitor - 3840 x 2160 quantum dot oled panel, 165hz / 0.03ms, 99% dci-p3, δe≤2, displayhdr true black 400 - dp 1.4a, hdmi 2.1(uhd@165hz), usb type-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG 321UP",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g8 gaming monitor (27\") 4k uhd, 240 hz, 0.03ms(gtg), g-sync, freesync premium pro, dp, hdmi, usb ports, height, tilt, swivel, pivot adjust stand, (ls27hg800swxxl, silver)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG800SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lenovo legion pro 32ud-10 31.5\" 4k uhd (3840x2160) oled gaming monitor, 240hz, 0.03ms, displayhdr true black 400, freesync premium pro, 99% dci-p3, usb-c pd, hdmi 2.1, 69d0gacbin": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "69D0GACBIN",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-02"
+  },
+  "lg 27gx790a-b 27-inch ultragear oled gaming monitor qhd 1440p 480hz": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg 27gx790a-b smartchoice 27 inch ultragear oled gaming monitor qhd 1440p 480hz, 0.03ms, displayport 2.1, true black 400, nvidia g-sync, amd freesync premium pro, usb, tilt/height/swivel/pivot stand [new · amazeo my pride]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "viewsonic xg2738-2k-oled 27-inch qhd qd-oled gaming monitor | 240hz refresh rate | 0.03ms gtg | hdr10 | ergonomic adjustable stand| amd freesync | nvidia g-sync compatible | hdmi": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG2738-2K-OLED",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus rog series 68.58 cm (27 inch) full hd oled panel with custom heatsink, intelligent voltage optimization, uniform brightness, displaywidget center, anti-glare gaming monitor (pg27aqdm)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG27AQDM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw2726dm 68.58 cm (27 inch) wqhd oled panel gaming monitor (2560x1440-vesa adaptivesync,swivel,height,pivot,1.07b clrs,99% dci-p3,hdmi & dp)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "aoc 68.58 cm (27 inch) quad hd led backlit oled panel with usb hub,hdmi 2.0, hdr400 gaming monitor (ag276qzd2)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AG276QZD2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg ‎ultragear 32gs95uv 32-inch ultra hd 4k oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "samsung m9 m90sf 32 inch ultra hd 4k qd-oled smart monitor (ls32fm900swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "M90SF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lg 34gs95qe 34 inch wqhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "34GS95QE",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g8 ls34bg850sw 34 inch quad hd smart gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey OLED G8 LS34BG850SW",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 39gx900a 39 inch wqhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "UltraGear 39GX900A",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "lg 39gs95qe 39 inch ultra hd 4k gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "39GS95QE",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey neo g9 ls57cg950nw 57 inch dual 4k curved monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "Odyssey Neo G9 LS57CG950NW",
+   "cond": "new",
+   "size": 57,
+   "seen": "2026-11-02"
+  },
+  "aoc ag276qzd2 27inch qd-oled wqhd 280hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AG276QZD2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell alienware 27 aw2726dm 240hz qd-oled wqhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Alienware 27 AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus co49dq 49-inch dqhd oled 144hz hdr gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Aorus CO49DQ",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
   }
  },
  "posts": {},
  "day": "2026-11-02",
- "calls": 3
+ "calls": 5
 }
