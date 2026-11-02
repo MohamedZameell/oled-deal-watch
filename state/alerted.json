@@ -26,5 +26,9 @@
  "drop|MAG341CQP|amazon": {
   "price": 68200,
   "t": "2026-10-31T23:50:32.063Z"
+ },
+ "below|AI LN434K|flipkart": {
+  "price": 25886,
+  "t": "2026-11-02T15:05:06.202Z"
  }
 }

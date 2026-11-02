@@ -1,0 +1,183 @@
+{
+ "titles": {
+  "samsung 27\" odyssey qd-oled g6 gaming monitor(smartchoice) | qhd 2560 x 1440| 240 hz| 0.03ms | ergonomic stand | pantone validated| glarefree | truebright 300| g-sync| free sync| ls27hg612swxxl| black": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lenovo legion 67.31 cm (27 inch) quad hd oled panel gaming monitor (legion 27q-10)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27Q-10",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 124.3 cm (49 inch) curved dqhd oled panel gaming monitor (ls49dg910swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g8 67.7 cm (27 inch) 4k ultra hd led backlit oled panel gaming monitor (ls27hg800swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG800SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung 80.3 cm (32 inch) 4k ultra hd oled panel gaming monitor (odyssey oled g8 gaming monitor uhd, 240 hz, 0.03ms(gtg), freesync premium pro)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey OLED G8 Gaming Monitor UHD",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 68.58 cm (27 inch) quad hd led backlit oled panel with 1.5m:1 contrast ratio, hdr true black 400, amd free sync compatible, height/tilt/pivot stand, virtually borderless gaming monitor (27gs95qe-bb.atrlmun)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GS95QE-BB.ATRLMUN",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix 68.58 cm (27 inch) quad hd ips panel gaming monitor (rog strix oled xg27acdms gaming monitor 27-inch, 1440p qd-oled, 280 hz, 0.03 ms)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27ACDMS",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g9 86.36 cm (34 inch) curved uwqhd oled panel with hdr10+, gaming, speaker, iot hub, voice assistants, height adjustable stand, neo quantum processor, oled safeguard, smart gaming monitor (ls34bg850swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS34BG850SWXXL",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "lyvon 109.22 cm (43 inch) 4k ultra hd oled panel monitor (ln434k)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LN434K",
+   "cond": "new",
+   "size": 43,
+   "seen": "2026-11-02"
+  },
+  "dell alienware series 67.31 cm (27 inch) quad hd led backlit oled panel gaming monitor (aw2726dm)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg 39gx900a- 21:9 ultragear gx9 800r curve 99.06 cm (39 inch) curved uwqhd oled panel gaming monitor (39gx900a (3440x1440)-freesync premium,hdmi x2,dp,usb-c with 65w pd,height/swivel)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "39GX900A",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix 67.31 cm (27 inch) quad hd ips panel gaming monitor (rog strix oled xg27aqdmes gaming monitor 27-inch 1440p qd-oled, 240 hz)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27AQDMES",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g5 ls27fg502sw 27 inch quad hd qd-oled monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG502SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "alienware aw2726dm 27 inch wqhd qd oled monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g6 g61sh 27 inch qd-oled gaming monitor (ls27hg612swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 ls49dg910swxxl 49 inch dual quad hd gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g8 g80sh 27 inch ultra hd 4k gaming monitor (ls27hg800swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG800SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g8 g80sh 32 inch ultra hd 4k gaming monitor (ls32hg800swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS32HG800SWXXL",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus co49dq 49 inch dqhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "CO49DQ",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "benq mobiuz ex271uz 27 inch ultra hd 4k qd-oled monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus rog swift pg27aqdm 27 inch quad hd gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "PG27AQDM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg 27gs95qe 27 inch quad hd gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "27GS95QE",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  }
+ },
+ "posts": {},
+ "day": "2026-11-02",
+ "calls": 3
+}

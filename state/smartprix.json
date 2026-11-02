@@ -1,0 +1,645 @@
+{
+ "pd1wepqkzkb": {
+  "t": "2026-11-02T14:53:16.457Z",
+  "listPrice": 31220,
+  "name": "Asus ZenScreen OLED MQ16FC 16 inch WUXGA Portable Monitor",
+  "url": "https://www.smartprix.com/monitors/asus-zenscreen-oled-mq16fc-16-inch-wuxga-ppd1wepqkzkb",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1kml1l2fw": {
+  "t": "2026-11-02T14:53:16.923Z",
+  "listPrice": 39799,
+  "name": "Alienware AW2726DM 27 inch WQHD QD OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/alienware-aw2726dm-27-inch-wqhd-qd-oled-monitor-ppd1kml1l2fw",
+  "drop": 14.821544,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 39799,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1lvg3mewi": {
+  "t": "2026-11-02T14:53:17.434Z",
+  "listPrice": 39999,
+  "name": "Samsung Odyssey G5 LS27FG502SW 27 inch Quad HD QD-OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-g5-ls27fg502sw-27-inch-quad-ppd1lvg3mewi",
+  "drop": 6.9159184,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 39999,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 45474,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd189kk779y": {
+  "t": "2026-11-02T14:53:17.923Z",
+  "listPrice": 46846,
+  "name": "LG UltraGear 27GR95QE 27 inch OLED Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-ultragear-27gr95qe-27-inch-oled-gaming-ppd189kk779y",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 46846,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1m7m989hl": {
+  "t": "2026-11-02T14:53:18.338Z",
+  "listPrice": 46899,
+  "name": "Samsung Odyssey G6 G61SH 27 inch QD-OLED Gaming Monitor (LS27HG612SWXXL)",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-g6-g61sh-27-inch-qd-oled-ppd1m7m989hl",
+  "drop": 6.246862,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 46899,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1t23n11t1": {
+  "t": "2026-11-02T14:53:18.796Z",
+  "listPrice": 49999,
+  "name": "Acer PE320QK X 32 inch Ultra HD 4K OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/acer-pe320qk-x-32-inch-ultra-hd-4k-oled-monitor-ppd1t23n11t1",
+  "drop": 0,
+  "rows": []
+ },
+ "pd15zbrdpxq": {
+  "t": "2026-11-02T14:53:19.270Z",
+  "listPrice": 55856,
+  "name": "ViewSonic ColorPro VP-16 15.6 inch Full HD Portable OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/viewsonic-colorpro-vp-16-15-6-inch-full-hd-ppd15zbrdpxq",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 55856,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd16qnx0gem": {
+  "t": "2026-11-02T14:53:19.784Z",
+  "listPrice": 59999,
+  "name": "Samsung Odyssey G8 G81SF 27 inch Ultra HD 4K Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-g8-g81sf-27-inch-ultra-hd-ppd16qnx0gem",
+  "drop": 0,
+  "rows": []
+ },
+ "pd18rpjzwym": {
+  "t": "2026-11-02T14:53:20.262Z",
+  "listPrice": 62999,
+  "name": "Ant Esports ANT27OQK 27 inch Quad HD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/ant-esports-ant27oqk-27-inch-quad-hd-gaming-ppd18rpjzwym",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1q4934one": {
+  "t": "2026-11-02T14:53:20.743Z",
+  "listPrice": 64999,
+  "name": "LG 45GS96QB 45 inch UWQHD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-45gs96qb-45-inch-uwqhd-gaming-monitor-ppd1q4934one",
+  "drop": 0,
+  "rows": []
+ },
+ "pd17xvre0os": {
+  "t": "2026-11-02T14:53:21.247Z",
+  "listPrice": 69999,
+  "name": "Samsung Odyssey OLED G7 G73SH 32 inch Ultra HD 4K Gaming Monitor (LS32HG730SWXXL)",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g7-g73sh-32-inch-ultra-ppd17xvre0os",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 69999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 78499,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1g52h6fzc": {
+  "t": "2026-11-02T14:53:21.652Z",
+  "listPrice": 74999,
+  "name": "Samsung Odyssey OLED G8 G80SD 32 inch Ultra HD 4K Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-g80sd-32-inch-ultra-ppd1g52h6fzc",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1d59vk1fv": {
+  "t": "2026-11-02T14:53:22.069Z",
+  "listPrice": 77999,
+  "name": "Samsung Odyssey OLED G9 LS49DG910SWXXL 49 inch Dual Quad HD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49dg910swxxl-49-ppd1d59vk1fv",
+  "drop": 5.633044,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 77999,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 77999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1orn1gqh1": {
+  "t": "2026-11-02T14:53:22.556Z",
+  "listPrice": 78999,
+  "name": "Samsung Odyssey OLED G8 G80SH 27 inch Ultra HD 4K Gaming Monitor (LS27HG800SWXXL)",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-g80sh-27-inch-ultra-ppd1orn1gqh1",
+  "drop": 3.3566484,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 78999,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd107m0mske": {
+  "t": "2026-11-02T14:53:23.001Z",
+  "listPrice": 79999,
+  "name": "LG 27GS95QE 27 inch Quad HD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-27gs95qe-27-inch-quad-hd-gaming-monitor-ppd107m0mske",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 79999,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 88300,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1puu4awb6": {
+  "t": "2026-11-02T14:53:23.397Z",
+  "listPrice": 79999,
+  "name": "Acer Predator X34 V 34 Inch Ultrawide Quad HD Curved Monitor",
+  "url": "https://www.smartprix.com/monitors/acer-predator-x34-v-34-inch-ultrawide-quad-ppd1puu4awb6",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 79999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1b146r2lp": {
+  "t": "2026-11-02T14:53:23.871Z",
+  "listPrice": 79999,
+  "name": "ViewSonic VX2776-2K-OLED 27 inch Quad HD Monitor",
+  "url": "https://www.smartprix.com/monitors/viewsonic-vx2776-2k-oled-27-inch-quad-hd-ppd1b146r2lp",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1f4wpvpif": {
+  "t": "2026-11-02T14:53:24.370Z",
+  "listPrice": 79999,
+  "name": "LG UltraGear 27GR95QE-B 27 inch OLED Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-ultragear-27gr95qe-b-27-inch-oled-gaming-ppd1f4wpvpif",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1btl9e4wn": {
+  "t": "2026-11-02T14:53:24.803Z",
+  "listPrice": 81849,
+  "name": "Asus ROG Swift PG27AQDM 27 inch Quad HD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg27aqdm-27-inch-quad-hd-gaming-ppd1btl9e4wn",
+  "drop": 0.06068668,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 81849,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Flipkart",
+    "price": 92654,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd170cy5s5e": {
+  "t": "2026-11-02T14:53:25.215Z",
+  "listPrice": 86449,
+  "name": "BenQ MOBIUZ EX271UZ 27 inch Ultra HD 4K QD-OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/benq-mobiuz-ex271uz-27-inch-ultra-hd-4k-qd-ppd170cy5s5e",
+  "drop": 4.4639826,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 86449,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1xs9iyxp1": {
+  "t": "2026-11-02T14:53:25.620Z",
+  "listPrice": 86999,
+  "name": "Samsung Odyssey OLED G9 LS49CG930SW 49 inch Dual QHD Ultrawide Curved Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49cg930sw-49-inch-ppd1xs9iyxp1",
+  "drop": 6.1052,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 86999,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Croma",
+    "price": 148077,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd13sq6i4aa": {
+  "t": "2026-11-02T14:53:26.083Z",
+  "listPrice": 87899,
+  "name": "Samsung Odyssey OLED G8 LS32FG810SWXXL 32 inch Ultra HD 4K Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-ls32fg810swxxl-32-ppd13sq6i4aa",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 87899,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Flipkart",
+    "price": 87899,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd10q65ndr9": {
+  "t": "2026-11-02T14:53:26.549Z",
+  "listPrice": 89899,
+  "name": "Samsung Odyssey OLED G8 G80SH 32 inch Ultra HD 4K Gaming Monitor (LS32HG800SWXXL)",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-32-inch-ultra-hd-ppd10q65ndr9",
+  "drop": 4.3617487,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 89899,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 93999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1v507in1n": {
+  "t": "2026-11-02T14:53:27.033Z",
+  "listPrice": 90000,
+  "name": "AOC AGON Pro AG276QZD 26.5 Inch Quad HD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/aoc-agon-pro-ag276qzd-26-5-inch-quad-hd-gaming-ppd1v507in1n",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1in0oz911": {
+  "t": "2026-11-02T14:53:27.523Z",
+  "listPrice": 90000,
+  "name": "Acer Predator X27U 27 Inch Quad HD Monitor",
+  "url": "https://www.smartprix.com/monitors/acer-predator-x27u-27-inch-quad-hd-monitor-ppd1in0oz911",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1vtlwjnrr": {
+  "t": "2026-11-02T14:53:28.001Z",
+  "listPrice": 91999,
+  "name": "Philips Evnia 34M2C8600 34 inch QD OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/philips-evnia-34-inch-wqhd-lcd-monitor-ppd1vtlwjnrr",
+  "drop": 0,
+  "rows": []
+ },
+ "pd163adme0s": {
+  "t": "2026-11-02T14:53:28.473Z",
+  "listPrice": 92999,
+  "name": "Acer Predator CG48 48 Inch UHD 4K Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/acer-predator-cg48-48-inch-uhd-4k-gaming-ppd163adme0s",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 92999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1r8yp2fcz": {
+  "t": "2026-11-02T14:53:28.946Z",
+  "listPrice": 95029,
+  "name": "Gigabyte Aorus CO49DQ 49 inch DQHD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/gigabyte-aorus-co49dq-49-inch-dqhd-gaming-ppd1r8yp2fcz",
+  "drop": -6.5935144,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 95029,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Flipkart",
+    "price": 110671,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1cmv7wo5l": {
+  "t": "2026-11-02T14:53:29.434Z",
+  "listPrice": 101299,
+  "name": "Samsung Odyssey OLED G8 LS34BG850SW 34 inch Quad HD Smart Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-34-inch-quad-hd-smart-ppd1cmv7wo5l",
+  "drop": -8.530553,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 101299,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 60454,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1gq16nomb": {
+  "t": "2026-11-02T14:53:29.840Z",
+  "listPrice": 101362,
+  "name": "Lenovo Legion Pro 34WD-10 34 inch WQHD OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/lenovo-34wd-10-34-inch-wqhd-curved-oled-monitor-ppd1gq16nomb",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 101362,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1u9vzjaw2": {
+  "t": "2026-11-02T14:53:30.333Z",
+  "listPrice": 104999,
+  "name": "LG 34GS95QE 34 inch WQHD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-34gs95qe-34-inch-ultra-hd-4k-gaming-monitor-ppd1u9vzjaw2",
+  "drop": -1.0693117,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 104999,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 85485,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1f16q40px": {
+  "t": "2026-11-02T14:53:30.787Z",
+  "listPrice": 105986,
+  "name": "Samsung Odyssey OLED G8 LS27FG810SWXXL 27 inch Ultra HD 4K Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-ls27fg810swxxl-27-ppd1f16q40px",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 76799,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": [
+     "Save 300  with coupon"
+    ]
+   },
+   {
+    "store": "Flipkart",
+    "price": 77899,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1p4zjsa5m": {
+  "t": "2026-11-02T14:53:31.266Z",
+  "listPrice": 106699,
+  "name": "Samsung M9 M90SF 32 inch Ultra HD 4K QD-OLED Smart Monitor (LS32FM900SWXXL)",
+  "url": "https://www.smartprix.com/monitors/samsung-m9-m90sf-32-inch-ultra-hd-4k-smart-ppd1p4zjsa5m",
+  "drop": 3.1640632,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 106699,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd16mhpigsk": {
+  "t": "2026-11-02T14:53:31.710Z",
+  "listPrice": 106990,
+  "name": "ASUS ROG Strix XG32UCWG 32 inch Ultra HD 4K OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/asus-rog-strix-xg32ucwg-32-inch-ultra-hd-ppd16mhpigsk",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 106990,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 115949,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd10gg11ku0": {
+  "t": "2026-11-02T14:53:32.185Z",
+  "listPrice": 110999,
+  "name": "LG ‎Ultragear 32GS95UV 32-inch Ultra HD 4K OLED Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-ultragear-32gs95uv-32-inch-ultra-hd-4k-ppd10gg11ku0",
+  "drop": -0.69357425,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 110999,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd106y23096": {
+  "t": "2026-11-02T14:53:32.654Z",
+  "listPrice": 110999,
+  "name": "LG UltraGear 48GQ900-B 48 Inch UHD 4K OLED Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-ultragear-48gq900-b-48-inch-uhd-4k-oled-ppd106y23096",
+  "drop": 0,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 110999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 116999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1vkoty4nf": {
+  "t": "2026-11-02T14:53:33.152Z",
+  "listPrice": 112526,
+  "name": "LG 39GS95QE 39 inch Ultra HD 4K Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-39gs95qe-39-inch-ultra-hd-4k-gaming-monitor-ppd1vkoty4nf",
+  "drop": 1.7085612,
+  "rows": [
+   {
+    "store": "Flipkart",
+    "price": 112526,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
+    "store": "Amazon",
+    "price": 117999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1jyw8h682": {
+  "t": "2026-11-02T14:53:33.639Z",
+  "listPrice": 114999,
+  "name": "LG UltraGear 39GX900A 39 inch WQHD Gaming Monitor",
+  "url": "https://www.smartprix.com/monitors/lg-ultragear-39gx900a-39-inch-wqhd-gaming-ppd1jyw8h682",
+  "drop": 3.077223,
+  "rows": [
+   {
+    "store": "Amazon",
+    "price": 114999,
+    "stock": "UNKNOWN",
+    "cond": "new",
+    "offers": []
+   }
+  ]
+ },
+ "pd1xqga4u6b": {
+  "t": "2026-11-02T14:53:34.133Z",
+  "listPrice": 116299,
+  "name": "Samsung LS34BG852SW 34 inch WQHD Ultrawide OLED Smart Monitor",
+  "url": "https://www.smartprix.com/monitors/samsung-ls34bg852sw-34-inch-quad-hd-ultrawide-ppd1xqga4u6b",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1t601quuv": {
+  "t": "2026-11-02T14:53:34.597Z",
+  "listPrice": 119999,
+  "name": "Asus ROG Swift  PG48UQ 48-inch 4K OLED Gaming Monitors",
+  "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg48uq-48-inch-4k-oled-gaming-ppd1t601quuv",
+  "drop": 0,
+  "rows": []
+ }
+}

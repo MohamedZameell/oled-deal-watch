@@ -1,10 +1,10 @@
 {
- "Amazon.in": 1,
+ "Amazon.in": 0,
  "Flipkart": 0,
  "Vedant Computers": 0,
  "Elitehubs": 0,
- "PrimeABGB": 7,
- "PCStudio": 60,
+ "PrimeABGB": 8,
+ "PCStudio": 61,
  "Samsung India": 0,
  "Lenovo India": 0,
  "LG India": 0,
@@ -16,5 +16,6 @@
  "TechEnclave Deals": 0,
  "Smartprix Deals": 0,
  "TPS Technologies": 0,
- "MD Computers": 0
+ "MD Computers": 0,
+ "Smartprix": 0
 }
