@@ -9,6 +9,9 @@ import fs from 'node:fs';
 import { execSync, spawn } from 'node:child_process';
 
 const DAY = 24 * 3600e3;
+// pinned Ollama release + its SHA-256 from GitHub's release metadata (update both together, e.g.
+// `gh api repos/ollama/ollama/releases/latest` -> asset ollama-linux-amd64.tar.zst -> digest)
+const OLLAMA = { version: 'v0.40.13', sha256: 'c9490e0f520be21271d969e6703f012268b1d39f8b70dd58854e5bfef7a75bb6' };
 const sleep = (ms) => new Promise((ok) => setTimeout(ok, ms));
 
 export function createAI({ cfg, stateDir, dry }) {
@@ -32,11 +35,23 @@ export function createAI({ cfg, stateDir, dry }) {
       const t0 = Date.now();
       if (!(await up())) {
         if (!process.env.CI) { console.log('AI off (no Ollama at', base + '; run `ollama serve` to enable)'); return false; }
+        // SECURITY (audit 2026-11-02): no `curl install.sh | sh` (a root shell running whatever the URL serves, in a
+        // job holding the Gmail/Telegram secrets and a repo-write token). Instead: one pinned release tarball,
+        // checked against its published SHA-256, unpacked in /tmp without sudo, and the server started with a
+        // clean environment so it never sees the job's secrets.
+        const { version, sha256 } = conf.ollama || OLLAMA;
+        const dir = '/tmp/ollama';
         try {
-          execSync('command -v ollama >/dev/null || curl -fsSL https://ollama.com/install.sh | sh', { stdio: 'ignore', timeout: 180000, shell: '/bin/bash' });
-          if (!(await up())) spawn('ollama', ['serve'], { detached: true, stdio: 'ignore' }).unref();
-          for (let i = 0; i < 30 && !(await up()); i++) await sleep(1000);
-        } catch (e) { console.log('AI install failed', String(e.message).slice(0, 100)); return false; }
+          execSync([
+            'set -euo pipefail',
+            `curl -fsSL -o /tmp/ollama.tar.zst https://github.com/ollama/ollama/releases/download/${version}/ollama-linux-amd64.tar.zst`,
+            `echo "${sha256}  /tmp/ollama.tar.zst" | sha256sum -c --quiet`,
+            `mkdir -p ${dir} && tar --zstd -xf /tmp/ollama.tar.zst -C ${dir} && rm /tmp/ollama.tar.zst`,
+          ].join('\n'), { stdio: 'ignore', timeout: 240000, shell: '/bin/bash' });
+          spawn(`${dir}/bin/ollama`, ['serve'], { detached: true, stdio: 'ignore',
+            env: { PATH: '/usr/bin:/bin', HOME: '/tmp', OLLAMA_MODELS: '/tmp/ollama-models', LD_LIBRARY_PATH: `${dir}/lib/ollama` } }).unref();
+          for (let i = 0; i < 40 && !(await up()); i++) await sleep(1000);
+        } catch (e) { console.log('AI install failed (download, checksum or unpack)', String(e.message).slice(0, 100)); return false; }
         if (!(await up())) { console.log('AI server did not start'); return false; }
       }
       const r = await fetch(`${base}/api/pull`, { method: 'POST', body: JSON.stringify({ model: conf.model, stream: false }), signal: AbortSignal.timeout(300000) }).catch((e) => ({ ok: false, statusText: e.message }));

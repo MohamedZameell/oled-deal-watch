@@ -17,7 +17,7 @@ on:
         default: ''
 
 permissions:
-  contents: write   # the jobs commit state/ (price history, alerted deals) back to the repo
+  contents: read    # least privilege; only gate and combine (the jobs that commit state/) get write below
 
 concurrency:
   # test runs from other branches (always --dry, never save state) get their own lock instead of queueing behind live scans
@@ -31,6 +31,8 @@ jobs:
   gate:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    permissions:
+      contents: write   # commits state/community.json when it only checks the deal channels
     outputs:
       due: ${{ steps.due.outputs.due }}
     steps:
@@ -80,6 +82,8 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.ref_name }}
+          # these jobs drive a browser through untrusted shop pages and never push: no token left in .git/config
+          persist-credentials: false
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -117,6 +121,8 @@ jobs:
     needs: [gate, scrape]
     if: always() && needs.gate.outputs.due == 'true'
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write   # commits state/ (price history, alerted deals)
     timeout-minutes: 25   # AI setup ~1 min + capped 6 min of inference, verification, email
     steps:
       - uses: actions/checkout@v5
