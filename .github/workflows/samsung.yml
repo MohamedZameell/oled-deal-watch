@@ -1,4 +1,4 @@
-name: Samsung stock check
+name: Fast check (Samsung + BuyHatke)
 
 on:
   schedule:
@@ -35,7 +35,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-      - name: Check Samsung stores
+      - name: Check Samsung stores + BuyHatke live prices (Amazon/Flipkart)
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

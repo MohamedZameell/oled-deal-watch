@@ -1,9 +1,13 @@
 name: OLED deal scan
 
+# Parallel scan, built for speed (a glitch price sells out in hours):
+#   gate     - is a full scan due? (cron-job.org fires every 15 min with --if-due) If not, it just checks the deal channels.
+#   scrape   - 3 parts side by side (amazon / web / shops, see "part" in config.json). Each one pings Telegram the
+#              moment one of its sources shows a glitch (early check), then hands its raw listings on as an artifact.
+#   combine  - all parts together: AI check, cross-shop comparison, verdicts, remaining alerts, email, state commit.
 on:
   schedule:
-    # fallback only: cron-job.org dispatches this every 15 min with --if-due (full scan hourly, every 15 min in a
-    # sale season, channel check otherwise); GitHub's own cron drops most runs on a free account
+    # fallback only: cron-job.org dispatches this every 15 min with --if-due; GitHub's own cron drops most runs
     - cron: '35 * * * *'
   workflow_dispatch:
     inputs:
@@ -13,18 +17,22 @@ on:
         default: ''
 
 permissions:
-  contents: write   # lets the job commit state/ (price history) back to the repo
+  contents: write   # the jobs commit state/ (price history, alerted deals) back to the repo
 
 concurrency:
   # test runs from other branches (always --dry, never save state) get their own lock instead of queueing behind live scans
   group: oled-scan${{ github.ref_name != 'main' && '-test' || '' }}
   cancel-in-progress: false
 
+env:
+  SCAN_ARGS: ${{ github.event_name == 'schedule' && '--if-due' || inputs.args }}
+
 jobs:
-  scan:
-    # pinned: ubuntu-latest moves to 26.04 in Oct 2026; 24.04 ships Google Chrome, so no browser download or apt install per run
+  gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40   # scan ~15 min + the local AI (setup ~1 min, capped at 6 min of inference)
+    timeout-minutes: 10
+    outputs:
+      due: ${{ steps.due.outputs.due }}
     steps:
       - uses: actions/checkout@v5
         with:
@@ -38,34 +46,126 @@ jobs:
       - run: npm ci --no-audit --no-fund
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
-      - name: Scan and email
+      - id: due
+        run: |
+          if [[ " $SCAN_ARGS " == *" --if-due "* ]]; then node scan.js --due-check; else echo "due=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Not due - deal channels only
+        if: steps.due.outputs.due != 'true'
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node scan.js --community-only $SCAN_ARGS
+      - name: Save seen posts
+        if: steps.due.outputs.due != 'true' && !contains(env.SCAN_ARGS, '--dry')
+        run: |
+          git config user.name "oled-deal-watch"
+          git config user.email "actions@users.noreply.github.com"
+          git add state
+          git diff --staged --quiet && exit 0
+          git commit -m "state: seen community posts [skip ci]"
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; sleep 5; done
+          exit 1
+
+  scrape:
+    needs: gate
+    if: needs.gate.outputs.due == 'true'
+    # pinned: 24.04 ships Google Chrome, so no browser download or apt install per run
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false   # one part failing must not cancel the others (combine reports which part is missing)
+      matrix:
+        part: [amazon, web, shops]
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - name: Scrape ${{ matrix.part }} (early Telegram pings)
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HEADFUL: '1'   # visible Chrome on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
+          BROWSER_CHANNEL: chrome
+        run: xvfb-run -a node scan.js --part=${{ matrix.part }} $SCAN_ARGS
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: part-${{ matrix.part }}
+          # the part's results + the source caches it rewrote (Smartprix pages, BuyHatke watchlist)
+          path: |
+            parts/
+            state/smartprix.json
+            state/buyhatke.json
+          if-no-files-found: ignore
+          retention-days: 2
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: debug-${{ matrix.part }}
+          path: debug
+          if-no-files-found: ignore
+          retention-days: 3
+
+  combine:
+    needs: [gate, scrape]
+    if: always() && needs.gate.outputs.due == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25   # AI setup ~1 min + capped 6 min of inference, verification, email
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - uses: actions/download-artifact@v5
+        with:
+          pattern: part-*
+          path: dl
+          merge-multiple: true
+      - name: Collect the parts
+        run: |
+          mkdir -p parts
+          cp dl/parts/*.json parts/ 2>/dev/null || true
+          for f in smartprix.json buyhatke.json; do [ -f "dl/state/$f" ] && cp "dl/state/$f" state/; done
+          ls -la parts
+      - name: Compare, AI, alerts and email
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          HEADFUL: '1'   # visible Chrome on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
-          BROWSER_CHANNEL: chrome   # the runner's real Google Chrome: retailers refuse bare headless Chromium on product pages
+          HEADFUL: '1'
+          BROWSER_CHANNEL: chrome
           FORCE_EMAIL: ${{ github.event_name == 'workflow_dispatch' && !contains(inputs.args, '--dry') && '1' || '' }}
-          SCAN_ARGS: ${{ github.event_name == 'schedule' && '--if-due' || inputs.args }}
-        run: xvfb-run -a node scan.js $SCAN_ARGS
+        run: xvfb-run -a node scan.js --combine $SCAN_ARGS
       - name: Keep debug screenshots
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: debug
+          name: debug-combine
           path: debug
           if-no-files-found: ignore
           retention-days: 3
       - name: Save price history
-        if: always() && !contains(inputs.args, '--dry')
+        if: always() && !contains(env.SCAN_ARGS, '--dry')
         run: |
           git config user.name "oled-deal-watch"
           git config user.email "actions@users.noreply.github.com"
           git add state
           git diff --staged --quiet && exit 0
           git commit -m "state: update price history [skip ci]"
-          # rebase in case anything else pushed meanwhile
           for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; sleep 5; done
           exit 1

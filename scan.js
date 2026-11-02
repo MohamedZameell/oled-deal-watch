@@ -10,6 +10,7 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
+import { createBuyHatke, fakeDiscount } from './buyhatke.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -26,7 +27,8 @@ const HOUR = 3600e3; const DAY = 24 * HOUR;
 // free AI judge (small open model run by Ollama on the runner): see ai.js. Every use falls back to the rule-based behaviour when it has no answer.
 const ai = createAI({ cfg, stateDir: STATE, dry: DRY });
 const VERDICT = { buy: '🔥 BUY', good: '👍 good deal', meh: '😐 meh', check: '⚠️ check this' };
-const aiTag = (c) => (c.judge ? ` · 🤖 ${VERDICT[c.judge.verdict] || esc(c.judge.verdict)}: ${esc(c.judge.note)}` : '');
+const aiTag = (c) => (c.fake ? ` · ⚠️ fake discount? raised to ${fmt(c.fake.hikedTo)} recently, normally ~${fmt(c.fake.normal)}` : '') +
+  (c.judge ? ` · 🤖 ${VERDICT[c.judge.verdict] || esc(c.judge.verdict)}: ${esc(c.judge.note)}` : '');
 // sale seasons (Big Billion Days, Great Indian Festival, ...): full scans every 15 min instead of hourly, smaller discounts alert
 const SALE = (cfg.saleWindows || []).find((w) => Date.now() >= Date.parse(w.from) && Date.now() < Date.parse(w.to) + DAY);
 if (SALE) Object.assign(cfg, cfg.saleOverrides || {});
@@ -103,6 +105,7 @@ function specKey(title) {
 const seeds = Object.fromEntries(Object.entries(cfg.streetPriceSeeds || {}).map(([k, v]) => [modelKey(k) || k, v]));
 // models already known to be OLED: a model-code search ("AW2726DM") also finds listings whose title never says OLED
 const savedHistory = readJson('history.json', {});
+const bh = createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY });
 const knownOled = new Set([...Object.keys(seeds), ...Object.keys(savedHistory)].filter((k) => !k.startsWith('~')).map((k) => modelKey(k) || k));
 const usualPrice = (key) => seeds[key] || (savedHistory[key]?.length ? median(savedHistory[key].slice(-48).map((h) => h.price)) : 0);
 
@@ -125,7 +128,8 @@ const flipkartExtract = () => [...document.querySelectorAll('a[href*="/p/itm"]')
   const c = a.closest('[data-id]') || a.parentElement.parentElement;
   const text = c.innerText.replace(/\n+/g, ' | ');
   const title = a.getAttribute('title') || (c.innerText.split('\n').find((l) => l.length > 25) || '');
-  return { title, text, url: a.href.split('?')[0] };
+  // the card's data-id is Flipkart's product id (MON...): BuyHatke's live-price API looks products up by it
+  return { title, text, url: a.href.split('?')[0], pid: (a.closest('[data-id]') || {}).dataset?.id || new URL(a.href).searchParams.get('pid') || '' };
 });
 
 const bestbuyExtract = () => [...document.querySelectorAll('a.product-list-item-link')].map((a) => {
@@ -297,9 +301,11 @@ async function smartprixSource(ctx, src) {
   return { items, errors, blockedUrls: [] };
 }
 
-async function scrapeSource(ctx, src, deskCtx = ctx) {
+async function scrapeSource(ctx, src, deskCtx = ctx, earlierItems = []) {
   if (src.kind === 'samsungapi') return samsungApi(src);
   if (src.kind === 'smartprix') return smartprixSource(deskCtx, src);
+  // listed last in config.json: it learns Amazon/Flipkart ids from the OLED listings the other sources found this run
+  if (src.kind === 'buyhatke') return bh.source(deskCtx, src, earlierItems.filter((i) => /oled/i.test(i.title + ' ' + urlWords(i.url || ''))));
   const items = []; const errors = []; const blockedUrls = [];
   const page = await ctx.newPage();
   // Amazon serves a bot wall to a cold session far more often than to one that opened the homepage first
@@ -339,7 +345,7 @@ async function scrapeSource(ctx, src, deskCtx = ctx) {
       } else if (src.kind === 'flipkart' || src.kind === 'bestbuy') {
         for (const r of await page.evaluate(src.kind === 'bestbuy' ? bestbuyExtract : flipkartExtract)) {
           const a = amountsIn(r.text); if (!a.length) continue;
-          items.push({ title: r.title, price: a[0], mrp: a[1] > a[0] ? a[1] : 0, url: r.url });
+          items.push({ title: r.title, price: a[0], mrp: a[1] > a[0] ? a[1] : 0, url: r.url, pid: r.pid });
         }
       } else if (src.kind === 'dealsea') {
         for (const r of await page.evaluate(dealseaExtract)) if (!r.expired && r.price) items.push({ title: r.title, price: money(r.price), mrp: 0, url: r.url, store: r.store });
@@ -540,9 +546,30 @@ async function verifyDeal(ctx, it) {
     const text = await page.evaluate(() => document.body.innerText);
     if (BLOCKED.test(text.slice(0, 1500))) return 'unverified (page blocked)';
     const top = text.slice(0, 6000);
-    const seen = amountsIn(text).some((n) => Math.abs(n - it.price) <= Math.max(1, it.price * 0.005));
+    const close = (n) => Math.abs(n - it.price) <= Math.max(1, it.price * 0.005);
+    const seen = amountsIn(text).some(close);
+    // second, independent reading (PriceGhost's idea): the structured product data shops embed for Google
+    // (JSON-LD offers, product:price meta, itemprop=price). It names the real selling price and stock, where page
+    // text also holds EMI amounts, "save ₹X" and other sellers' prices.
+    const sd = await page.evaluate(() => {
+      const prices = []; let avail = '';
+      const walk = (o) => {
+        if (!o || typeof o !== 'object') return;
+        if (Array.isArray(o)) { o.forEach(walk); return; }
+        if (o['@graph']) walk(o['@graph']);
+        if (o.offers) walk(o.offers);
+        for (const k of ['price', 'lowPrice']) if (o[k] != null && (o['@type'] || '').toString().includes('Offer')) prices.push(String(o[k]));
+        if (o.availability) avail += ' ' + o.availability;
+      };
+      for (const s of document.querySelectorAll('script[type="application/ld+json"]')) { try { walk(JSON.parse(s.textContent)); } catch {} }
+      for (const m of document.querySelectorAll('meta[property="product:price:amount"], meta[itemprop="price"]')) prices.push(m.getAttribute('content') || '');
+      return { prices, avail };
+    }).catch(() => ({ prices: [], avail: '' }));
+    const structured = sd.prices.map((p) => Math.round(parseFloat(String(p).replace(/[^0-9.]/g, '')))).filter((n) => n >= R.minAmount);
+    if (/OutOfStock|SoldOut|Discontinued/i.test(sd.avail) && !/InStock/i.test(sd.avail)) return 'out of stock';
     if (OUT_OF_STOCK.test(top) && !/add to (cart|bag)|buy now/i.test(top)) return 'out of stock';
-    return seen ? 'verified' : 'unverified (price not on page)';
+    if (structured.length && !structured.some(close)) return `unverified (page data says ${fmt(Math.min(...structured))})`;
+    return seen || structured.some(close) ? 'verified' : 'unverified (price not on page)';
   } catch (e) {
     return 'unverified (page failed to load)';
   } finally { await page.close().catch(() => {}); }
@@ -574,14 +601,104 @@ async function samsungOnly() {
     fast[k] = { price: it.price, t: now };
     pings.push(`⚡ <b>Samsung</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)} · <a href="${esc(it.url)}">${esc(source)}</a>`);
   }
+  // BuyHatke live prices for every watched OLED id (plain HTTP, one request per 50 ids): a flash deal on Amazon or
+  // Flipkart reaches Telegram within 5 minutes instead of waiting for the next full scan. Read-only on
+  // buyhatke.json (the full scan owns the watchlist); last-seen prices live in fast.json as "bh|<model>|<shop>".
+  const { out: live, errors: bhErr } = await bh.livePrices();
+  const stats = bh.statsByKey(); const nl = cfg.newLowAlert || {};
+  console.log('BuyHatke live prices', live.length, bhErr.join(','));
+  for (const { w, price, oos } of live) {
+    if (oos || !w.name || BANNED.test(w.name)) continue;
+    const key = w.key || modelKey(w.name); if (!key) continue;
+    const store = w.store || ({ 63: 'Amazon', 2: 'Flipkart' })[w.pos] || 'shop';
+    const k = key + '|' + retailerOf(store);
+    const s = stats[key] || {}; const hist = (history[key] || []).slice(-48).map((h) => h.price);
+    const usual = s.monthAvg || (hist.length >= 6 ? median(hist) : seeds[key] || 0);
+    const seen = fast['bh|' + k]; fast['bh|' + k] = { price, t: now };
+    const size = +((w.name.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i) || [])[1] || 0);
+    const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`
+      : s.low && price <= s.low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? `new all-time low (was ${fmt(s.low)})`
+      : seen && price <= seen.price * (cfg.dropThreshold || 0.9) && !fakeDiscount(w.hist?.series, price) ? `dropped from ${fmt(seen.price)} in the last few minutes`
+      : cfg.priceAlertBelow && price < cfg.priceAlertBelow && BRANDS.test(w.name.toUpperCase()) && (!size || size >= 24) ? `under ${fmt(cfg.priceAlertBelow)}` : '';
+    if (!why) continue;
+    console.log(' ', key, store, fmt(price), why);
+    const last = fast[k];
+    if (last && price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
+    fast[k] = { price, t: now };
+    pings.push(`⚡ <b>${esc(store)}</b>: ${esc(w.name.slice(0, 100))}\n<b>${fmt(price)}</b>, ${esc(why)}${s.monthAvg ? ` · 1-mo avg ${fmt(s.monthAvg)}` : ''} · <a href="${esc(w.url)}">open</a>`);
+  }
   writeJson('fast.json', fast);
   console.log('pings', pings.length);
   if (DRY) { console.log(pings.join('\n\n') || '(nothing to send)'); return; }
   await sendTelegram(pings.join('\n\n'));
 }
 
+// one source's raw items -> the OLED-monitor listings the rules keep, normalised (model key, shop, condition).
+// Used by the early check (right after each source) and by the full comparison at the end.
+function keepListings(src, items) {
+  if (process.env.DEBUG_ITEMS) console.log(src.name, JSON.stringify(items.slice(0, 6)).slice(0, 1800));
+  // one product per URL (+ store): Flipkart lists each product twice, once with a cut-off title
+  const byUrl = new Map();
+  for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
+  const good = [...byUrl.values()].filter((i) => {
+    const full = i.title + ' ' + urlWords(i.url);
+    if (!i.title || BANNED.test(full) || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
+    if (/oled/i.test(full)) return true;
+    // no "OLED" anywhere: only a known OLED model, no other panel type named, and not absurdly cheap for that model
+    const key = modelKey(full); const usual = usualPrice(key);
+    return knownOled.has(key) && !NON_OLED_PANEL.test(i.title) && (!usual || i.price >= usual * 0.5);
+  });
+  return good.map((g) => {
+    const source = g.store ? `${src.name} · ${g.store}` : src.name;
+    const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
+    return { ...g, source, retailer: ['smartprix', 'buyhatke'].includes(src.kind) ? retailerOf(g.store) : retailerOf(source),
+      feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) };
+  });
+}
+
+// EARLY CHECK: the moment one source has been read, look for a glitch among its listings and ping Telegram right
+// away, instead of after the whole ~20-minute scan. Rules only (no AI, no cross-shop comparison yet): a known model
+// code at a price far below its usual price, under the price target from a known brand, or under its all-time low.
+// Every hit is re-checked on the product page first. The final comparison skips what was already pinged.
+const earlyState = { alerted: null, fast: null, lows: null, stats: null, pinged: new Map() };
+const EARLY_SIZE = (t) => { const m = t.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i); if (m) return +m[1]; const c = t.match(/(\d{2,3}(?:\.\d+)?)\s*cm/i); return c ? +c[1] / 2.54 : 0; };
+async function earlyCheck(listings, verifyCtx) {
+  if (!cfg.earlyPing?.enabled) return;
+  earlyState.alerted ||= readJson('alerted.json', {}); earlyState.fast ||= readJson('fast.json', {});
+  earlyState.lows ||= readJson('lows.json', {}); earlyState.stats ||= bh.statsByKey();
+  const now = new Date().toISOString(); const nl = cfg.newLowAlert || {};
+  const recent = (v, price) => v && price >= (typeof v === 'number' ? v : v.price) * 0.95 && (typeof v === 'number' || Date.now() - Date.parse(v.t) < 7 * DAY);
+  for (const it of listings) {
+    if (it.generic || it.feed || it.risky) continue;
+    const k = it.key + '|' + it.retailer;
+    if (earlyState.pinged.has(k)) continue;
+    const usual = earlyState.stats[it.key]?.monthAvg || usualPrice(it.key);
+    const L = earlyState.lows[it.key]; const low = L ? Math.min(...Object.values(L.days)) : 0;
+    const size = EARLY_SIZE(it.title);
+    const [kind, why] = usual && it.price <= usual * cfg.crazyThreshold ? ['', `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`]
+      : cfg.priceAlertBelow && it.price < cfg.priceAlertBelow && BRANDS.test(it.title.toUpperCase()) && !/portable/i.test(it.title) && (!size || size >= 24) ? ['below|', `under ${fmt(cfg.priceAlertBelow)}`]
+      : low && it.price <= low * (1 - (nl.minDropPct ?? 3) / 100) && it.price <= (nl.maxPrice ?? Infinity) && L && Date.now() - Date.parse(L.first) >= (nl.minDays ?? 7) * DAY ? ['low|', `new all-time low (was ${fmt(low)})`]
+      : [null, ''];
+    if (kind === null) continue;
+    if (recent(earlyState.alerted[kind + k], it.price) || recent(earlyState.fast[k], it.price)) continue;   // told already
+    const check = await verifyDeal(verifyCtx, it);
+    const suspect = usual && it.price < usual * 0.25;
+    console.log('EARLY', it.key, it.source, fmt(it.price), why, '->', check);
+    if (check === 'out of stock' || (suspect && check !== 'verified')) continue;
+    earlyState.pinged.set(k, { kind, price: it.price, t: now });
+    await (DRY ? Promise.resolve(console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why))
+      : sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`));
+  }
+}
+
+// parallel scan (scan.yml): `--part=<name>` scrapes only the sources with that "part" in config.json, pings early,
+// and saves its raw results to parts/<name>.json; `--combine` then loads every part and runs the comparison,
+// AI, alerts and email. Without either flag, one process does everything (local runs, old behaviour).
+const PART = (process.argv.find((a) => a.startsWith('--part=')) || '').slice(7);
+const COMBINE = process.argv.includes('--combine');
+
 async function main() {
-  writeJson('lastscan.json', { t: new Date().toISOString() });
+  if (!PART) writeJson('lastscan.json', { t: new Date().toISOString() });
   const CDP = process.env.CDP_URL;
   const ua = { locale: R.browserLocale, timezoneId: R.timeZone };
   const browser = CDP ? await chromium.connectOverCDP(CDP)
@@ -594,35 +711,48 @@ async function main() {
 
   const health = []; const all = [];
   const scraped = [];
-  for (const src of cfg.sources) scraped.push([src, await scrapeSource(src.mobile ? mobileCtx : ctx, src, ctx)]);
+  const sources = COMBINE ? [] : PART ? cfg.sources.filter((s) => (s.part || 'shops') === PART) : cfg.sources;
+  const t0 = Date.now();
+  for (const src of sources) {
+    const r = await scrapeSource(src.mobile ? mobileCtx : ctx, src, ctx, scraped.flatMap(([, x]) => x.items));
+    scraped.push([src, r]);
+    await earlyCheck(keepListings(src, r.items), src.mobile ? mobileCtx : ctx);
+    console.log(`SOURCE DONE ${src.name} at +${Math.round((Date.now() - t0) / 1000)} s`);
+  }
+  if (COMBINE) {   // the parts' results, saved by the parallel jobs
+    for (const f of fs.existsSync('parts') ? fs.readdirSync('parts').filter((x) => x.endsWith('.json')) : []) {
+      const p = JSON.parse(fs.readFileSync(`parts/${f}`, 'utf8'));
+      for (const [name, r] of p.scraped) { const src = cfg.sources.find((s) => s.name === name); if (src) scraped.push([src, r]); }
+      for (const [k, e] of p.early || []) earlyState.pinged.set(k, e);
+      console.log('PART', f, p.scraped.map(([n, r]) => `${n}:${r.items.length}`).join(' '), 'early pings', (p.early || []).length);
+    }
+    const missing = cfg.sources.filter((s) => !scraped.some(([x]) => x === s)).map((s) => s.name);
+    if (missing.length) console.log('PART MISSING (that job failed or timed out):', missing.join(', '));
+    // shown as ❌ in the email's source health, and counted by the broken-source warning
+    for (const name of missing) scraped.push([cfg.sources.find((s) => s.name === name), { items: [], errors: ['scan job failed'], blockedUrls: [] }]);
+  }
   // Amazon.in blocks GitHub's IPs in waves: the searches that hit the wall often go through a few minutes later
   for (const [src, r] of scraped) {
-    if (!r.blockedUrls.length || !src.retries) continue;
+    if (!r.blockedUrls.length || !src.retries || COMBINE) continue;   // the parts already ran their second pass
     const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls, budgetMs: src.secondPassBudgetMs || src.budgetMs }, ctx);
     console.log('SECOND PASS', src.name, r.blockedUrls.length, 'blocked ->', again.blockedUrls.length, 'still blocked');
     r.items.push(...again.items);
     if (!again.blockedUrls.length) r.errors = r.errors.filter((e) => e !== 'blocked/captcha');
+    if (!COMBINE) await earlyCheck(keepListings(src, again.items), src.mobile ? mobileCtx : ctx);
   }
-  for (const [src, { items, errors }] of scraped) {
-    if (process.env.DEBUG_ITEMS) console.log(src.name, JSON.stringify(items.slice(0, 6)).slice(0, 1800));
-    // one product per URL (+ store): Flipkart lists each product twice, once with a cut-off title
-    const byUrl = new Map();
-    for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
-    const good = [...byUrl.values()].filter((i) => {
-      const full = i.title + ' ' + urlWords(i.url);
-      if (!i.title || BANNED.test(full) || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
-      if (/oled/i.test(full)) return true;
-      // no "OLED" anywhere: only a known OLED model, no other panel type named, and not absurdly cheap for that model
-      const key = modelKey(full); const usual = usualPrice(key);
-      return knownOled.has(key) && !NON_OLED_PANEL.test(i.title) && (!usual || i.price >= usual * 0.5);
-    });
-    for (const g of good) {
-      const source = g.store ? `${src.name} · ${g.store}` : src.name;
-      const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
-      all.push({ ...g, source, retailer: src.kind === 'smartprix' ? retailerOf(g.store) : retailerOf(source), feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) });
-    }
-    health.push({ name: src.name, found: good.length, errors: [...new Set(errors)] });
-    console.log(src.name, 'raw', items.length, 'kept', good.length, errors.length ? 'ERR ' + [...new Set(errors)].join(',') : '');
+  if (PART) {   // hand the raw results to the combine job and stop: no comparison, AI, email or state commit here
+    fs.mkdirSync('parts', { recursive: true });
+    fs.writeFileSync(`parts/${PART}.json`, JSON.stringify({ t: new Date().toISOString(), scraped: scraped.map(([s, r]) => [s.name, r]), early: [...earlyState.pinged] }));
+    console.log(`PART ${PART} done in ${Math.round((Date.now() - t0) / 1000)} s: ${scraped.map(([s, r]) => `${s.name}:${r.items.length}`).join(' ')}`);
+    if (!CDP) await browser.close();
+    return;
+  }
+  for (const [src, r] of scraped) {
+    const good = keepListings(src, r.items);
+    all.push(...good);
+    if (COMBINE && src.kind !== 'buyhatke') bh.harvestAll(good);
+    health.push({ name: src.name, found: good.length, errors: [...new Set(r.errors)] });
+    console.log(src.name, 'raw', r.items.length, 'kept', good.length, r.errors.length ? 'ERR ' + [...new Set(r.errors)].join(',') : '');
   }
 
   // AI second opinion on every listing the rules kept (cached per title, so only new listings cost a request):
@@ -656,6 +786,9 @@ async function main() {
     if (!best.has(k) || best.get(k).price > it.price) best.set(k, it);
   }
   const mine = [...best.values()];
+  // BuyHatke price history per model (all-time low, month/year averages): months of history we don't have ourselves
+  const bhStats = bh.statsByKey();
+  for (const it of mine) it.bhs = bhStats[it.key] || null;
 
   // the other scanner's latest listings (laptop <-> GitHub) widen the comparison; they are never alerted from here
   const peer = cfg.peerSnapshot ? readJsonAt(cfg.peerSnapshot, null) : null;
@@ -700,24 +833,41 @@ async function main() {
       for (const h of history[it.key] || []) { const d = h.t.slice(0, 10); L.days[d] = Math.min(L.days[d] || Infinity, h.price); if (h.t < L.first) L.first = h.t; }
     }
     const prev = Object.entries(L.days).filter(([d]) => d !== dayStr).map(([, v]) => v);
-    it.prevLow = prev.length ? Math.min(...prev) : 0;
+    // reference low = ours or BuyHatke's believable all-time low, whichever is lower; BuyHatke's months of
+    // history count as "tracked long enough" on day one
+    const ownLow = prev.length ? Math.min(...prev) : 0; const bhLow = it.bhs?.low || 0;
+    it.prevLow = ownLow && bhLow ? Math.min(ownLow, bhLow) : ownLow || bhLow;
     it.trackedDays = (Date.parse(now) - Date.parse(L.first)) / DAY;
     const nl = cfg.newLowAlert || {};
-    if (it.prevLow && it.price <= it.prevLow * (1 - (nl.minDropPct ?? 3) / 100) && it.trackedDays >= (nl.minDays ?? 7) && it.price <= (nl.maxPrice ?? Infinity)) it.newLow = true;
+    if (it.prevLow && it.price <= it.prevLow * (1 - (nl.minDropPct ?? 3) / 100) && (it.trackedDays >= (nl.minDays ?? 7) || bhLow) && it.price <= (nl.maxPrice ?? Infinity)) it.newLow = true;
     L.days[dayStr] = Math.min(L.days[dayStr] || Infinity, it.price);
   }
   for (const L of Object.values(lows)) for (const d of Object.keys(L.days)) if (Date.parse(now) - Date.parse(d) > 180 * DAY) delete L.days[d];
+  // our own per-shop price timeline (state/series.json: lowest price per model per shop per day, 120 days).
+  // BuyHatke's history pages are walled from GitHub, so this is what the fake-discount check reads; it becomes
+  // useful once ~3 weeks are recorded (until then fakeOf falls back to the usual-price rule)
+  const series = readJson('series.json', {});
+  for (const it of mine) {
+    if (it.generic || it.risky || it.feed) continue;
+    const d = ((series[it.key + '|' + it.retailer] ||= {}));
+    d[dayStr] = Math.min(d[dayStr] || Infinity, it.price);
+  }
+  for (const [k, d] of Object.entries(series)) { for (const day of Object.keys(d)) if (Date.parse(now) - Date.parse(day) > 120 * DAY) delete d[day]; if (!Object.keys(d).length) delete series[k]; }
+  const ownSeries = (key, retailer) => { const d = series[key + '|' + retailer]; return d ? Object.entries(d).sort().map(([day, p]) => [day, day, p]) : null; };
   const crazy = []; const near = [];
   for (const [key, list] of Object.entries(byModel)) {
     const hist = (history[key] || []).map((h) => h.price);
     const histRef = hist.length >= 6 ? median(hist) : 0;
-    const lowestSeen = hist.length ? Math.min(...hist) : 0;
+    const bhK = bhStats[key];
+    const lo = Math.min(hist.length ? Math.min(...hist) : Infinity, bhK?.low || Infinity);
+    const lowestSeen = Number.isFinite(lo) ? lo : 0;
+    const bhRef = bhK?.monthAvg || bhK?.yearAvg || 0;   // BuyHatke's 1-month average: an independent "normal price" signal
     for (const it of list) {
       if (it.peer || it.generic) continue;
       // "normal" = what OTHER retailers charge (never the listing itself, never deal-feed or open-box prices),
       // plus the seeded street price and this model's own price history
       const others = list.filter((x) => x.retailer !== it.retailer && !x.risky && !x.feed).map((x) => x.price);
-      const signals = [...others, ...(seeds[key] ? [seeds[key]] : []), ...(histRef ? [histRef] : [])];
+      const signals = [...others, ...(seeds[key] ? [seeds[key]] : []), ...(histRef ? [histRef] : []), ...(bhRef ? [bhRef] : [])];
       if (!signals.length) continue;
       const ref = median(signals);
       const vsRef = it.price / ref; const vsHist = histRef ? it.price / histRef : 1;
@@ -758,7 +908,9 @@ async function main() {
   if (cfg.priceAlertBelow) {
     const shown = new Set(fresh.map(aKey));
     const targets = mine.filter((x) => !x.feed && x.price < cfg.priceAlertBelow && !/portable/i.test(x.title) &&
-      (inches(x.title) >= 24 || (!inches(x.title) && !x.generic)) && !shown.has(aKey(x)))
+      (inches(x.title) >= 24 || (!inches(x.title) && !x.generic)) && !shown.has(aKey(x)) &&
+      // known monitor brands only: a no-name "LYVON 43-inch OLED panel" at ₹25,886 is not the deal you're after
+      BRANDS.test(x.title.toUpperCase()))
       .filter((x) => notRecent(alerted['below|' + aKey(x)], x.price) && notRecent(fastPinged[aKey(x)], x.price))
       .sort((a, b) => a.price - b.price);
     for (const c of targets.slice(0, 5)) {
@@ -790,6 +942,14 @@ async function main() {
     console.log('VERIFY-LOW', c.key, c.source, fmt(c.prevLow), '->', fmt(c.price), c.check);
     if (c.check !== 'out of stock') newLows.push(c);
   }
+  // fake discounts: a "drop" that only undoes a recent price hike (PriceDive's trick). BuyHatke's price timeline
+  // when we have it for that shop, else our own run history. Fake drops are not alerts; anything else gets a tag.
+  const fakeOf = (c) => fakeDiscount(c.bh?.series || bh.seriesFor(c.key, c.retailer) || ownSeries(c.key, c.retailer), c.price) ||
+    (c.dropFrom && usualPrice(c.key) && c.dropFrom >= usualPrice(c.key) * 1.08 && c.price >= usualPrice(c.key) * 0.95 ? { normal: usualPrice(c.key), hikedTo: c.dropFrom } : null);
+  for (const c of [...fresh, ...below, ...drops]) c.fake = fakeOf(c);
+  const fakeDrops = drops.filter((c) => c.fake);
+  for (const c of fakeDrops) console.log('FAKE-DROP', c.key, c.source, fmt(c.dropFrom), '->', fmt(c.price), 'normal', fmt(c.fake.normal));
+  drops.splice(0, drops.length, ...drops.filter((c) => !c.fake));
   // AI verdict on every alert: one request with the full context (other shops, history, flags)
   const alertList = [...fresh.map((c) => ['crazy: far below other shops', c]), ...below.map((c) => ['under the price target', c]),
     ...drops.map((c) => ['sudden drop at this shop', c]), ...newLows.map((c) => ['new all-time low', c])];
@@ -800,6 +960,8 @@ async function main() {
     lowestTracked: c.prevLow || c.lowestSeen || null, trackedDays: Math.round(c.trackedDays || 0), typicalPrice: usualPrice(c.key) || null,
     previousPriceHere: c.dropFrom || null, smartprixMonthDropPct: c.spDrop != null ? Math.round(c.spDrop) : null,
     bankOffers: c.offers?.length ? c.offers : undefined,
+    fakeDiscount: c.fake ? `price was raised to ₹${c.fake.hikedTo} recently; normal before that ~₹${c.fake.normal}` : undefined,
+    buyhatkeAllTimeLow: c.bhs?.low || null, buyhatkeMonthAvg: c.bhs?.monthAvg || null, buyhatkeYearAvg: c.bhs?.yearAvg || null,
     // the arithmetic, done here: a 4B model misreads "₹33,999 vs lowest ₹37,999" as nothing special
     pctBelowTypical: usualPrice(c.key) ? Math.round((1 - c.price / usualPrice(c.key)) * 100) : null,
     pctBelowLowestTracked: c.prevLow || c.lowestSeen ? Math.round((1 - c.price / (c.prevLow || c.lowestSeen)) * 100) : null,
@@ -814,7 +976,10 @@ async function main() {
   for (const c of below) alerted['below|' + aKey(c)] = { price: c.price, t: now };
   for (const c of drops) alerted['drop|' + aKey(c)] = { price: c.price, t: now };
   for (const c of newLows) alerted['low|' + aKey(c)] = { price: c.price, t: now };
-  writeJson('lows.json', lows);
+  // early pings (sent mid-scan) count as alerted too, so neither this run's final ping nor the next run repeats them
+  for (const [k, e] of earlyState.pinged) alerted[e.kind + k] = { price: e.price, t: e.t };
+  const notEarly = (c) => { const e = earlyState.pinged.get(aKey(c)); return !e || c.price < e.price * 0.95; };
+  writeJson('lows.json', lows); writeJson('series.json', series);
   writeJson('history.json', history); writeJson('alerted.json', alerted); writeJson('steady.json', steady);
   writeJson('snapshot.json', { t: now, items: mine.filter((x) => !x.feed).map(({ key, generic, source, retailer, price, risky, title, url }) => ({ key, generic, source, retailer, price, risky, title, url })) });
 
@@ -829,7 +994,7 @@ async function main() {
   const badge = (c) => !c.check ? '' : c.check === 'verified' ? '<span style="color:#15803d">✓ price + stock checked</span>' : `<span style="color:#b45309">⚠ ${esc(c.check)}</span>`;
   const row = (c) => `<tr><td ${td}><b>${esc(c.title.slice(0, 90))}</b>${c.risky ? ' <span style="color:#b45309">⚠ open-box/refurb/used?</span>' : ''}<br>${badge(c)}${aiTag(c)}</td>` +
     `<td ${td}><b>${fmt(c.price)}</b></td><td ${td}>${fmt(c.ref)}<br><small style="color:#6b7280">from ${c.basis} price${c.basis > 1 ? 's' : ''}</small></td>` +
-    `<td ${td}>${c.pct}% below${c.lowestSeen ? `<br><small style="color:#6b7280">lowest seen ${fmt(c.lowestSeen)}</small>` : ''}${c.steadyDays >= 3 ? `<br><small style="color:#6b7280">this price for ${c.steadyDays > 200 ? 'a while' : Math.floor(c.steadyDays) + ' days'}</small>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`;
+    `<td ${td}>${c.pct}% below${c.lowestSeen ? `<br><small style="color:#6b7280">lowest seen ${fmt(c.lowestSeen)}</small>` : ''}${c.bhs?.monthAvg ? `<br><small style="color:#6b7280">BuyHatke 1-mo avg ${fmt(c.bhs.monthAvg)}${c.bhs.glitchLow ? `, once glitched to ${fmt(c.bhs.glitchLow)}` : ''}</small>` : ''}${c.steadyDays >= 3 ? `<br><small style="color:#6b7280">this price for ${c.steadyDays > 200 ? 'a while' : Math.floor(c.steadyDays) + ' days'}</small>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`;
   const tbl = (rows) => `<table style="border-collapse:collapse;font:14px Arial;width:100%"><tr><th ${th}>Item</th><th ${th}>Price</th><th ${th}>Normal</th><th ${th}></th><th ${th}>Where</th></tr>${rows.map(row).join('')}</table>`;
   const cheapest = Object.entries(byModel).map(([key, list]) => ({ key, ...list.filter((x) => !x.peer && !x.risky).sort((a, b) => a.price - b.price)[0] }))
     .filter((x) => x.price).sort((a, b) => a.price - b.price).slice(0, 8);
@@ -840,6 +1005,7 @@ async function main() {
     : `<h3>No new crazy deal this run.</h3>`;
   if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (drops.length) html += `<h3 style="color:#b45309">📉 Sudden price drops</h3><ul>${drops.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.dropFrom)}</s> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  if (fakeDrops.length) html += `<p style="color:#6b7280">Ignored ${fakeDrops.length} fake discount${fakeDrops.length > 1 ? 's' : ''} (price raised first, then "dropped" back): ${fakeDrops.map((c) => `${esc(c.key)} ${fmt(c.dropFrom)} → ${fmt(c.price)} at ${esc(c.source)}, normally ~${fmt(c.fake.normal)}`).join('; ')}.</p>`;
   if (newLows.length) html += `<h3 style="color:#15803d">🏆 New all-time lows</h3><ul>${newLows.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.prevLow)}</s> lowest in ${Math.round(c.trackedDays)} days · ${esc(c.title.slice(0, 90))} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (dropped.length) html += `<p style="color:#6b7280">Skipped ${dropped.length} deal${dropped.length > 1 ? 's' : ''} that failed the page check: ${dropped.map((c) => `${esc(c.key)} ${fmt(c.price)} at ${esc(c.source)} (${esc(c.check)})`).join('; ')}.</p>`;
   if (near.length) html += `<h3>Near-misses (${Math.round((1 - cfg.nearMissThreshold) * 100)}%+ below, or a bigger drop with only one price to compare)</h3>${tbl(near.sort((a, b) => b.pct - a.pct).slice(0, 8))}`;
@@ -859,11 +1025,11 @@ async function main() {
 
   // Telegram: instant phone ping for what's worth acting on (deals, posts, broken sources); digests stay in email
   const tg = [
-    ...fresh.map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
-    ...below.map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...fresh.filter(notEarly).map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...below.filter(notEarly).map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     // the AI verdict is advice only: it never hides a ping (a 4B model once called a 10%-below-all-time-low deal "meh")
-    ...drops.map((c) => `📉 <b>Price drop</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, was ${fmt(c.dropFrom)} here${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
-    ...newLows.map((c) => `🏆 <b>New all-time low</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, lowest in ${Math.round(c.trackedDays)} days (was ${fmt(c.prevLow)})${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...drops.filter(notEarly).map((c) => `📉 <b>Price drop</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, was ${fmt(c.dropFrom)} here${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...newLows.filter(notEarly).map((c) => `🏆 <b>New all-time low</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, lowest in ${Math.round(c.trackedDays)} days (was ${fmt(c.prevLow)})${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     ...newPosts.map(postTg), ...broken.map(brokenTg),
   ].join('\n\n');
 
@@ -899,8 +1065,15 @@ async function main() {
 // --if-due: the outside timer fires every 15 min; a full scan runs when the last one is an hour old (15 min in a
 // sale season), and the runs in between only check the deal channels
 const lastScan = readJson('lastscan.json', {}).t;
-const due = !lastScan || Date.now() - Date.parse(lastScan) >= (SALE ? 14 : 55) * 60e3;
+// every 15 min all year (the parallel scan takes ~15 min; minutes are free on a public repo): glitches don't wait for sales
+const due = !lastScan || Date.now() - Date.parse(lastScan) >= 14 * 60e3;
 const has = (f) => process.argv.includes(f);
+// --due-check (parallel scan.yml's gate job): just report whether a full scan is due, as a step output
+if (has('--due-check')) {
+  console.log('full scan due:', due, '(last', lastScan || 'never', ')');
+  if (process.env.GITHUB_OUTPUT) fs.appendFileSync(process.env.GITHUB_OUTPUT, `due=${due}\n`);
+  process.exit(0);
+}
 const run = has('--samsung-only') ? samsungOnly : has('--community-only') || (has('--if-due') && !due) ? communityOnly : main;
 console.log('mode', run.name, SALE ? '(sale: ' + SALE.name + ')' : '');
 run().then(() => process.exit(0)).catch((e) => { console.error(e); process.exit(1); });

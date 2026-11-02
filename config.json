@@ -26,8 +26,8 @@
       "kind": "amazon",
       "mobile": true,
       "retries": 5,
-      "budgetMs": 480000,
-      "secondPassBudgetMs": 300000,
+      "budgetMs": 300000,
+      "secondPassBudgetMs": 180000,
       "urls": [
         "https://www.amazon.in/s?k=oled+gaming+monitor",
         "https://www.amazon.in/s?k=oled+monitor",
@@ -45,7 +45,8 @@
         "https://www.amazon.in/s?k=MAG+271QPX+monitor"
       ],
       "warmup": "https://www.amazon.in/",
-      "offers": 12
+      "offers": 12,
+      "part": "amazon"
     },
     {
       "name": "Flipkart",
@@ -64,7 +65,8 @@
         "https://www.flipkart.com/search?q=XG27ACDMS+monitor",
         "https://www.flipkart.com/search?q=AG276QZD2+monitor",
         "https://www.flipkart.com/search?q=MAG+271QPX+monitor"
-      ]
+      ],
+      "part": "web"
     },
     {
       "name": "Smartprix",
@@ -79,28 +81,32 @@
       ],
       "refreshHours": 6,
       "maxProducts": 40,
-      "budgetMs": 240000
+      "budgetMs": 240000,
+      "part": "web"
     },
     {
       "name": "Vedant Computers",
       "kind": "text",
       "urls": [
         "https://www.vedantcomputers.com/index.php?route=product/search&search=oled%20monitor"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "Elitehubs",
       "kind": "text",
       "urls": [
         "https://elitehubs.com/search?q=oled+monitor"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "PrimeABGB",
       "kind": "text",
       "urls": [
         "https://www.primeabgb.com/?s=oled+monitor&post_type=product"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "PCStudio",
@@ -108,21 +114,24 @@
       "knownBlocked": true,
       "urls": [
         "https://pcstudio.in/?s=oled+monitor&post_type=product"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "TPS Technologies",
       "kind": "text",
       "urls": [
         "https://www.tpstech.in/search?q=oled+monitor"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "MD Computers",
       "kind": "text",
       "urls": [
         "https://mdcomputers.in/index.php?route=product/search&search=oled%20monitor"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "Samsung India",
@@ -140,21 +149,30 @@
             "in_bulk": "Business"
           }
         }
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "Lenovo India",
       "kind": "text",
       "urls": [
         "https://www.lenovo.com/in/en/search?text=oled%20monitor"
-      ]
+      ],
+      "part": "shops"
     },
     {
       "name": "LG India",
       "kind": "text",
       "urls": [
         "https://www.lg.com/in/monitors/all-monitors/?oled="
-      ]
+      ],
+      "part": "shops"
+    },
+    {
+      "name": "BuyHatke",
+      "kind": "buyhatke",
+      "historyPerRun": 0,
+      "part": "shops"
     }
   ],
   "community": [
@@ -277,5 +295,8 @@
   },
   "bannedBrands": [
     "LYVON"
-  ]
+  ],
+  "earlyPing": {
+    "enabled": true
+  }
 }
