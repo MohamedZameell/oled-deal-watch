@@ -367,9 +367,209 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-02"
+  },
+  "msi mpg 341cqpx qd-oled 34 inch 2k uwqhd curved gaming monitor - 3440 x 1440(21:9) qd-oled panel, 240hz / 0.03ms, 99.3% dci-p3, δe≤2, displayhdr true black 400, dp 1.4a, hdmi 2.1, usb type c(pd:98w)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 ls49cg930sw 49 inch dual qhd ultrawide curved monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "msi mpg 322ur qd-oled x24 32inch qd-oled uhd 240hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 322UR",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "aoc porsche design 49 inch dqhd 240hz oled panel 99% srgb 0.03ms adaptive sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Porsche Design 49 Inch DQHD 240Hz",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g9 ls49dg930swxxl 49 inch 2k dqhd 240hz oled panel 99% srgb 0.03ms amd freesync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey G9 LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "viewsonic xg2738 27 inch 2k qhd 240hz oled panel 148% 0.03ms adaptive-sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG2738",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g8 ls32hg800sw 32 inch 4k udh 240hz oled panel 99%srgb 0.03ms adaptive sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey G8 LS32HG800SW",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus fo32u2p 32 inch 4k uhd 240hz oled panel 99% srgb 0.03ms amd freesync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Aorus FO32U2P",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "msi mag 341cqp-qd 34 inch 2k qhd 175hz oled panel 139% srgb 0.03ms amd freesync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG 341CQP-QD",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "benq mobiuz ex271uz 27 inch 4k uhd 240hz oled panel 99% srgb 0.03ms amd freesync premium pro gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Mobiuz EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw3225qf 32 inch 4k uhd 240hz oled panel 99%srgb 0.03ms curved nvidia gsync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Alienware AW3225QF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "msi mag 321upx qd 32 inch 4k uhd oled 240hz 138.2% srgb 0.03ms adaptive sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG 321UPX",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lg 34gs95qe ultragear 34 inch 2k qhd 240hz oled panel 98.5% 0.03ms amd freesync curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "34GS95QE",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "aoc agon pro ag276qzd2 27 inch 2k qhd 280hz oled panel 98% srgb 0.03ms adaptive sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AGON Pro AG276QZD2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus co49dq 49 inch qhd 144hz oled panel 99% srgb 0.3ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Aorus CO49DQ",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "asus rog swift pg42uq 42 inch uhd 100hz oled panel 133% srgb 0.1ms nvida gsync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "ROG Swift PG42UQ",
+   "cond": "new",
+   "size": 42,
+   "seen": "2026-11-02"
+  },
+  "msi mpg 341cqpx 34 inch 2k qhd 240hz oled panel 139% srgb 0.03 ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus fo27q3 27 inch qhd 360hz oled panel 99% srgb 0.03ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO27Q3",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 27gs95qe 27 inch qhd 240hz oled panel 98% srgb 0.03ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Ultragear 27GS95QE",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "msi mag 271qpx e2 27 inch 2k qhd 240hz oled panel 139% srgb 0.03 ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG 271QPX E2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw3423wf 34 inch qhd 165hz oled panel 100% srgb 0.5ms amd freesync oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "ALIENWARE AW3423WF",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw3223qf 32 inch qhd 240hz oled panel 100% srgb 0.03ms nvidia gsync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "ALIENWARE AW3223QF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw2725df 27 inch 2k qhd 360hz oled 99.3%srgb 0.03ms amd freesync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Alienware AW2725DF",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey ls49dg910swxxl 49 inch dqhd 144hz oled panel 99% srgb 0.03ms amd freesync gaming monitor (silver)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey LS49DG910SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "lg 27gr95qe-b 27 inch 2k 240hz oled panel 0.3ms nvidia g-sync / amd free sync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GR95QE-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
   }
  },
  "posts": {},
  "day": "2026-11-02",
- "calls": 5
+ "calls": 7
 }
