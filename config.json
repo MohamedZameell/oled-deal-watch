@@ -274,5 +274,8 @@
     "minDropPct": 3,
     "minDays": 7,
     "maxPrice": 60000
-  }
+  },
+  "bannedBrands": [
+    "LYVON"
+  ]
 }

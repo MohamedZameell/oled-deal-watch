@@ -35,6 +35,8 @@ const MONITOR_OK = /monitor|odyssey|ultragear|alienware|aorus|\brog\b|mpg|mag\s?
 const NOT_MONITOR = /watch|laptop|notebook|\btv\b|television|smartphone|phone|zenbook|ideapad|vivobook|cooler|ryujin|portable monitor|tablet|soundbar|headphone|projector|keyboard|mouse/i;
 // model-code searches ("PG27AQWP", "27Q-10") also return parts and look-alike models: a VESA adapter "compatible with"
 // the monitor, Lenovo's IPS LOQ 27Q-10, Samsung's IPS G5. Titles naming a non-OLED panel or an accessory are dropped.
+// brands Zameel banned (config bannedBrands): never listed, compared, alerted or shown anywhere
+const BANNED = (cfg.bannedBrands || []).length ? new RegExp('\\b(' + cfg.bannedBrands.join('|') + ')\\b', 'i') : /$^/;
 const ACCESSORY = /compatible with|\badapter\b|bracket|wall mount|monitor arm|mount kit|screen (protector|guard)|replacement|power supply|charger|\bcable\b|dust cover/i;
 const NON_OLED_PANEL = /\b(IPS|VA|TN|mini[\s-]?LED)\b/i;
 const RISKY_CONDITION = /open[\s-]?box|refurb|renewed|repackag|pre[\s-]?owned|\bused\b|b[\s-]?grade|display unit|demo/i;
@@ -608,7 +610,7 @@ async function main() {
     for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
     const good = [...byUrl.values()].filter((i) => {
       const full = i.title + ' ' + urlWords(i.url);
-      if (!i.title || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
+      if (!i.title || BANNED.test(full) || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
       if (/oled/i.test(full)) return true;
       // no "OLED" anywhere: only a known OLED model, no other panel type named, and not absurdly cheap for that model
       const key = modelKey(full); const usual = usualPrice(key);
