@@ -67,6 +67,21 @@
       ]
     },
     {
+      "name": "Smartprix",
+      "kind": "smartprix",
+      "urls": [
+        "https://www.smartprix.com/monitors/price-below_45000/oled-type",
+        "https://www.smartprix.com/monitors/price-45000_to_70000/oled-type",
+        "https://www.smartprix.com/monitors/price-70000_to_100000/oled-type",
+        "https://www.smartprix.com/monitors/price-100000_to_125000/oled-type",
+        "https://www.smartprix.com/monitors/price-125000_to_150000/oled-type",
+        "https://www.smartprix.com/monitors/price-above_150000/oled-type"
+      ],
+      "refreshHours": 6,
+      "maxProducts": 40,
+      "budgetMs": 240000
+    },
+    {
       "name": "Vedant Computers",
       "kind": "text",
       "urls": [
@@ -248,5 +263,16 @@
     "crazyThreshold": 0.75,
     "nearMissThreshold": 0.88,
     "dropThreshold": 0.93
+  },
+  "ai": {
+    "model": "qwen3:4b",
+    "batch": 15,
+    "maxNewTitles": 25,
+    "budgetMs": 360000
+  },
+  "newLowAlert": {
+    "minDropPct": 3,
+    "minDays": 7,
+    "maxPrice": 60000
   }
 }

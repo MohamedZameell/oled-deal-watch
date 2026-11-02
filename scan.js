@@ -9,6 +9,7 @@
 //      MAIL_VIA_GH (relay mail through that repo's mail.yml), FORCE_EMAIL, DEBUG_ITEMS
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
+import { createAI } from './ai.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -22,6 +23,10 @@ const readJsonAt = (p, d) => { try { return JSON.parse(fs.readFileSync(p, 'utf8'
 const readJson = (f, d) => readJsonAt(`${STATE}/${f}`, d);
 const writeJson = (f, v) => { if (!DRY) fs.writeFileSync(`${STATE}/${f}`, JSON.stringify(v, null, 1)); };
 const HOUR = 3600e3; const DAY = 24 * HOUR;
+// free AI judge (small open model run by Ollama on the runner): see ai.js. Every use falls back to the rule-based behaviour when it has no answer.
+const ai = createAI({ cfg, stateDir: STATE, dry: DRY });
+const VERDICT = { buy: '🔥 BUY', good: '👍 good deal', meh: '😐 meh', check: '⚠️ check this' };
+const aiTag = (c) => (c.judge ? ` · 🤖 ${VERDICT[c.judge.verdict] || esc(c.judge.verdict)}: ${esc(c.judge.note)}` : '');
 // sale seasons (Big Billion Days, Great Indian Festival, ...): full scans every 15 min instead of hourly, smaller discounts alert
 const SALE = (cfg.saleWindows || []).find((w) => Date.now() >= Date.parse(w.from) && Date.now() < Date.parse(w.to) + DAY);
 if (SALE) Object.assign(cfg, cfg.saleOverrides || {});
@@ -230,8 +235,69 @@ async function samsungApi(src) {
   return { items, errors, blockedUrls: [] };
 }
 
+// Smartprix: one page per price band lists every OLED monitor it tracks, and each product page carries a table of
+// store prices (Amazon, Flipkart, ...) with stock. That gives Amazon prices even on runs when Amazon walls us.
+// It sits behind a Cloudflare check that a headless browser fails: the workflow runs Chrome headful under xvfb.
+// Product pages are cached (state/smartprix.json) and only re-read when the listed price moves or the copy is old.
+async function smartprixSource(ctx, src) {
+  const items = []; const errors = []; const page = await ctx.newPage();
+  const base = 'https://www.smartprix.com';
+  const readWay = async (url) => {
+    try {
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      for (let i = 0; i < 25; i++) {
+        const m = (await page.content()).match(/<script id="__WAY_JSON__" type="application\/json">([\s\S]*?)<\/script>/);
+        if (m) return JSON.parse(m[1]).$way?.props?.item || null;
+        await page.waitForTimeout(1000);
+      }
+    } catch (e) { errors.push(String(e.message).slice(0, 60)); }
+    return null;
+  };
+  const listed = new Map();
+  for (const u of src.urls) {
+    const it = await readWay(u);
+    if (!it?.searchResults) { errors.push('blocked/captcha'); continue; }
+    const sr = it.searchResults;
+    if (sr.pageInfo?.hasNextPage) console.log('SMARTPRIX band has a second page (split it in config.json):', u, sr.totalCount);
+    for (const n of sr.nodes || []) if (n.url && n.price) listed.set(n.id, n);
+  }
+  const cache = readJson('smartprix.json', {});
+  const now = Date.now(); const maxAge = (src.refreshHours || 6) * HOUR;
+  const stale = [...listed.values()].filter((n) => !cache[n.id] || cache[n.id].listPrice !== n.price || now - Date.parse(cache[n.id].t) > maxAge)
+    .sort((a, b) => (cache[a.id] ? 1 : 0) - (cache[b.id] ? 1 : 0) || a.price - b.price);
+  const deadline = now + (src.budgetMs || 240000); let fetched = 0;
+  for (const n of stale.slice(0, src.maxProducts || 40)) {
+    if (Date.now() > deadline) break;
+    const it = await readWay(base + n.url);
+    if (!it?.priceComparison) continue;
+    fetched++;
+    const rows = [];
+    for (const [cond, list] of Object.entries(it.priceComparison.table || {})) {
+      if (cond === 'global') continue;   // import listings (Amazon.com etc.), not buyable here at that price
+      for (const r of list || []) if (r.price && r.store?.name) rows.push({ store: r.store.name, price: Math.round(r.price), stock: r.stock, cond,
+        offers: (r.offers || []).map((o) => (typeof o === 'string' ? o : o.title || o.text || o.description || o.name || '')).filter(Boolean).slice(0, 2) });
+    }
+    cache[n.id] = { t: new Date().toISOString(), listPrice: n.price, name: it.name || n.name, url: base + n.url, drop: it.priceDrop ?? null, rows };
+  }
+  for (const n of listed.values()) {
+    const c = cache[n.id];
+    if (!c || now - Date.parse(c.t) > DAY) continue;   // never show a store price older than a day
+    for (const r of c.rows) {
+      if (r.stock === 'OUT_OF_STOCK') continue;
+      items.push({ title: c.name + (r.cond === 'used' ? ' (used)' : ''), price: r.price, mrp: 0, url: c.url, store: r.store,
+        preChecked: r.stock === 'IN_STOCK' ? 'verified' : 'unverified (Smartprix: stock unknown)', spDrop: c.drop, offers: r.offers });
+    }
+  }
+  for (const id of Object.keys(cache)) if (!listed.has(id) && now - Date.parse(cache[id].t) > 7 * DAY) delete cache[id];
+  writeJson('smartprix.json', cache);
+  console.log('SMARTPRIX listed', listed.size, 'refreshed', fetched, 'of', stale.length, 'stale');
+  await page.close();
+  return { items, errors, blockedUrls: [] };
+}
+
 async function scrapeSource(ctx, src, deskCtx = ctx) {
   if (src.kind === 'samsungapi') return samsungApi(src);
+  if (src.kind === 'smartprix') return smartprixSource(deskCtx, src);
   const items = []; const errors = []; const blockedUrls = [];
   const page = await ctx.newPage();
   // Amazon serves a bot wall to a cold session far more often than to one that opened the homepage first
@@ -420,7 +486,17 @@ function brokenSources(health) {
   return broken;
 }
 
-const postLine = (p) => `${esc(p.where)}: ${esc(p.title.slice(0, 140))}${p.price ? ` (${fmt(p.price)}${p.ref ? `, normally ~${fmt(p.ref)}` : ''})` : ''}`;
+const postLine = (p) => `${esc(p.where)}: ${esc(p.title.slice(0, 140))}${p.price ? ` (${fmt(p.price)}${p.ref ? `, normally ~${fmt(p.ref)}` : ''})` : ''}${p.aiNote ? ` · 🤖 ${esc(p.aiNote)}` : ''}`;
+// AI check on new community posts: the regexes let through questions, reviews and build threads that mention OLED
+async function aiFilterPosts(list) {
+  const v = await ai.posts(list);
+  return list.filter((p) => {
+    const c = v.get(p.id); if (!c) return true;   // no AI answer: keep the rule-based decision
+    p.aiNote = c.note; if (!p.price && c.price) p.price = c.price;
+    if (!c.deal) console.log('AI-SKIP post', p.where, p.title.slice(0, 80));
+    return c.deal;
+  });
+}
 const postTg = (p) => `💬 <a href="${esc(p.url)}">${postLine(p)}</a>`;
 const brokenTg = (h) => `⚠️ ${esc(h.name)} found nothing for ${h.runs} runs in a row${h.errors.length ? ' (' + esc(h.errors.join(', ')) + ')' : ''}`;
 
@@ -437,7 +513,8 @@ async function sendTelegram(text) {
 // between the hourly full scans, because channel deals can sell out before the next hourly run.
 async function communityOnly() {
   const community = await fetchCommunity();
-  const newPosts = newCommunityPosts(community, readJson('history.json', {}), new Date().toISOString());
+  const newPosts = await aiFilterPosts(newCommunityPosts(community, readJson('history.json', {}), new Date().toISOString()));
+  ai.save();
   const broken = brokenSources(community.health);
   const tg = [...newPosts.map(postTg), ...broken.map(brokenTg)].join('\n\n');
   if (DRY) {
@@ -453,6 +530,7 @@ async function communityOnly() {
 // A misread price (B&H once parsed as $60 for a $699 monitor) or a sold-out listing must not become an alert.
 async function verifyDeal(ctx, it) {
   if (it.apiChecked) return 'verified';   // price + stock came from the store's own API this run (Samsung)
+  if (it.preChecked) return it.preChecked;   // Smartprix: stock from its store table (its page lists every shop, so a page check proves nothing)
   const page = await ctx.newPage();
   try {
     await page.goto(it.url, { waitUntil: 'domcontentloaded', timeout: 40000 });
@@ -505,7 +583,7 @@ async function main() {
   const CDP = process.env.CDP_URL;
   const ua = { locale: R.browserLocale, timezoneId: R.timeZone };
   const browser = CDP ? await chromium.connectOverCDP(CDP)
-    : await chromium.launch({ headless: true, channel: process.env.BROWSER_CHANNEL || undefined, executablePath: process.env.BROWSER_PATH || undefined });
+    : await chromium.launch({ headless: !process.env.HEADFUL, channel: process.env.BROWSER_CHANNEL || undefined, executablePath: process.env.BROWSER_PATH || undefined });
   const ctx = CDP ? browser.contexts()[0] : await browser.newContext({ ...ua, viewport: { width: 1440, height: 900 },
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' });
   // Amazon.in answers desktop browsers from GitHub's datacenter IPs with a 503 "rush hour" page; a phone-shaped browser gets real results.
@@ -539,19 +617,40 @@ async function main() {
     for (const g of good) {
       const source = g.store ? `${src.name} · ${g.store}` : src.name;
       const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
-      all.push({ ...g, source, retailer: retailerOf(source), feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) });
+      all.push({ ...g, source, retailer: src.kind === 'smartprix' ? retailerOf(g.store) : retailerOf(source), feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) });
     }
     health.push({ name: src.name, found: good.length, errors: [...new Set(errors)] });
     console.log(src.name, 'raw', items.length, 'kept', good.length, errors.length ? 'ERR ' + [...new Set(errors)].join(',') : '');
   }
 
+  // AI second opinion on every listing the rules kept (cached per title, so only new listings cost a request):
+  // drops non-OLED / non-desktop items the regexes let through, catches open-box/renewed wording, and gives
+  // listings with no recognised model code a real model key so they can be compared and alerted on
+  const verdicts = await ai.classify(all.map((x) => x.title));
+  for (let i = all.length - 1; i >= 0; i--) {
+    const it = all[i]; const c = verdicts.get(it.title); if (!c) continue;
+    it.ai = c;
+    // only the product KIND removes a listing: small models misjudge panel types from model names
+    // (qwen3:4b called the PG27AQDM and 34GS95QE "LCD"), and the regex rules already handle titles naming IPS/VA
+    const wrongKind = c.kind === 'accessory' || c.kind === 'laptop' || (c.kind === 'portable' && !(c.size >= 22)) || (c.kind === 'tv' && !/monitor/i.test(it.title));
+    if (wrongKind) {
+      console.log('AI-DROP', it.source, fmt(it.price), it.title.slice(0, 80), JSON.stringify({ kind: c.kind, panel: c.panel }));
+      all.splice(i, 1); continue;
+    }
+    if (['renewed', 'open-box', 'used'].includes(c.cond)) it.risky = true;
+    if (it.generic && c.model) {
+      it.key = modelKey(`${c.model} ${c.size ? c.size + ' inch' : ''}`) || 'AI ' + c.model.toUpperCase().replace(/\s+/g, '');
+      it.generic = false; it.aiKey = true;
+    }
+  }
+
   const community = await fetchCommunity();
 
-  // cheapest listing per (model, source, condition)
+  // cheapest listing per (model, shop, condition); Smartprix's Amazon row and our own Amazon scrape are the same shop
   const best = new Map();
   for (const it of all) {
     if (!it.key) continue;
-    const k = it.key + '|' + it.source + '|' + (it.risky ? 'r' : 'n');
+    const k = it.key + '|' + it.retailer + '|' + (it.risky ? 'r' : 'n');
     if (!best.has(k) || best.get(k).price > it.price) best.set(k, it);
   }
   const mine = [...best.values()];
@@ -587,6 +686,25 @@ async function main() {
     it.steadyDays = (Date.parse(now) - Date.parse(steady[k].since)) / DAY;
   }
   for (const [k, p] of Object.entries(steady)) if (Date.parse(now) - Date.parse(p.seen) > 14 * DAY) delete steady[k];
+  // all-time lows per model (state/lows.json: one lowest price per day, kept 180 days). "Lowest price ever tracked"
+  // is the strongest sign of a real deal, and history.json only remembers the last ~120 runs.
+  const lows = readJson('lows.json', {});
+  const dayStr = now.slice(0, 10);
+  for (const it of mine) {
+    if (it.generic || it.risky || it.feed) continue;
+    let L = lows[it.key];
+    if (!L) {   // first sight: seed from the run history we already have
+      L = lows[it.key] = { first: now, days: {} };
+      for (const h of history[it.key] || []) { const d = h.t.slice(0, 10); L.days[d] = Math.min(L.days[d] || Infinity, h.price); if (h.t < L.first) L.first = h.t; }
+    }
+    const prev = Object.entries(L.days).filter(([d]) => d !== dayStr).map(([, v]) => v);
+    it.prevLow = prev.length ? Math.min(...prev) : 0;
+    it.trackedDays = (Date.parse(now) - Date.parse(L.first)) / DAY;
+    const nl = cfg.newLowAlert || {};
+    if (it.prevLow && it.price <= it.prevLow * (1 - (nl.minDropPct ?? 3) / 100) && it.trackedDays >= (nl.minDays ?? 7) && it.price <= (nl.maxPrice ?? Infinity)) it.newLow = true;
+    L.days[dayStr] = Math.min(L.days[dayStr] || Infinity, it.price);
+  }
+  for (const L of Object.values(lows)) for (const d of Object.keys(L.days)) if (Date.parse(now) - Date.parse(d) > 180 * DAY) delete L.days[d];
   const crazy = []; const near = [];
   for (const [key, list] of Object.entries(byModel)) {
     const hist = (history[key] || []).map((h) => h.price);
@@ -659,6 +777,32 @@ async function main() {
     console.log('VERIFY-DROP', c.key, c.source, fmt(c.dropFrom), '->', fmt(c.price), c.check);
     if (c.check !== 'out of stock') drops.push(c);
   }
+  // new all-time lows: not 35% off, but cheaper than this model has ever been since tracking started
+  const newLows = [];
+  const shownSoFar = new Set([...fresh, ...below, ...drops].map(aKey));
+  const lowCands = mine.filter((x) => x.newLow && !shownSoFar.has(aKey(x)) && notRecent(alerted['low|' + aKey(x)], x.price) && notRecent(fastPinged[aKey(x)], x.price))
+    .sort((a, b) => a.price / a.prevLow - b.price / b.prevLow);
+  for (const c of lowCands.slice(0, 4)) {
+    const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
+    c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
+    console.log('VERIFY-LOW', c.key, c.source, fmt(c.prevLow), '->', fmt(c.price), c.check);
+    if (c.check !== 'out of stock') newLows.push(c);
+  }
+  // AI verdict on every alert: one request with the full context (other shops, history, flags)
+  const alertList = [...fresh.map((c) => ['crazy: far below other shops', c]), ...below.map((c) => ['under the price target', c]),
+    ...drops.map((c) => ['sudden drop at this shop', c]), ...newLows.map((c) => ['new all-time low', c])];
+  const judged = await ai.judge(alertList.map(([type, c]) => ({ type, title: c.title.slice(0, 160), price: c.price, shop: c.source,
+    condition: c.risky ? 'open-box/renewed/used?' : c.ai?.cond || 'new', pageCheck: c.check || null,
+    otherShops: (byModel[c.key] || []).filter((x) => x.retailer !== c.retailer).sort((a, b) => a.price - b.price).slice(0, 5)
+      .map((x) => `${x.source} ₹${x.price}${x.risky ? ' (open-box?)' : ''}`),
+    lowestTracked: c.prevLow || c.lowestSeen || null, trackedDays: Math.round(c.trackedDays || 0), typicalPrice: usualPrice(c.key) || null,
+    previousPriceHere: c.dropFrom || null, smartprixMonthDropPct: c.spDrop != null ? Math.round(c.spDrop) : null,
+    bankOffers: c.offers?.length ? c.offers : undefined,
+    // the arithmetic, done here: a 4B model misreads "₹33,999 vs lowest ₹37,999" as nothing special
+    pctBelowTypical: usualPrice(c.key) ? Math.round((1 - c.price / usualPrice(c.key)) * 100) : null,
+    pctBelowLowestTracked: c.prevLow || c.lowestSeen ? Math.round((1 - c.price / (c.prevLow || c.lowestSeen)) * 100) : null,
+    pctBelowCheapestOtherShop: (() => { const o = (byModel[c.key] || []).filter((x) => x.retailer !== c.retailer && !x.risky).map((x) => x.price); return o.length ? Math.round((1 - c.price / Math.min(...o)) * 100) : null; })() })));
+  alertList.forEach(([, c], i) => { c.judge = judged.get(i); });
   if (VERIFY_SAMPLE) {
     for (const c of mine.filter((x) => !x.feed).sort((a, b) => a.price - b.price).slice(0, 3)) console.log('SAMPLE-VERIFY', c.key, c.source, fmt(c.price), '->', await verifyDeal(ctx, c), c.url);
   }
@@ -667,10 +811,13 @@ async function main() {
   for (const c of fresh) alerted[aKey(c)] = { price: c.price, t: now };
   for (const c of below) alerted['below|' + aKey(c)] = { price: c.price, t: now };
   for (const c of drops) alerted['drop|' + aKey(c)] = { price: c.price, t: now };
+  for (const c of newLows) alerted['low|' + aKey(c)] = { price: c.price, t: now };
+  writeJson('lows.json', lows);
   writeJson('history.json', history); writeJson('alerted.json', alerted); writeJson('steady.json', steady);
   writeJson('snapshot.json', { t: now, items: mine.filter((x) => !x.feed).map(({ key, generic, source, retailer, price, risky, title, url }) => ({ key, generic, source, retailer, price, risky, title, url })) });
 
-  const newPosts = newCommunityPosts(community, history, now);
+  const newPosts = await aiFilterPosts(newCommunityPosts(community, history, now));
+  ai.save();
   const broken = brokenSources([...health, ...community.health]);
 
   // ---------- email ----------
@@ -678,7 +825,7 @@ async function main() {
   const th = 'style="text-align:left;padding:6px 8px;background:#f3f4f6;border-bottom:1px solid #e5e7eb"';
   const td = 'style="padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top"';
   const badge = (c) => !c.check ? '' : c.check === 'verified' ? '<span style="color:#15803d">✓ price + stock checked</span>' : `<span style="color:#b45309">⚠ ${esc(c.check)}</span>`;
-  const row = (c) => `<tr><td ${td}><b>${esc(c.title.slice(0, 90))}</b>${c.risky ? ' <span style="color:#b45309">⚠ open-box/refurb/used?</span>' : ''}<br>${badge(c)}</td>` +
+  const row = (c) => `<tr><td ${td}><b>${esc(c.title.slice(0, 90))}</b>${c.risky ? ' <span style="color:#b45309">⚠ open-box/refurb/used?</span>' : ''}<br>${badge(c)}${aiTag(c)}</td>` +
     `<td ${td}><b>${fmt(c.price)}</b></td><td ${td}>${fmt(c.ref)}<br><small style="color:#6b7280">from ${c.basis} price${c.basis > 1 ? 's' : ''}</small></td>` +
     `<td ${td}>${c.pct}% below${c.lowestSeen ? `<br><small style="color:#6b7280">lowest seen ${fmt(c.lowestSeen)}</small>` : ''}${c.steadyDays >= 3 ? `<br><small style="color:#6b7280">this price for ${c.steadyDays > 200 ? 'a while' : Math.floor(c.steadyDays) + ' days'}</small>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`;
   const tbl = (rows) => `<table style="border-collapse:collapse;font:14px Arial;width:100%"><tr><th ${th}>Item</th><th ${th}>Price</th><th ${th}>Normal</th><th ${th}></th><th ${th}>Where</th></tr>${rows.map(row).join('')}</table>`;
@@ -689,31 +836,38 @@ async function main() {
   if (SALE) html += `<p style="background:#fef3c7;padding:6px 8px">🛍️ <b>${esc(SALE.name)}</b>: scanning every 15 min, alerting from ${Math.round((1 - cfg.crazyThreshold) * 100)}% below.</p>`;
   html += fresh.length ? `<h3 style="color:#b91c1c">🚨 Crazy deals (≥${Math.round((1 - cfg.crazyThreshold) * 100)}% below what other sellers charge)</h3>${tbl(fresh)}<p>${esc(R.buyNote)}</p>`
     : `<h3>No new crazy deal this run.</h3>`;
-  if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
-  if (drops.length) html += `<h3 style="color:#b45309">📉 Sudden price drops</h3><ul>${drops.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.dropFrom)}</s> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  if (drops.length) html += `<h3 style="color:#b45309">📉 Sudden price drops</h3><ul>${drops.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.dropFrom)}</s> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  if (newLows.length) html += `<h3 style="color:#15803d">🏆 New all-time lows</h3><ul>${newLows.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.prevLow)}</s> lowest in ${Math.round(c.trackedDays)} days · ${esc(c.title.slice(0, 90))} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (dropped.length) html += `<p style="color:#6b7280">Skipped ${dropped.length} deal${dropped.length > 1 ? 's' : ''} that failed the page check: ${dropped.map((c) => `${esc(c.key)} ${fmt(c.price)} at ${esc(c.source)} (${esc(c.check)})`).join('; ')}.</p>`;
   if (near.length) html += `<h3>Near-misses (${Math.round((1 - cfg.nearMissThreshold) * 100)}%+ below, or a bigger drop with only one price to compare)</h3>${tbl(near.sort((a, b) => b.pct - a.pct).slice(0, 8))}`;
   if (newPosts.length) html += `<h3>💬 New community posts</h3><ul>${newPosts.map((p) => `<li><a href="${esc(p.url)}">${postLine(p)}</a></li>`).join('')}</ul>`;
   if (broken.length) html += `<h3 style="color:#b45309">⚠ Sources that stopped working</h3><ul>${broken.map((h) => `<li>${esc(h.name)}: nothing found for ${h.runs} runs in a row${h.errors.length ? ' (' + esc(h.errors.join(', ')) + ')' : ''}. Probably a layout change or a new bot wall: scan.js needs a fix.</li>`).join('')}</ul>`;
   html += `<h3>Cheapest prices right now</h3><table style="border-collapse:collapse;font:14px Arial;width:100%"><tr><th ${th}>Model</th><th ${th}>Price</th><th ${th}>Where</th></tr>${cheapest.map((c) => `<tr><td ${td}>${esc(c.title.slice(0, 80))}</td><td ${td}><b>${fmt(c.price)}</b>${c.mrp > c.price ? ` <s style="color:#6b7280">${fmt(c.mrp)}</s>` : ''}</td><td ${td}><a href="${esc(c.url)}">${esc(c.source)}</a></td></tr>`).join('')}</table>`;
   html += `<h3>Source health</h3><ul>${[...health, ...community.health].map((h) => `<li>${h.found ? '✅' : '❌'} ${esc(h.name)}: ${h.found} items${h.errors.length ? ' (' + esc(h.errors.join(', ')) + ')' : ''}</li>`).join('')}`;
+  html += `<li>${ai.on ? '🤖' : '⚠️'} AI judge (local ${esc(cfg.ai?.model || 'qwen3:4b')} on the runner): ${ai.calls} requests today${ai.on ? '' : ', off this run (rules only)'}</li>`;
   if (cfg.peerSnapshot) html += `<li>${peerAgeH < 26 ? '✅' : '⚠️'} ${esc(cfg.peerLabel)}: ${peer ? `last ran ${peerAgeH < 1 ? 'under an hour' : Math.round(peerAgeH) + 'h'} ago, ${peer.items.length} listings` : 'no run recorded yet'}${peerAgeH >= 26 ? ' (not running: is the laptop on?)' : ''}</li>`;
   html += `</ul><p style="color:#6b7280">${esc(R.footer)}</p></div>`;
   const subject = fresh.length ? `🚨 ${R.subjectTag} crazy deal: ${fresh[0].title.slice(0, 40)} ${fmt(fresh[0].price)} (${fresh[0].pct}% below)`
     : below.length ? `🎯 ${R.subjectTag} under ${fmt(cfg.priceAlertBelow)}: ${below[0].title.slice(0, 40)} ${fmt(below[0].price)}`
+    : newLows.length ? `🏆 ${R.subjectTag} new all-time low: ${newLows[0].title.slice(0, 40)} ${fmt(newLows[0].price)} (was ${fmt(newLows[0].prevLow)})`
     : drops.length ? `📉 ${R.subjectTag} price drop: ${drops[0].title.slice(0, 40)} ${fmt(drops[0].dropFrom)} → ${fmt(drops[0].price)}`
     : newPosts.length ? `💬 ${R.subjectTag} community post: ${newPosts[0].title.slice(0, 60)}`
     : `${R.subjectTag} digest ${stamp}: no crazy deal (${cheapest[0] ? 'low ' + fmt(cheapest[0].price) : 'no data'})${bad.length > 3 ? ' ⚠ many sources failed' : ''}${broken.length ? ' ⚠ ' + broken.map((h) => h.name).join(', ') + ' stopped working' : ''}`;
 
   // Telegram: instant phone ping for what's worth acting on (deals, posts, broken sources); digests stay in email
   const tg = [
-    ...fresh.map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
-    ...below.map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
-    ...drops.map((c) => `📉 <b>Price drop</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, was ${fmt(c.dropFrom)} here${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...fresh.map((c) => `🚨 <b>Crazy deal</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, ${c.pct}% below ~${fmt(c.ref)}${c.risky ? ' (open-box/refurb?)' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...below.map((c) => `🎯 <b>Under ${fmt(cfg.priceAlertBelow)}</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    // the AI verdict is advice only: it never hides a ping (a 4B model once called a 10%-below-all-time-low deal "meh")
+    ...drops.map((c) => `📉 <b>Price drop</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, was ${fmt(c.dropFrom)} here${c.risky ? ' (open-box/refurb?)' : ''}${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
+    ...newLows.map((c) => `🏆 <b>New all-time low</b>: ${esc(c.title.slice(0, 90))}\n<b>${fmt(c.price)}</b>, lowest in ${Math.round(c.trackedDays)} days (was ${fmt(c.prevLow)})${c.check === 'verified' ? ' ✓ checked' : ''}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a>`),
     ...newPosts.map(postTg), ...broken.map(brokenTg),
   ].join('\n\n');
 
   if (DRY) {
+    console.log('AI VERDICTS', alertList.map(([t, c]) => `${t}: ${c.key} ${c.price} ${c.source} -> ${c.judge ? c.judge.verdict + ' / ' + c.judge.note : '-'}`));
+    console.log('NEW LOWS', newLows.map((c) => `${c.key} ${c.prevLow}->${c.price} ${c.source}`));
     console.log('DROPS', drops.map((c) => `${c.key} ${c.dropFrom}->${c.price} ${c.source}`), 'SALE', SALE ? SALE.name : '-');
     console.log('\nCOMMUNITY (all matching posts, shown as if new):\n' + community.posts.map((p) => '  ' + postLine(p) + ' ' + p.url).join('\n'));
     console.log('\nTELEGRAM:', tg || '(nothing to send)');
@@ -726,7 +880,7 @@ async function main() {
   const today = new Date().toLocaleDateString('en-CA', { timeZone: R.timeZone });
   const dailyDigest = (R.dailyDigestHours || []).includes(hourNow) && readJson('digest.json', {}).date !== today;
   await sendTelegram(tg);
-  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !drops.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
+  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !drops.length && !newLows.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
   if (process.env.MAIL_VIA_GH) {
     const { execFileSync } = await import('node:child_process');
     execFileSync('gh', ['workflow', 'run', 'mail.yml', '-R', process.env.MAIL_VIA_GH, '--json'], { input: JSON.stringify({ subject, html }) });

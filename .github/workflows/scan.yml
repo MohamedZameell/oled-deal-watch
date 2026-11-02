@@ -16,14 +16,15 @@ permissions:
   contents: write   # lets the job commit state/ (price history) back to the repo
 
 concurrency:
-  group: oled-scan
+  # test runs from other branches (always --dry, never save state) get their own lock instead of queueing behind live scans
+  group: oled-scan${{ github.ref_name != 'main' && '-test' || '' }}
   cancel-in-progress: false
 
 jobs:
   scan:
     # pinned: ubuntu-latest moves to 26.04 in Oct 2026; 24.04 ships Google Chrome, so no browser download or apt install per run
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 40   # scan ~15 min + the local AI (setup ~1 min, capped at 6 min of inference)
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -40,10 +41,11 @@ jobs:
           MAIL_TO: ${{ secrets.MAIL_TO }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          HEADFUL: '1'   # visible Chrome on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
           BROWSER_CHANNEL: chrome   # the runner's real Google Chrome: retailers refuse bare headless Chromium on product pages
           FORCE_EMAIL: ${{ github.event_name == 'workflow_dispatch' && !contains(inputs.args, '--dry') && '1' || '' }}
           SCAN_ARGS: ${{ github.event_name == 'schedule' && '--if-due' || inputs.args }}
-        run: node scan.js $SCAN_ARGS
+        run: xvfb-run -a node scan.js $SCAN_ARGS
       - name: Keep debug screenshots
         if: always()
         uses: actions/upload-artifact@v6
