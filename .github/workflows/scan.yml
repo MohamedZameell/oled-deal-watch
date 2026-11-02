@@ -27,6 +27,10 @@ jobs:
     timeout-minutes: 40   # scan ~15 min + the local AI (setup ~1 min, capped at 6 min of inference)
     steps:
       - uses: actions/checkout@v5
+        with:
+          # the branch head when the job STARTS: a queued dispatch otherwise checks out the commit it was triggered on,
+          # i.e. stale state/ (old alerted.json -> repeat alerts), and its state push then conflicts
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -63,5 +67,5 @@ jobs:
           git diff --staged --quiet && exit 0
           git commit -m "state: update price history [skip ci]"
           # rebase in case anything else pushed meanwhile
-          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; sleep 5; done
           exit 1

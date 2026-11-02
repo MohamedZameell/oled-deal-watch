@@ -24,6 +24,10 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v5
+        with:
+          # the branch head when the job STARTS: a queued dispatch otherwise checks out the commit it was triggered on,
+          # i.e. stale state/ (old alerted.json -> repeat alerts), and its state push then conflicts
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v5
         with:
           node-version: 22
@@ -45,5 +49,5 @@ jobs:
           git add state
           git diff --staged --quiet && exit 0
           git commit -m "state: seen community posts [skip ci]"
-          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; sleep 5; done
           exit 1
