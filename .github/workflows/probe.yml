@@ -1,0 +1,39 @@
+name: probe
+on: workflow_dispatch
+permissions:
+  contents: read
+  models: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with: { node-version: 22 }
+      - run: npm ci --no-audit --no-fund
+        env: { PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1 }
+      - name: curl smartprix
+        run: |
+          UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36"
+          for u in /monitors/oled-type /monitors/oled-type/price-below_50000 /monitors/alienware-aw2726dm-27-inch-wqhd-qd-oled-monitor-ppd1kml1l2fw; do
+            curl -s -m 20 -A "$UA" -H "accept-language: en-IN,en;q=0.9" -H "accept: text/html" -o p.html -w "$u %{http_code} %{size_download} " "https://www.smartprix.com$u"; grep -c __WAY_JSON__ p.html || true
+          done
+      - name: chrome smartprix
+        run: |
+          cat > probe.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const b = await chromium.launch({ headless: true, channel: 'chrome' });
+          const p = await (await b.newContext({ locale: 'en-IN' })).newPage();
+          for (const u of ['/monitors/oled-type', '/monitors/oled-type/price-below_50000']) {
+            const r = await p.goto('https://www.smartprix.com' + u, { waitUntil: 'domcontentloaded' });
+            const h = await p.content();
+            console.log(u, r.status(), h.length, h.includes('__WAY_JSON__'));
+          }
+          await b.close();
+          JS
+          node probe.mjs
+      - name: github models
+        env: { GH_TOKEN: '${{ secrets.GITHUB_TOKEN }}' }
+        run: |
+          curl -s -m 30 -H "Authorization: Bearer $GH_TOKEN" -H "Content-Type: application/json" https://models.github.ai/inference/chat/completions -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"Say OK"}],"max_tokens":5}' | head -c 300; echo
+          curl -s -m 30 -H "Authorization: Bearer $GH_TOKEN" -H "Content-Type: application/json" https://models.github.ai/inference/chat/completions -d '{"model":"openai/gpt-4.1-mini","messages":[{"role":"user","content":"Say OK"}],"max_tokens":5}' | head -c 300; echo
