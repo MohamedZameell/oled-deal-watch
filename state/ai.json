@@ -871,9 +871,193 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-02"
+  },
+  "dell s3225qc 32 inch 120hz 4k qd-oled monitor hdr dolby vision": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "S3225QC",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 49 inch 144hz 5120 x 1440 resolution 0.03ms response time oled panel gaming monitors ls49dg910swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "asus xg27acdms (oled) 26.5 inch 280hz rog strix monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27ACDMS",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "asus rog swift oled pg27aqwp-g edition 20 27 inch qhd 540hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG27AQWP-G",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix oled xg32ucwg gaming monitor ―32-inch": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG32UCWG",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus fo32u2p 32 inch uhd oled 240hz hdr gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Aorus FO32U2P",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix oled 27 inch xg27aqdmes qhd 240hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27AQDMES",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg 39gs95qe 39 inch ultragear oled curved gaming monitor black": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "39GS95QE",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "asus pa32ucdm (oled) 32 inch 240hz pro art monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PA32UCDM",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 27gx790a-b 27 inch 480hz oled qhd 1440p gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus fo27q2 27 inch inch oled 1440p 240 hz gaming monitor black": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO27Q2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus co49dq 49 inch qd oled 144hz dqhd ultrawide curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "CO49DQ",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g8 34 inch 175hz oled gaming monitor ls34bg850swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS34BG850SWXXL",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "benq mobiuz ex271uz 27″ 4k hdr 240 hz oled gaming monitor (white)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus xg32ucwmg (oled 4k) 31.5 inch 480hz rog strix monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG32UCWMG",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 2k dqhd ls49dg930swxxl 49 inch curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix oled xg27acdms 27 inch gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27ACDMS",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "msi mag 341cqp qd-oled 34 inch curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "asus rog swift oled pg27aqwp-g 20th edition 27 inch monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "PG27AQWP-G",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "68.5 cm (27) odyssey qd-oled g5 gaming monitor with 180 hz refresh rate and 0.03ms response time ls27fg502sw": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG502SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "1.24 m odyssey oled g9 gaming monitor with 0.03 ms response time and 144 hz refresh rate ls49dg910sw": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SW",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "68.5 cm (27) odyssey oled g8 g80sh 4k 240hz gaming monitor ls27hg800sw [corporate/student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG800SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung 27\" odyssey qd-oled g5 gaming monitor (smartchoice) |qhd 2560 x 1440|180 hz|0.03ms|pantone-validated|g-sync|free sync|glarefree|ports-dp,hdmi,": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
   }
  },
  "posts": {},
  "day": "2026-11-02",
- "calls": 11
+ "calls": 13
 }
