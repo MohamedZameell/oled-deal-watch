@@ -567,9 +567,185 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-02"
+  },
+  "samsung odyssey g5 ls27fg502swxxl 27 inch 2k qhd 180hz oled panel 99% srgb 0.03ms nvidia gsync gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG502SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "msi mag 321up qd-oled 31.5\" 4k uhd 165hz 0.3ms oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "321UP",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled g9 49\" 240hz 0.03ms dual qhd curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw2725d 27\" 280hz 0.03ms qhd qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725D",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg 39gx900a-b 39\" oled wqhd gaming monitor 240hz": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "asus rog swift oled 27-inch qhd oled gaming monitor pg27aqwp-w": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG27AQWP-W",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw3225qf 32\" 4k 240hz qd-oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3225QF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw3425dw 34\" 240hz 0.03ms wqhd curved qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3425DW",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 34gs95qe-b 34\" 240hz wqhd oled 800r curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "34GS95QE-B",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "gigabyte aorus fo32u2p 32\" 4k uhd 240hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO32U2P",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "asus rog pg32ucdm3 4k 240hz oled gaming monitor for pc & console": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG32UCDM3",
+   "cond": "new",
+   "size": 4,
+   "seen": "2026-11-02"
+  },
+  "msi mag 341cqp qd-oled 34\" uwqhd 175hz 0.03ms curved oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "lg 32gs95uv-b 32\" 240hz 4k oled dual-mode ultragear gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "32GS95UV-B",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lenovo legion 27q-10 oled 26.5-inch qhd 240hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Legion 27Q-10",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey oled ls27fg502swxxl g5 27\" 80hz 0.03ms qd‑oled qhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey OLED LS27FG502SWXXL G5",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear 27gx790a-b 27\" 480hz oled qhd 1440p gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g8 ls27fg810swxxl 27\" 240hz 0.03ms 4k qd‑oled gaming monitor glare‑free": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey G8 LS27FG810SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "msi mpg 341cqpx qd-oled 34\" 2k uwqhd 240hz 0.03ms curved oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "samsung 32-inch m9 oled vision ai smart monitor ls32fm900swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "32-inch M9 OLED Vision AI Smart Monitor LS32FM900SWXXL",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "samsung odyssey g6 ls27dg610swxxl 27\" 240hz 0.03ms oled 2k qhd gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Odyssey G6 LS27DG610SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "dell s3225qc 32\" 120hz 4k qd-oled monitor hdr dolby vision": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "S3225QC",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "lenovo legion 27q-10 qd-oled 27 inch gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Legion 27Q-10",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
   }
  },
  "posts": {},
  "day": "2026-11-02",
- "calls": 7
+ "calls": 9
 }

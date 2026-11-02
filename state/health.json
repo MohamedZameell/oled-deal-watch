@@ -1,13 +1,13 @@
 {
- "Amazon.in": 0,
+ "Amazon.in": 1,
  "Flipkart": 0,
  "Vedant Computers": 0,
  "Elitehubs": 0,
- "PrimeABGB": 10,
- "PCStudio": 63,
+ "PrimeABGB": 11,
+ "PCStudio": 64,
  "Samsung India": 0,
  "Lenovo India": 0,
- "LG India": 0,
+ "LG India": 1,
  "Reddit": 0,
  "DesiDime": 0,
  "Price History Deals": 0,
@@ -17,5 +17,6 @@
  "Smartprix Deals": 0,
  "TPS Technologies": 0,
  "MD Computers": 0,
- "Smartprix": 0
+ "Smartprix": 0,
+ "BuyHatke": 0
 }
