@@ -583,7 +583,7 @@ async function samsungOnly() {
   const { items, errors } = await samsungApi(src);
   console.log('Samsung API items', items.length, errors.join(','));
   const history = readJson('history.json', {}); const steady = readJson('steady.json', {}); const fast = readJson('fast.json', {});
-  const now = new Date().toISOString(); const pings = [];
+  const now = new Date().toISOString(); const deals = [];
   for (const it of items) {
     const key = modelKey(it.title); if (!key) continue;
     const source = `${src.name} · ${it.store}`; const k = key + '|' + retailerOf(source);
@@ -599,11 +599,14 @@ async function samsungOnly() {
     const last = fast[k];
     if (last && it.price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
     fast[k] = { price: it.price, t: now };
-    pings.push(`⚡ <b>Samsung</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)} · <a href="${esc(it.url)}">${esc(source)}</a>`);
+    deals.push({ title: it.title, price: it.price, why, where: source, url: it.url });
   }
   // BuyHatke live prices for every watched OLED id (plain HTTP, one request per 50 ids): a flash deal on Amazon or
   // Flipkart reaches Telegram within 5 minutes instead of waiting for the next full scan. Read-only on
-  // buyhatke.json (the full scan owns the watchlist); last-seen prices live in fast.json as "bh|<model>|<shop>".
+  // buyhatke.json (the full scan owns the watchlist); last-seen prices live in fast.json PER LISTING ("bhid|<pos>~<pid>"):
+  // keyed per model+shop, two Amazon listings of one model (G6 "Smartchoice" + another) once faked a ₹54,935 -> ₹46,899
+  // "drop" that was just the other listing's normal price.
+  for (const k of Object.keys(fast)) if (k.startsWith('bh|')) delete fast[k];   // old per-model keys
   const { out: live, errors: bhErr } = await bh.livePrices();
   const stats = bh.statsByKey(); const nl = cfg.newLowAlert || {};
   console.log('BuyHatke live prices', live.length, bhErr.join(','));
@@ -614,29 +617,31 @@ async function samsungOnly() {
     const k = key + '|' + retailerOf(store);
     const s = stats[key] || {}; const hist = (history[key] || []).slice(-48).map((h) => h.price);
     const usual = s.monthAvg || (hist.length >= 6 ? median(hist) : seeds[key] || 0);
-    const seen = fast['bh|' + k]; fast['bh|' + k] = { price, t: now };
+    const id = 'bhid|' + w.pos + '~' + w.pid;
+    const seen = fast[id]; fast[id] = { price, t: now };
     const size = +((w.name.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i) || [])[1] || 0);
     const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`
       : s.low && price <= s.low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? `new all-time low (was ${fmt(s.low)})`
-      : seen && price <= seen.price * (cfg.dropThreshold || 0.9) && !fakeDiscount(w.hist?.series, price) ? `dropped from ${fmt(seen.price)} in the last few minutes`
+      // a drop counts only when it also lands well under the model's usual price: going back to normal is not a deal
+      : seen && price <= seen.price * (cfg.dropThreshold || 0.9) && usual && price <= usual * 0.9 && !fakeDiscount(w.hist?.series, price)
+        ? `dropped from ${fmt(seen.price)} (usual ~${fmt(usual)})`
       : cfg.priceAlertBelow && price < cfg.priceAlertBelow && BRANDS.test(w.name.toUpperCase()) && (!size || size >= 24) ? `under ${fmt(cfg.priceAlertBelow)}` : '';
     if (!why) continue;
     console.log(' ', key, store, fmt(price), why);
     const last = fast[k];
     if (last && price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
     fast[k] = { price, t: now };
-    pings.push(`⚡ <b>${esc(store)}</b>: ${esc(w.name.slice(0, 100))}\n<b>${fmt(price)}</b>, ${esc(why)}${s.monthAvg ? ` · 1-mo avg ${fmt(s.monthAvg)}` : ''} · <a href="${esc(w.url)}">open</a>`);
+    deals.push({ title: w.name, price, why, where: store, url: w.url });
   }
+  // every alert goes to Telegram and into the hourly digest (fast.json .log); email right away only under
+  // immediateEmailBelow (₹25k: Zameel's rule, everything else waits for the digest)
+  fast.log = [...(fast.log || []), ...deals.map((d) => ({ ...d, t: now }))].filter((d) => Date.now() - Date.parse(d.t) < 2 * DAY).slice(-60);
   writeJson('fast.json', fast);
-  console.log('pings', pings.length);
-  if (DRY) { console.log(pings.join('\n\n') || '(nothing to send)'); return; }
-  await sendTelegram(pings.join('\n\n'));
-  // the same pings by email, at once (the Telegram text is already safe HTML: <b>, <a> and escaped text)
-  if (pings.length) {
-    const first = pings[0].replace(/<[^>]+>/g, '').split('\n')[0].replace(/^⚡\s*/, '');
-    await sendMail(`⚡ OLED deal: ${first.slice(0, 90)}${pings.length > 1 ? ` (+${pings.length - 1} more)` : ''}`,
-      `<div style="font:15px Arial;max-width:640px">${pings.map((p) => `<p style="font-size:16px">${p.replace(/\n/g, '<br>')}</p>`).join('<hr>')}<p style="color:#6b7280">${esc(R.buyNote)}</p></div>`);
-  }
+  console.log('alerts', deals.length);
+  const tg = deals.map((d) => `⚡ <b>${esc(d.where)}</b>: ${esc(d.title.slice(0, 100))}\n<b>${fmt(d.price)}</b>, ${esc(d.why)} · <a href="${esc(d.url)}">open</a>`);
+  if (DRY) { console.log(tg.join('\n\n') || '(nothing to send)'); return; }
+  await sendTelegram(tg.join('\n\n'));
+  for (const d of deals.filter(mailNow)) await dealMail(d.title, d.price, d.why, d.where, d.url, '');
 }
 
 // one source's raw items -> the OLED-monitor listings the rules keep, normalised (model key, shop, condition).
@@ -694,7 +699,7 @@ async function earlyCheck(listings, verifyCtx) {
     earlyState.pinged.set(k, { kind, price: it.price, t: now });
     if (DRY) { console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why); continue; }
     await sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
-    await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? '✓ price + stock checked' : check);
+    if (mailNow(it)) await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? '✓ price + stock checked' : check);
   }
 }
 
@@ -823,7 +828,9 @@ async function main() {
     if (it.generic) continue;
     const k = it.key + '|' + it.retailer; const p = steady[k];
     // a shop cutting its own price 10%+ since it was last seen listing it is how flash sales start
-    if (p && it.price <= p.price * (cfg.dropThreshold || 0.9) && Date.parse(now) - Date.parse(p.seen) < 3 * DAY) it.dropFrom = p.price;
+    if (p && it.price <= p.price * (cfg.dropThreshold || 0.9) && Date.parse(now) - Date.parse(p.seen) < 3 * DAY &&
+      // and well under the usual price: a cheaper second listing coming back in stock is not a flash sale
+      (!usualPrice(it.key) || it.price <= usualPrice(it.key) * 0.9)) it.dropFrom = p.price;
     if (!p || Math.abs(it.price - p.price) > p.price * 0.02) steady[k] = { price: it.price, since: now, seen: now }; else p.seen = now;
     it.steadyDays = (Date.parse(now) - Date.parse(steady[k].since)) / DAY;
   }
@@ -1012,6 +1019,10 @@ async function main() {
     : `<h3>No new crazy deal this run.</h3>`;
   if (below.length) html += `<h3 style="color:#b91c1c">🎯 Under ${fmt(cfg.priceAlertBelow)}</h3><ul>${below.map((c) => `<li><b>${fmt(c.price)}</b> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (drops.length) html += `<h3 style="color:#b45309">📉 Sudden price drops</h3><ul>${drops.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.dropFrom)}</s> ${esc(c.title.slice(0, 90))}${c.risky ? ' ⚠ open-box/refurb?' : ''} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
+  // what the 5-minute check (Samsung + BuyHatke) alerted since the last digest: it only mails under ₹25k itself
+  const dgPrev = readJson('digest.json', {});
+  const fastLog = (readJson('fast.json', {}).log || []).filter((d) => !dgPrev.last || d.t > dgPrev.last);
+  if (fastLog.length) html += `<h3>⚡ Alerts from the 5-minute check since the last digest</h3><ul>${fastLog.map((d) => `<li><b>${fmt(d.price)}</b> ${esc(d.title.slice(0, 90))}: ${esc(d.why)} · <a href="${esc(d.url)}">${esc(d.where)}</a></li>`).join('')}</ul>`;
   if (fakeDrops.length) html += `<p style="color:#6b7280">Ignored ${fakeDrops.length} fake discount${fakeDrops.length > 1 ? 's' : ''} (price raised first, then "dropped" back): ${fakeDrops.map((c) => `${esc(c.key)} ${fmt(c.dropFrom)} → ${fmt(c.price)} at ${esc(c.source)}, normally ~${fmt(c.fake.normal)}`).join('; ')}.</p>`;
   if (newLows.length) html += `<h3 style="color:#15803d">🏆 New all-time lows</h3><ul>${newLows.map((c) => `<li><b>${fmt(c.price)}</b> <s style="color:#6b7280">${fmt(c.prevLow)}</s> lowest in ${Math.round(c.trackedDays)} days · ${esc(c.title.slice(0, 90))} · ${badge(c)}${aiTag(c)} · <a href="${esc(c.url)}">${esc(c.source)}</a></li>`).join('')}</ul>`;
   if (dropped.length) html += `<p style="color:#6b7280">Skipped ${dropped.length} deal${dropped.length > 1 ? 's' : ''} that failed the page check: ${dropped.map((c) => `${esc(c.key)} ${fmt(c.price)} at ${esc(c.source)} (${esc(c.check)})`).join('; ')}.</p>`;
@@ -1060,10 +1071,10 @@ async function main() {
   //                  ping) or a broken source is mailed at once; otherwise the digest goes out at most every digestEveryMin
   //  "alerts-only" - only deals, posts, broken sources, or the daily digest hour;   "always" - every run
   const dg = readJson('digest.json', {});
-  const dealNow = [...fresh, ...below, ...drops, ...newLows].some(notEarly);
+  const dealNow = [...fresh, ...below, ...drops, ...newLows].some((c) => notEarly(c) && mailNow(c));
   const send = cfg.emailMode === 'always' ? true
     : cfg.emailMode === 'alerts-only' ? dealNow || newPosts.length || broken.length || dailyDigest
-    : dealNow || broken.length || !dg.last || Date.now() - Date.parse(dg.last) >= ((cfg.digestEveryMin ?? 60) - 5) * 60e3;
+    : dealNow || !dg.last || Date.now() - Date.parse(dg.last) >= ((cfg.digestEveryMin ?? 60) - 5) * 60e3;
   if (!send && !process.env.FORCE_EMAIL) { console.log('no new deal; last digest', dg.last, '- skipping email'); return; }
   if (await sendMail(subject, html)) writeJson('digest.json', { ...dg, last: new Date().toISOString(), ...(dailyDigest ? { date: today } : {}) });
 }
@@ -1086,6 +1097,8 @@ async function sendMail(subject, html) {
     return true;
   } catch (e) { console.log('EMAIL FAILED', subject, String(e.message).slice(0, 120)); return false; }
 }
+// immediate email only under cfg.immediateEmailBelow (₹25k, Zameel 2026-11-02); everything else is in the hourly digest
+const mailNow = (d) => !cfg.immediateEmailBelow || d.price < cfg.immediateEmailBelow;
 // a short "act now" email for one deal (early ping or fast check), sent the same moment as its Telegram ping
 const dealMail = (title, price, why, where, url, check) => sendMail(`⚡ OLED deal: ${title.slice(0, 60)} ${fmt(price)} (${why})`,
   `<div style="font:15px Arial;max-width:640px"><h2 style="margin:0 0 6px;color:#b91c1c">⚡ ${esc(title.slice(0, 120))}</h2>` +

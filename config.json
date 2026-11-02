@@ -299,5 +299,6 @@
   "earlyPing": {
     "enabled": true
   },
-  "digestEveryMin": 60
+  "digestEveryMin": 60,
+  "immediateEmailBelow": 25000
 }
