@@ -237,11 +237,18 @@ async function scrapeSource(ctx, src, deskCtx = ctx) {
   // Amazon serves a bot wall to a cold session far more often than to one that opened the homepage first
   const warmup = async () => { if (src.warmup) { await page.goto(src.warmup, { waitUntil: 'domcontentloaded', timeout: 45000 }).catch(() => {}); await page.waitForTimeout(3000); } };
   await warmup();
+  // Amazon walls GitHub IPs in waves: once two searches in a row stay blocked through every retry, retrying in place
+  // just burns ~90 s per URL (it pushed runs past the 30-min job limit), so give the rest one try and leave them for
+  // the second pass; a time budget caps the whole source so the digest always goes out
+  const deadline = src.budgetMs ? Date.now() + src.budgetMs : Infinity;
+  let wallStreak = 0, skipped = 0;
   for (const url of src.urls) {
+    if (Date.now() > deadline) { blockedUrls.push(url); skipped++; continue; }
     try {
       // some sites (Amazon from datacenter IPs) block at random: retry with fresh cookies and a growing pause
       let body = '', blocked = true, tries = 0;
-      while (blocked && tries < (src.retries || 1)) {
+      const maxTries = wallStreak >= 2 ? 1 : (src.retries || 1);
+      while (blocked && tries < maxTries && Date.now() <= deadline) {
         if (tries) { await ctx.clearCookies(); await page.waitForTimeout(4000 + tries * 3000); await warmup(); }
         tries++;
         await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
@@ -256,7 +263,8 @@ async function scrapeSource(ctx, src, deskCtx = ctx) {
         blocked = BLOCKED.test(body.slice(0, 1500)) || BLOCKED.test(await page.title());
       }
       if (src.retries) console.log('TRIES', src.name, url, tries, blocked ? 'still blocked' : 'ok');
-      if (blocked) { errors.push('blocked/captcha'); blockedUrls.push(url); continue; }
+      if (blocked) { if (tries >= (src.retries || 1)) wallStreak++; errors.push('blocked/captcha'); blockedUrls.push(url); continue; }
+      wallStreak = 0;
       const before = items.length;
       if (src.kind === 'amazon') {
         for (const r of (await page.evaluate(amazonExtract)).filter((x) => x.price.includes(CUR))) items.push({ title: r.title, price: money(r.price), mrp: money(r.mrp), url: r.url });
@@ -290,6 +298,7 @@ async function scrapeSource(ctx, src, deskCtx = ctx) {
     } catch (e) { errors.push(String(e.message).slice(0, 60)); }
   }
   await page.close();
+  if (skipped) console.log('BUDGET', src.name, skipped, 'URLs skipped (time budget)');
   // Amazon search shows only the buy-box price; cheaper other sellers, Renewed and used units sit in each product's
   // offer panel, which Amazon only fills for a desktop browser (a phone-shaped one gets the buy box alone)
   if (src.offers) {
@@ -509,7 +518,7 @@ async function main() {
   // Amazon.in blocks GitHub's IPs in waves: the searches that hit the wall often go through a few minutes later
   for (const [src, r] of scraped) {
     if (!r.blockedUrls.length || !src.retries) continue;
-    const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls }, ctx);
+    const again = await scrapeSource(src.mobile ? mobileCtx : ctx, { ...src, urls: r.blockedUrls, budgetMs: src.secondPassBudgetMs || src.budgetMs }, ctx);
     console.log('SECOND PASS', src.name, r.blockedUrls.length, 'blocked ->', again.blockedUrls.length, 'still blocked');
     r.items.push(...again.items);
     if (!again.blockedUrls.length) r.errors = r.errors.filter((e) => e !== 'blocked/captcha');

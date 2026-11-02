@@ -26,6 +26,8 @@
       "kind": "amazon",
       "mobile": true,
       "retries": 5,
+      "budgetMs": 480000,
+      "secondPassBudgetMs": 300000,
       "urls": [
         "https://www.amazon.in/s?k=oled+gaming+monitor",
         "https://www.amazon.in/s?k=oled+monitor",
