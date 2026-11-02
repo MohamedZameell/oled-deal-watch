@@ -49,5 +49,5 @@ jobs:
           git add state/fast.json 2>/dev/null || exit 0
           git diff --staged --quiet && exit 0
           git commit -m "state: Samsung pings [skip ci]"
-          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; sleep 5; done
+          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; git rebase --abort 2>/dev/null; sleep 5; done
           exit 1
