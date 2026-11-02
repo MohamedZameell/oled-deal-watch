@@ -743,9 +743,137 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-02"
+  },
+  "lg 39gx900a smartchoice 99cm (39 inch) ultragear oled (3440x1440) curved gaming monitor, 240hz, 0.03ms(gtg), nvidia g-sync, amd freesync premium pro, hdmi x 2, dp, usb-c, tilt/height/swivel adjustable": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "39GX900A",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-02"
+  },
+  "benq mobiuz ex271uz (smartchoice) 27” 4k uhd 4th gen qd-oled 240hz gaming monitor| 0.03ms gtg|hdmi 2.0, dp 1.4|usb-c(90w)|99% dci-p3|amd freesync premium pro|kvm|height,swivel, tilt adjustable(white)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "msi mpg 341cqpx qd-oled 34 inch 2k uwqhd curved gaming monitor - 3440 x 1440(21:9) qd-oled panel, 240hz / 0.03ms, 99.3% dci-p3, δe≤2, displayhdr true black 400, dp 1.4a, hdmi 2.1, usb type c(pd:98w) [new · amazeo my pride]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-02"
+  },
+  "lg 32ep950-b ultrafine oled pro 4k monitor with 10-bit color usb-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "32EP950-B",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "benq mobiuz ex271qz 27\" 500hz 0.03ms qhd qd oled gaming monitor hdr freesync": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271QZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "asus rog strix oled xg32ucwg 31.5 inch 4k gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "ROG Strix OLED XG32UCWG",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-02"
+  },
+  "dell alienware aw2725df 27\" qhd 360hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725DF",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "68.5 cm (27) odyssey oled g8 g80sh 4k 240hz gaming monitor ls27hg800sw": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "68.5 cm (27) odyssey qd-oled g5 gaming monitor with 180 hz refresh rate and 0.03ms response time ls27fg502sw [corporate/student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG502SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "1.24 m odyssey oled g9 gaming monitor with 0.03 ms response time and 144 hz refresh rate ls49dg910sw [corporate/student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SW",
+   "cond": "new",
+   "size": null,
+   "seen": "2026-11-02"
+  },
+  "legion 27q-10 oled 67.31cms (26.5) monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27Q-10",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "lg ultragear™ 27 (68.58 cm) oled 480hz qhd gaming monitor | 0.03ms (gtg), dp 2.1, displayhdr true black 400": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "32 (80 cm) ultragear™ dual-mode oled gaming monitor | 4k uhd, 0.03ms (gtg), displayhdr true black 400": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Dual-Mode",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-02"
+  },
+  "alienware aw2726dm (smartchoice) 26.5\" qd oled monitor|99% dci-p3,0.03ms gtg,240hz|amd freesync premium|hdmi*2,dp 1.4|infinite contrast, 200cd/m2(typi": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-02"
+  },
+  "alienware aw2725d 27\" (68.58 cm) qd-oled gaming monitor with 280hz refresh rate, 0.03ms response, nvidia g-sync compatible, hdcp supported,": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725D",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-02"
+  },
+  "samsung 49\" (124.4cm) odyssey oled g9 curved gaming monitor (smartchoice) dual qhd 5120 x 1440|240hz|0.03ms|dci 99%|oled safeguard|freesync premium pr": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-02"
   }
  },
  "posts": {},
  "day": "2026-11-02",
- "calls": 9
+ "calls": 11
 }
