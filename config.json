@@ -13,7 +13,7 @@
     "buyNote": "Move fast: deals like this have sold out within a day. Before paying: confirm stock, Chennai delivery, warranty, and whether it is open-box/repackaged.",
     "footer": "Staff-store prices (Samsung Corporate / Student / Business) need that store's login to buy. Other prices are read from public listing pages and re-checked on the product page before an alert; verify before paying."
   },
-  "emailMode": "always",
+  "emailMode": "hourly",
   "crazyThreshold": 0.65,
   "nearMissThreshold": 0.8,
   "historyThreshold": 0.7,
@@ -298,5 +298,6 @@
   ],
   "earlyPing": {
     "enabled": true
-  }
+  },
+  "digestEveryMin": 60
 }

@@ -631,6 +631,12 @@ async function samsungOnly() {
   console.log('pings', pings.length);
   if (DRY) { console.log(pings.join('\n\n') || '(nothing to send)'); return; }
   await sendTelegram(pings.join('\n\n'));
+  // the same pings by email, at once (the Telegram text is already safe HTML: <b>, <a> and escaped text)
+  if (pings.length) {
+    const first = pings[0].replace(/<[^>]+>/g, '').split('\n')[0].replace(/^⚡\s*/, '');
+    await sendMail(`⚡ OLED deal: ${first.slice(0, 90)}${pings.length > 1 ? ` (+${pings.length - 1} more)` : ''}`,
+      `<div style="font:15px Arial;max-width:640px">${pings.map((p) => `<p style="font-size:16px">${p.replace(/\n/g, '<br>')}</p>`).join('<hr>')}<p style="color:#6b7280">${esc(R.buyNote)}</p></div>`);
+  }
 }
 
 // one source's raw items -> the OLED-monitor listings the rules keep, normalised (model key, shop, condition).
@@ -686,8 +692,9 @@ async function earlyCheck(listings, verifyCtx) {
     console.log('EARLY', it.key, it.source, fmt(it.price), why, '->', check);
     if (check === 'out of stock' || (suspect && check !== 'verified')) continue;
     earlyState.pinged.set(k, { kind, price: it.price, t: now });
-    await (DRY ? Promise.resolve(console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why))
-      : sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`));
+    if (DRY) { console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why); continue; }
+    await sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
+    await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? '✓ price + stock checked' : check);
   }
 }
 
@@ -1048,20 +1055,43 @@ async function main() {
   const today = new Date().toLocaleDateString('en-CA', { timeZone: R.timeZone });
   const dailyDigest = (R.dailyDigestHours || []).includes(hourNow) && readJson('digest.json', {}).date !== today;
   await sendTelegram(tg);
-  if (cfg.emailMode === 'alerts-only' && !fresh.length && !below.length && !drops.length && !newLows.length && !newPosts.length && !broken.length && !dailyDigest && !process.env.FORCE_EMAIL) { console.log('no alert; skipping email'); return; }
+  // email (config emailMode):
+  //  "hourly"      - a new deal (crazy / under target / real drop / new all-time low, not already mailed by an early
+  //                  ping) or a broken source is mailed at once; otherwise the digest goes out at most every digestEveryMin
+  //  "alerts-only" - only deals, posts, broken sources, or the daily digest hour;   "always" - every run
+  const dg = readJson('digest.json', {});
+  const dealNow = [...fresh, ...below, ...drops, ...newLows].some(notEarly);
+  const send = cfg.emailMode === 'always' ? true
+    : cfg.emailMode === 'alerts-only' ? dealNow || newPosts.length || broken.length || dailyDigest
+    : dealNow || broken.length || !dg.last || Date.now() - Date.parse(dg.last) >= ((cfg.digestEveryMin ?? 60) - 5) * 60e3;
+  if (!send && !process.env.FORCE_EMAIL) { console.log('no new deal; last digest', dg.last, '- skipping email'); return; }
+  if (await sendMail(subject, html)) writeJson('digest.json', { ...dg, last: new Date().toISOString(), ...(dailyDigest ? { date: today } : {}) });
+}
+
+// one email, used by the digest, the mid-scan early pings and the 5-minute fast check
+async function sendMail(subject, html) {
+  if (DRY) { console.log('MAIL (dry, not sent):', subject); return false; }
   if (process.env.MAIL_VIA_GH) {
     const { execFileSync } = await import('node:child_process');
     execFileSync('gh', ['workflow', 'run', 'mail.yml', '-R', process.env.MAIL_VIA_GH, '--json'], { input: JSON.stringify({ subject, html }) });
     console.log('email relayed via GitHub:', subject);
-    return;
+    return true;
   }
   const { GMAIL_USER, GMAIL_APP_PASSWORD, MAIL_TO } = process.env;
-  if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !MAIL_TO) throw new Error('Missing GMAIL_USER / GMAIL_APP_PASSWORD / MAIL_TO');
-  const tx = nodemailer.createTransport({ host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD } });
-  await tx.sendMail({ from: `${R.title} <${GMAIL_USER}>`, to: MAIL_TO, subject, html });
-  if (dailyDigest) writeJson('digest.json', { date: today });
-  console.log('email sent:', subject);
+  if (!GMAIL_USER || !GMAIL_APP_PASSWORD || !MAIL_TO) { console.log('no mail credentials in this job; not mailed:', subject); return false; }
+  try {
+    const tx = nodemailer.createTransport({ host: 'smtp.gmail.com', port: 465, secure: true, auth: { user: GMAIL_USER, pass: GMAIL_APP_PASSWORD } });
+    await tx.sendMail({ from: `${R.title} <${GMAIL_USER}>`, to: MAIL_TO, subject, html });
+    console.log('email sent:', subject);
+    return true;
+  } catch (e) { console.log('EMAIL FAILED', subject, String(e.message).slice(0, 120)); return false; }
 }
+// a short "act now" email for one deal (early ping or fast check), sent the same moment as its Telegram ping
+const dealMail = (title, price, why, where, url, check) => sendMail(`⚡ OLED deal: ${title.slice(0, 60)} ${fmt(price)} (${why})`,
+  `<div style="font:15px Arial;max-width:640px"><h2 style="margin:0 0 6px;color:#b91c1c">⚡ ${esc(title.slice(0, 120))}</h2>` +
+  `<p style="font-size:20px;margin:6px 0"><b>${fmt(price)}</b> · ${esc(why)}</p><p>${esc(where)}${check ? ` · ${esc(check)}` : ''}</p>` +
+  `<p><a href="${esc(url)}" style="background:#b91c1c;color:#fff;padding:10px 16px;text-decoration:none;border-radius:6px">Open the listing</a></p>` +
+  `<p style="color:#6b7280">${esc(R.buyNote)}</p></div>`);
 // --if-due: the outside timer fires every 15 min; a full scan runs when the last one is an hour old (15 min in a
 // sale season), and the runs in between only check the deal channels
 const lastScan = readJson('lastscan.json', {}).t;

@@ -39,6 +39,10 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          # deal emails go out the moment a deal is found (same time as the Telegram ping)
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
           SCAN_ARGS: ${{ inputs.args }}
         run: node scan.js --samsung-only $SCAN_ARGS
       - name: Save pinged deals
