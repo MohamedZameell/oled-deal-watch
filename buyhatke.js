@@ -125,18 +125,19 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     const { out, errors } = await prices();
     const refreshed = await refreshHistory(ctx, out.filter((x) => !x.oos).map((x) => x.w), { max: src.historyPerRun ?? 12, budgetMs: src.budgetMs ?? 150000 });
     const items = [];
-    let gone = 0;
+    let gone = 0; const tally = {};
     for (const { w, price, oos, exGst: noGst } of out) {
       if (oos || !w.name || noGst) continue;
       w.last = price;
       // BuyHatke's stock flag is stale (see amazonStock): Amazon listings are confirmed on Amazon itself; the rest
       // (Flipkart) go through verifyDeal's product-page check like any shop instead of counting as pre-verified
       const stock = w.pos === 63 ? await amazonStock(w.pid) : 'unknown';
+      if (w.pos === 63) tally[stock] = (tally[stock] || 0) + 1;
       if (stock === 'out of stock') { gone++; continue; }
       const store = w.store || STORE[w.pos] || `store ${w.pos}`;
       items.push({ title: w.name, price, mrp: 0, url: w.url || '', store, apiChecked: stock === 'in stock', bh: w.hist || null, bhId: idOf(w.pos, w.pid) });
     }
-    console.log('BUYHATKE dropped', gone, 'listings Amazon shows as unavailable');
+    console.log('BUYHATKE dropped', gone, 'listings Amazon shows as unavailable; Amazon page check', JSON.stringify(tally), amazonWalled ? '(Amazon walled us)' : '');
     console.log('BUYHATKE watching', Object.keys(st.ids).length, 'ids, priced', out.length, '(', out.filter((x) => x.oos).length, 'out of stock ), history refreshed', refreshed);
     writeJson('buyhatke.json', st);
     return { items, errors, blockedUrls: [] };
@@ -203,7 +204,8 @@ export async function amazonStock(asin) {
     if (r.status >= 400 || /captcha|api-services-support|enter the characters/i.test(t.slice(0, 20000))) amazonWalled = true;
     else if (/id="add-to-cart-button"|id="buy-now-button"/.test(t)) res = 'in stock';
     else if (/currently unavailable|no featured offers/i.test(t)) res = 'out of stock';
-  } catch {}
+  } catch (e) { console.log('amazonStock', asin, String(e.message).slice(0, 60)); }
+  if (amazonWalled && res === 'unknown') console.log('amazonStock walled at', asin);
   stockCache.set(asin, res);
   return res;
 }
