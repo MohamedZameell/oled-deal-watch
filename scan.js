@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
-import { createBuyHatke, fakeDiscount } from './buyhatke.js';
+import { createBuyHatke, fakeDiscount, exGst } from './buyhatke.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -618,6 +618,8 @@ async function samsungOnly() {
     const s = stats[key] || {}; const hist = (history[key] || []).slice(-48).map((h) => h.price);
     const usual = s.monthAvg || (hist.length >= 6 ? median(hist) : seeds[key] || 0);
     const id = 'bhid|' + w.pos + '~' + w.pid;
+    // GST-excluded price (BuyHatke quirk on Amazon Business listings): not a real price, don't alert or remember it
+    if (exGst(price, fast[id]?.price, w.last, usual)) { console.log('  skip ex-GST price', key, fmt(price)); continue; }
     const seen = fast[id]; fast[id] = { price, t: now };
     const size = +((w.name.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i) || [])[1] || 0);
     const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`

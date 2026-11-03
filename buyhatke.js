@@ -59,7 +59,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
         for (const w of chunk) {
           const raw = data[`${w.pos}~**~${w.pid}`]; if (!raw) continue;
           const p = JSON.parse(raw);
-          if (p.price > 0) out.push({ w, price: Math.round(p.price), oos: !!p.oos });
+          if (p.price > 0) out.push({ w, price: Math.round(p.price), oos: !!p.oos, exGst: exGst(p.price, w.last) });
         }
       } catch (e) { errors.push(String(e.message).slice(0, 60)); }
     }
@@ -125,8 +125,9 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     const { out, errors } = await prices();
     const refreshed = await refreshHistory(ctx, out.filter((x) => !x.oos).map((x) => x.w), { max: src.historyPerRun ?? 12, budgetMs: src.budgetMs ?? 150000 });
     const items = [];
-    for (const { w, price, oos } of out) {
-      if (oos || !w.name) continue;
+    for (const { w, price, oos, exGst: noGst } of out) {
+      if (oos || !w.name || noGst) continue;
+      w.last = price;
       const store = w.store || STORE[w.pos] || `store ${w.pos}`;
       items.push({ title: w.name, price, mrp: 0, url: w.url || '', store, apiChecked: true, bh: w.hist || null, bhId: idOf(w.pos, w.pid) });
     }
@@ -160,6 +161,12 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
 // Fake discount: the shop raised the price in the last 3 weeks, and today's "drop" only brings it back to (about)
 // what it normally cost before that. series = [[fromDate, toDate, price], ...] from BuyHatke's price timeline.
 // Returns { normal, hikedTo } when the drop is fake, otherwise null.
+// BuyHatke sometimes reports an Amazon Business ("Smartchoice") listing WITHOUT 18% GST: 2026-11-02 four fake
+// "drops" were all exactly price/1.18 (AW2726DM ₹39,799 -> ₹33,728). True when price is a reference price minus GST.
+export function exGst(price, ...refs) {
+  return refs.some((r) => r > 0 && Math.abs((price * 1.18) / r - 1) < 0.003);
+}
+
 export function fakeDiscount(series, price, nowMs = Date.now()) {
   if (!series?.length) return null;
   const DAY = 864e5;
