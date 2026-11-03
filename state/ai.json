@@ -1135,6 +1135,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-03"
+  },
+  "lg ultragear 39gs95qe-b 39″ wqhd 240hz oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1154,5 +1162,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 6
+ "calls": 7
 }
