@@ -1183,6 +1183,22 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-03"
+  },
+  "msi mag 321up qd-oled 31.5 inch 4k uhd gaming monitor - 3840x2160 quantum dot oled panel, 165hz,0.03ms,dci-p3, displayhdr true black 400 - dp 1.4a, hdmi 2.1(uhd 165hz), usb type-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "321UP",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-03"
+  },
+  "msi mag 321up qd-oled 31.5 inch 4k uhd gaming monitor - 3840x2160 quantum dot oled panel, 165hz,0.03ms,dci-p3, displayhdr true black 400 - dp 1.4a, hdmi 2.1(uhd 165hz), usb type-c [new · tradezoneindia©]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "321UP",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1202,5 +1218,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 8
+ "calls": 10
 }
