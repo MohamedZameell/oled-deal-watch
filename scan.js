@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
-import { createBuyHatke, fakeDiscount, exGst } from './buyhatke.js';
+import { createBuyHatke, fakeDiscount, exGst, amazonStock } from './buyhatke.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -629,11 +629,14 @@ async function samsungOnly() {
         ? `dropped from ${fmt(seen.price)} (usual ~${fmt(usual)})`
       : cfg.priceAlertBelow && price < cfg.priceAlertBelow && BRANDS.test(w.name.toUpperCase()) && (!size || size >= 24) ? `under ${fmt(cfg.priceAlertBelow)}` : '';
     if (!why) continue;
-    console.log(' ', key, store, fmt(price), why);
+    // BuyHatke's price/stock can be a stale cache: confirm Amazon listings on Amazon before pinging
+    const stock = w.pos === 63 ? await amazonStock(w.pid) : 'unknown';
+    console.log(' ', key, store, fmt(price), why, stock);
+    if (stock === 'out of stock') continue;
     const last = fast[k];
     if (last && price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
     fast[k] = { price, t: now };
-    deals.push({ title: w.name, price, why, where: store, url: w.url });
+    deals.push({ title: w.name, price, why: stock === 'in stock' ? why : why + ' (BuyHatke price, stock not confirmed: check before buying)', where: store, url: w.url });
   }
   // every alert goes to Telegram and into the hourly digest (fast.json .log); email right away only under
   // immediateEmailBelow (₹25k: Zameel's rule, everything else waits for the digest)

@@ -125,12 +125,18 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     const { out, errors } = await prices();
     const refreshed = await refreshHistory(ctx, out.filter((x) => !x.oos).map((x) => x.w), { max: src.historyPerRun ?? 12, budgetMs: src.budgetMs ?? 150000 });
     const items = [];
+    let gone = 0;
     for (const { w, price, oos, exGst: noGst } of out) {
       if (oos || !w.name || noGst) continue;
       w.last = price;
+      // BuyHatke's stock flag is stale (see amazonStock): Amazon listings are confirmed on Amazon itself; the rest
+      // (Flipkart) go through verifyDeal's product-page check like any shop instead of counting as pre-verified
+      const stock = w.pos === 63 ? await amazonStock(w.pid) : 'unknown';
+      if (stock === 'out of stock') { gone++; continue; }
       const store = w.store || STORE[w.pos] || `store ${w.pos}`;
-      items.push({ title: w.name, price, mrp: 0, url: w.url || '', store, apiChecked: true, bh: w.hist || null, bhId: idOf(w.pos, w.pid) });
+      items.push({ title: w.name, price, mrp: 0, url: w.url || '', store, apiChecked: stock === 'in stock', bh: w.hist || null, bhId: idOf(w.pos, w.pid) });
     }
+    console.log('BUYHATKE dropped', gone, 'listings Amazon shows as unavailable');
     console.log('BUYHATKE watching', Object.keys(st.ids).length, 'ids, priced', out.length, '(', out.filter((x) => x.oos).length, 'out of stock ), history refreshed', refreshed);
     writeJson('buyhatke.json', st);
     return { items, errors, blockedUrls: [] };
@@ -177,4 +183,27 @@ export function fakeDiscount(series, price, nowMs = Date.now()) {
   const recent = series.filter(([, to]) => Date.parse(to) >= nowMs - 21 * DAY).map(([, , v]) => v);
   const hikedTo = recent.length ? Math.max(...recent) : 0;
   return hikedTo >= normal * 1.1 && price >= normal * 0.95 ? { normal, hikedTo } : null;
+}
+
+// BuyHatke's live price for an Amazon listing is a CACHE: it kept saying "₹49,800, in stock" for the ViewSonic
+// XG2738 (B0GL83RWPV) while Amazon showed "Currently unavailable / No featured offers" (Zameel, 2026-11-03).
+// So every Amazon price from BuyHatke is checked against Amazon's own page (plain HTTP, mobile UA, no browser):
+// an add-to-cart / buy-now button = in stock; "currently unavailable" or "no featured offers" without one = out of
+// stock; a captcha or error = unknown (stops asking for the rest of the run, Amazon walls GitHub IPs at times).
+const stockCache = new Map(); let amazonWalled = false;
+export async function amazonStock(asin) {
+  if (stockCache.has(asin)) return stockCache.get(asin);
+  if (amazonWalled) return 'unknown';
+  let res = 'unknown';
+  try {
+    const r = await fetch(`https://www.amazon.in/dp/${asin}`, { signal: AbortSignal.timeout(20000), headers: {
+      'user-agent': 'Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+      'accept-language': 'en-IN,en;q=0.9', accept: 'text/html' } });
+    const t = await r.text();
+    if (r.status >= 400 || /captcha|api-services-support|enter the characters/i.test(t.slice(0, 20000))) amazonWalled = true;
+    else if (/id="add-to-cart-button"|id="buy-now-button"/.test(t)) res = 'in stock';
+    else if (/currently unavailable|no featured offers/i.test(t)) res = 'out of stock';
+  } catch {}
+  stockCache.set(asin, res);
+  return res;
 }
