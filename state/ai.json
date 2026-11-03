@@ -374,7 +374,7 @@
    "model": "MPG 341CQPX",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-02"
+   "seen": "2026-11-03"
   },
   "samsung odyssey oled g9 ls49cg930sw 49 inch dual qhd ultrawide curved monitor": {
    "kind": "monitor",
@@ -1103,6 +1103,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-03"
+  },
+  "msi mag 321upx qd-oled 31.5 inch 4k uhd flat gaming monitor - 3840 x 2160 quantum dot oled panel, 240hz / 0.03ms, 99% dci-p3, displayhdr true black 400, kvm - dp 1.4a, hdmi 2.1, usb type-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "321UPX",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1115,5 +1123,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 2
+ "calls": 3
 }
