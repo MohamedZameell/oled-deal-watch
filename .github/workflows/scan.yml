@@ -95,11 +95,11 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          HEADFUL: '1'   # visible Chrome          # deal emails go out the moment a deal is found (same time as the Telegram ping)
+          HEADFUL: '1'   # visible Chrome on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
+          # deal emails go out the moment a deal is found (same time as the Telegram ping)
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           MAIL_TO: ${{ secrets.MAIL_TO }}
- on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
           BROWSER_CHANNEL: chrome
         run: xvfb-run -a node scan.js --part=${{ matrix.part }} $SCAN_ARGS
       - uses: actions/upload-artifact@v6
