@@ -1111,7 +1111,9 @@ const dealMail = (title, price, why, where, url, check) => sendMail(`⚡ OLED de
 // sale season), and the runs in between only check the deal channels
 const lastScan = readJson('lastscan.json', {}).t;
 // every 15 min all year (the parallel scan takes ~15 min; minutes are free on a public repo): glitches don't wait for sales
-const due = !lastScan || Date.now() - Date.parse(lastScan) >= 14 * 60e3;
+// lastscan.json is stamped when combine FINISHES (~3-8 min after the :02 trigger), so 14 min skipped every other
+// 15-min slot (full scans ran every 30 min); dispatches are 15 min apart and the concurrency group stops overlaps
+const due = !lastScan || Date.now() - Date.parse(lastScan) >= 5 * 60e3;
 const has = (f) => process.argv.includes(f);
 // --due-check (parallel scan.yml's gate job): just report whether a full scan is due, as a step output
 if (has('--due-check')) {

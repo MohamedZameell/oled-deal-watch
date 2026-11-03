@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       args:
-        description: 'Extra scan.js flags, e.g. "--dry --verify-sample" for a test run that sends nothing and saves nothing'
+        description: 'Extra scan.js flags, e.g. "--dry --verify-sample" for a test run that sends nothing and saves nothing; "--email" forces the digest email'
         required: false
         default: ''
 
@@ -65,7 +65,7 @@ jobs:
           git add state
           git diff --staged --quiet && exit 0
           git commit -m "state: seen community posts [skip ci]"
-          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; git rebase --abort 2>/dev/null; sleep 5; done
+          for i in 1 2 3 4 5; do if git pull --rebase -X theirs -q && git push -q; then exit 0; fi; git rebase --abort 2>/dev/null; sleep $((RANDOM % 8 + 3)); done
           exit 1
 
   scrape:
@@ -159,7 +159,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           HEADFUL: '1'
           BROWSER_CHANNEL: chrome
-          FORCE_EMAIL: ${{ github.event_name == 'workflow_dispatch' && !contains(inputs.args, '--dry') && '1' || '' }}
+          FORCE_EMAIL: ${{ contains(inputs.args, '--email') && !contains(inputs.args, '--dry') && '1' || '' }}
         run: xvfb-run -a node scan.js --combine $SCAN_ARGS
       - name: Keep debug screenshots
         if: always()
@@ -177,5 +177,5 @@ jobs:
           git add state
           git diff --staged --quiet && exit 0
           git commit -m "state: update price history [skip ci]"
-          for i in 1 2 3; do git pull --rebase -X theirs -q && git push -q && exit 0; git rebase --abort 2>/dev/null; sleep 5; done
+          for i in 1 2 3 4 5; do if git pull --rebase -X theirs -q && git push -q; then exit 0; fi; git rebase --abort 2>/dev/null; sleep $((RANDOM % 8 + 3)); done
           exit 1
