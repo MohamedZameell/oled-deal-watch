@@ -1215,6 +1215,14 @@
    "cond": "new",
    "size": 34,
    "seen": "2026-11-03"
+  },
+  "samsung 49\" (124.4cm) odyssey oled g9 curved gaming monitor (smartchoice) dual qhd 5120 x 1440|240hz|0.03ms|dci 99%|oled safeguard|freesync premium pro|g-sync + logitech c920 hd pro webcam": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1234,5 +1242,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 12
+ "calls": 13
 }
