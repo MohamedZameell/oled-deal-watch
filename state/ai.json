@@ -718,7 +718,7 @@
    "model": "32-inch M9 OLED Vision AI Smart Monitor LS32FM900SWXXL",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-02"
+   "seen": "2026-11-03"
   },
   "samsung odyssey g6 ls27dg610swxxl 27\" 240hz 0.03ms oled 2k qhd gaming monitor": {
    "kind": "monitor",
@@ -726,7 +726,7 @@
    "model": "Odyssey G6 LS27DG610SWXXL",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-02"
+   "seen": "2026-11-03"
   },
   "dell s3225qc 32\" 120hz 4k qd-oled monitor hdr dolby vision": {
    "kind": "monitor",
@@ -782,7 +782,7 @@
    "model": "MOBIUZ EX271QZ",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-02"
+   "seen": "2026-11-03"
   },
   "asus rog strix oled xg32ucwg 31.5 inch 4k gaming monitor": {
    "kind": "monitor",
@@ -1087,6 +1087,22 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-03"
+  },
+  "gigabyte aorus fo27q3 27\" 360hz 1440p qhd hdr ready oled panel gaming monitor with dual speakers - black": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO27Q3",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-03"
+  },
+  "dell aw series 68.58 cm (27 inch) 4k ultra hd oled panel gaming monitor (aw2725q)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725Q",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1099,5 +1115,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 1
+ "calls": 2
 }
