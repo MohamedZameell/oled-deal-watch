@@ -1143,6 +1143,46 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-03"
+  },
+  "asus rog strix xg32ucwg 32 inch 4k 165hz glossy oled pc screen gamer": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-03"
+  },
+  "msi mag341cqp qd-oled 34\" curved gaming monitor, 3440 x 1440 (uwqhd), 0.03ms response time, 175hz, true black hdr 400, hdmi, dp port, usb type-c, tilt, height adjustable": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-03"
+  },
+  "asus rog swift 27”1440p oled dsc gaming monitor (pg27aqdm) - qhd (2560x1440), 240hz, 0.03ms, g-sync compatible, anti-glare micro-texture coating, 99% dci-p3, true 10-bit, displayport,black": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG27AQDM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-03"
+  },
+  "lg 27gx790a-b 27-inch ultragear oled gaming monitor qhd 1440p 480hz [new · amazeo my pride]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-03"
+  },
+  "samsung 32\" oled 4k odyssey g7 gaming monitor (smartchoice)|uhd 3840 x 2160|4k 165hz / fhd 330 hz|0.03ms|pantone validated||ergonomic stand|freesync p": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "32\" OLED 4K Odyssey G7",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-03"
   }
  },
  "posts": {
@@ -1162,5 +1202,5 @@
   }
  },
  "day": "2026-11-03",
- "calls": 7
+ "calls": 8
 }
