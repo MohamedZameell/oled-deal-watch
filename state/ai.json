@@ -1263,6 +1263,54 @@
    "cond": "new",
    "size": 26.7,
    "seen": "2026-11-04"
+  },
+  "msi 86.82 cm (34 inch) curved full hd ips panel gaming monitor (mpg341cqpx qd oled)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-04"
+  },
+  "msi 80.01 cm (32 inch) full hd ips panel gaming monitor (mag321up qd-oled)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG321UP",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-04"
+  },
+  "msi 86.36 cm (34 inch) curved full hd ips panel gaming monitor (mag341cqp qd oled)": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "MAG341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-04"
+  },
+  "lg ultragear 86.36 cm (34 inch) curved wqhd led backlit oled panel with 800r curvature, 1.5m:1 contrast ratio, hdr true black 400, amd free sync compatible, height/tilt/swivel stand gaming monitor (34gs95qe-bb.atrlmun)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "34GS95QE-BB.ATRLMUN",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-04"
+  },
+  "msi 80.01 cm (32 inch) full hd ips panel gaming monitor (mag321upx qd oled)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG321UPX",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-04"
+  },
+  "msi 81.28 cm (32 inch) uhd oled panel with displayhdr true black 400, clear mr13000, 138.2% srgb, smart crosshair, adjustable stand flat gaming monitor (mag 321upx qd oled)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MAG 321UPX",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-04"
   }
  },
  "posts": {
@@ -1282,5 +1330,5 @@
   }
  },
  "day": "2026-11-04",
- "calls": 6
+ "calls": 7
 }
