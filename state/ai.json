@@ -1239,6 +1239,14 @@
    "cond": "new",
    "size": 31.5,
    "seen": "2026-11-04"
+  },
+  "samsung odyssey g9 124.46 cm (49 inch) curved dqhd led backlit oled panel with hdr10+, quantum dot, 1800r curvature, amd free sync compatible, height adjustable stand gaming monitor (ls49dg930swxxl)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-04"
   }
  },
  "posts": {
@@ -1258,5 +1266,5 @@
   }
  },
  "day": "2026-11-04",
- "calls": 3
+ "calls": 4
 }
