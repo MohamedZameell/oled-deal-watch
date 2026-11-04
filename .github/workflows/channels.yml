@@ -49,5 +49,5 @@ jobs:
           git add state
           git diff --staged --quiet && exit 0
           git commit -m "state: seen community posts [skip ci]"
-          for i in 1 2 3 4 5; do if git pull --rebase -X theirs -q && git push -q; then exit 0; fi; git rebase --abort 2>/dev/null; sleep $((RANDOM % 8 + 3)); done
+          for i in 1 2 3 4 5; do if git pull --rebase -X theirs -q && git push -q; then exit 0; fi; git rebase --abort 2>/dev/null || true; sleep $((RANDOM % 8 + 3)); done
           exit 1
