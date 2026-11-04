@@ -1311,6 +1311,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-04"
+  },
+  "msi 86.36 cm (34 inch) curved uwqhd oled panel with displayhdr true black 400, clear mr13000, 139.1% srgb, smart crosshair, height adjustable gaming monitor (mpg 341cqpx qd oled)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MPG 341CQPX QD OLED",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-04"
   }
  },
  "posts": {
@@ -1330,5 +1338,5 @@
   }
  },
  "day": "2026-11-04",
- "calls": 7
+ "calls": 8
 }
