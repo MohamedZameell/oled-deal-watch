@@ -1359,6 +1359,14 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-05"
+  },
+  "samsung odyssey g5 qd-oled 68.58 cm (27 inch) quad hd oled panel monitor (ls27fg502swxxl-(2560 x 1440|)180 hz| pantone-validated|g-sync,1.07b clr, dp,hdmi)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-05"
   }
  },
  "posts": {
@@ -1378,5 +1386,5 @@
   }
  },
  "day": "2026-11-05",
- "calls": 2
+ "calls": 3
 }
