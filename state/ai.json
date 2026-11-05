@@ -1367,6 +1367,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-05"
+  },
+  "samsung odyssey quantam dot oled g8 ls32hg800swxxl 81.28 cm (32 inch) 4k ultra hd oled panel gaming monitor (glare free,pantone validated,hdr true black 400,hdmi,dp 2.1(uhbr20)& usb-c (98w))": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-05"
   }
  },
  "posts": {
@@ -1386,5 +1394,5 @@
   }
  },
  "day": "2026-11-05",
- "calls": 3
+ "calls": 4
 }
