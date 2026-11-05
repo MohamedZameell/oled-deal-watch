@@ -1351,6 +1351,14 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-05"
+  },
+  "alienware aw3926qw 39\" 5k oled curved gaming monitor, 165hz refresh rate, 0.03ms response time, hdr, nvidia g-sync + amd freesync premium pro + vesa, amd freesync premium pro, hdmi 2.1, usb-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-05"
   }
  },
  "posts": {
@@ -1370,5 +1378,5 @@
   }
  },
  "day": "2026-11-05",
- "calls": 1
+ "calls": 2
 }
