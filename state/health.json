@@ -1,10 +1,10 @@
 {
- "Amazon.in": 1,
+ "Amazon.in": 0,
  "Flipkart": 0,
  "Vedant Computers": 0,
  "Elitehubs": 0,
- "PrimeABGB": 0,
- "PCStudio": 392,
+ "PrimeABGB": 1,
+ "PCStudio": 393,
  "Samsung India": 0,
  "Lenovo India": 0,
  "LG India": 0,
@@ -18,5 +18,5 @@
  "TPS Technologies": 0,
  "MD Computers": 0,
  "Smartprix": 0,
- "BuyHatke": 30
+ "BuyHatke": 31
 }
