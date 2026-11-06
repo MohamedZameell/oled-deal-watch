@@ -1399,8 +1399,15 @@
    "price": 5001,
    "note": "Acer 24\" gaming monitor for sale in Lucknow, Rs 5000",
    "t": "2026-11-03"
+  },
+  "t3_1xpawqj": {
+   "deal": false,
+   "model": null,
+   "price": 0,
+   "note": "Question about 1440p OLED monitor under 5:00k",
+   "t": "2026-11-06"
   }
  },
  "day": "2026-11-06",
- "calls": 1
+ "calls": 2
 }
