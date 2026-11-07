@@ -1399,6 +1399,14 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-07"
+  },
+  "benq mobiuz ex271qz 27 2k qhd 3rd gen qd-oled 500hz gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271QZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-07"
   }
  },
  "posts": {
@@ -1425,5 +1433,5 @@
   }
  },
  "day": "2026-11-07",
- "calls": 2
+ "calls": 3
 }
