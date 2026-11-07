@@ -1383,6 +1383,14 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-07"
+  },
+  "gigabyte aorus fo32u2p 32-inch uhd oled 240hz hdr gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Aorus FO32U2P",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-07"
   }
  },
  "posts": {
@@ -1409,5 +1417,5 @@
   }
  },
  "day": "2026-11-07",
- "calls": 0
+ "calls": 1
 }
