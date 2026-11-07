@@ -1407,6 +1407,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-07"
+  },
+  "benq mobiuz ex271qz 27”(smartchoice) 2k qhd 3rd gen qd-oled 500hz gaming monitor| 0.03ms gtg|hdmi 2.1, dp 1.4|usb-c|99% dci-p3|amd freesync premium pro|height,swivel, tilt adjustable(white)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271QZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-07"
   }
  },
  "posts": {
@@ -1433,5 +1441,5 @@
   }
  },
  "day": "2026-11-07",
- "calls": 3
+ "calls": 4
 }
