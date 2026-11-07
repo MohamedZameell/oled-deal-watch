@@ -63,6 +63,20 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
         }
       } catch (e) { errors.push(String(e.message).slice(0, 60)); }
     }
+    // BuyHatke's priceData went empty on 2026-11-06: Amazon ids it did not answer are read from Amazon itself instead
+    // (4 at a time, 150 s budget). If priceData comes back it answers first and this loop has nothing to do.
+    if (AZ_URL) {
+      const have = new Set(out.map((x) => x.w.pid));
+      const amazon = ids.filter((w) => w.pos === 63 && !have.has(w.pid));
+      const todo = [...amazon]; const t0 = Date.now(); let n = 0;
+      await Promise.all(Array.from({ length: 4 }, async () => {
+        for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
+          const a = await azDetails(w.pid);
+          if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false }); n++; }
+        }
+      }));
+      console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
+    }
     return { out, errors };
   }
 
@@ -191,9 +205,31 @@ export function fakeDiscount(series, price, nowMs = Date.now()) {
 // So every Amazon price from BuyHatke is checked against Amazon's own page (plain HTTP, mobile UA, no browser):
 // an add-to-cart / buy-now button = in stock; "currently unavailable" or "no featured offers" without one = out of
 // stock; a captcha or error = unknown (stops asking for the rest of the run, Amazon walls GitHub IPs at times).
+// Amazon price + stock straight from Amazon through omkarcloud/amazon-scraper (pinned, started by the workflow on
+// localhost; see .github/actions/amazon-scraper). Real India prices at Zameel's pincode, so no stale-cache problem and no
+// GitHub-IP wall. Only active when AMAZON_SCRAPER_URL is set; any failure returns null and the old paths take over.
+const AZ_URL = process.env.AMAZON_SCRAPER_URL, AZ_PIN = process.env.AMAZON_PINCODE || '622001';
+const azCache = new Map(); let azFails = 0;
+export async function azDetails(asin) {
+  if (!AZ_URL || azFails >= 3) return null;           // 3 failures in a row = scraper is down/blocked: stop asking this run
+  if (azCache.has(asin)) return azCache.get(asin);
+  let res = null;
+  try {
+    const link = encodeURIComponent('https://www.amazon.in/dp/' + asin);
+    const r = await fetch(`${AZ_URL}/products/details?product=${link}&postal_code=${AZ_PIN}`, { signal: AbortSignal.timeout(60000) });
+    const d = await r.json();
+    if (d && d.asin === asin && d.availability) { res = { price: Math.round(d.price?.amount || 0), inStock: !!d.availability.is_in_stock }; azFails = 0; }
+    else azFails++;
+  } catch (e) { azFails++; console.log('azDetails', asin, String(e.message).slice(0, 60)); }
+  azCache.set(asin, res);
+  return res;
+}
+
 const stockCache = new Map(); let amazonWalled = false;
 export async function amazonStock(asin) {
   if (stockCache.has(asin)) return stockCache.get(asin);
+  const az = await azDetails(asin);
+  if (az) { const r = az.inStock && az.price ? 'in stock' : 'out of stock'; stockCache.set(asin, r); return r; }
   if (amazonWalled) return 'unknown';
   let res = 'unknown';
   try {

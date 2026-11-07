@@ -15,7 +15,7 @@ permissions:
   contents: write   # commits state/fast.json so a Samsung deal is only pinged once
 
 concurrency:
-  group: oled-samsung   # own group: it only writes state/fast.json, so it never waits behind a full scan
+  group: oled-samsung${{ github.ref_name != 'main' && '-test' || '' }}   # own group: it only writes state/fast.json, so it never waits behind a full scan
   cancel-in-progress: false
 
 jobs:
@@ -35,8 +35,10 @@ jobs:
       - run: npm ci --no-audit --no-fund
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - uses: ./.github/actions/amazon-scraper
       - name: Check Samsung stores + BuyHatke live prices (Amazon/Flipkart)
         env:
+          AMAZON_SCRAPER_URL: http://localhost:8000
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           # deal emails go out the moment a deal is found (same time as the Telegram ping)

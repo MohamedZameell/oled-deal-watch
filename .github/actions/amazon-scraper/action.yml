@@ -1,0 +1,23 @@
+name: Start Amazon scraper
+description: Installs omkarcloud/amazon-scraper at a pinned, audited commit and serves it on localhost:8000 for the rest of the job. Never fails the job (the scan falls back to its old Amazon paths).
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v6
+      continue-on-error: true
+      with:
+        python-version: '3.12'
+        cache: pip
+        cache-dependency-path: .github/actions/amazon-scraper/requirements.txt
+    - name: Install + start
+      shell: bash
+      continue-on-error: true
+      run: |
+        # pinned to the commit that was read through and tested on 2026-11-08; MIT; its only network targets are amazon hosts
+        git clone --quiet https://github.com/omkarcloud/amazon-scraper "$RUNNER_TEMP/az"
+        git -C "$RUNNER_TEMP/az" checkout --quiet ecf93fa5988b7acfc36a76d7b67d94e868937731
+        pip install --quiet -r "$RUNNER_TEMP/az/requirements.txt"
+        cd "$RUNNER_TEMP/az"
+        nohup python run.py > "$RUNNER_TEMP/amazon-scraper.log" 2>&1 &
+        for i in $(seq 1 20); do curl -sf http://localhost:8000/health >/dev/null && { echo "amazon scraper up"; exit 0; }; sleep 1; done
+        echo "amazon scraper did not start"; tail -n 20 "$RUNNER_TEMP/amazon-scraper.log"; exit 1

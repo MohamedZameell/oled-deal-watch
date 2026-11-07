@@ -91,8 +91,11 @@ jobs:
       - run: npm ci --no-audit --no-fund
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: '1'
+      - uses: ./.github/actions/amazon-scraper
+        if: matrix.part == 'shops'
       - name: Scrape ${{ matrix.part }} (early Telegram pings)
         env:
+          AMAZON_SCRAPER_URL: http://localhost:8000
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           HEADFUL: '1'   # visible Chrome on a virtual screen (xvfb-run): Smartprix's Cloudflare check rejects headless Chrome
