@@ -218,8 +218,14 @@ export async function azDetails(asin) {
     const link = encodeURIComponent('https://www.amazon.in/dp/' + asin);
     const r = await fetch(`${AZ_URL}/products/details?product=${link}&postal_code=${AZ_PIN}`, { signal: AbortSignal.timeout(60000) });
     const d = await r.json();
-    if (d && d.asin === asin && d.availability) { res = { price: Math.round(d.price?.amount || 0), inStock: !!d.availability.is_in_stock }; azFails = 0; }
-    else azFails++;
+    if (d && d.asin === asin && d.availability) {
+      azFails = 0;
+      const price = Math.round(d.price?.amount || 0);
+      // third-party BUNDLE listings ("G9 + Logitech webcam", seller Clicktech) come back with the add-on's price (₹2,995 for a
+      // ₹87k monitor: dry run 2026-11-08 B0HDSK5WMF): never trust a bundle title or a price no OLED monitor sells at
+      if (price && (price < 10000 || / \+ /.test(d.title || ''))) console.log('azDetails ignoring bundle/implausible price', asin, price);
+      else res = { price, inStock: !!d.availability.is_in_stock };
+    } else azFails++;
   } catch (e) { azFails++; console.log('azDetails', asin, String(e.message).slice(0, 60)); }
   azCache.set(asin, res);
   return res;
