@@ -1,5 +1,5 @@
 {
- "t": "2026-11-08T01:05:50.919Z",
+ "t": "2026-11-08T01:20:12.891Z",
  "items": [
   {
    "key": "AW2725D",
@@ -62,6 +62,16 @@
    "url": "https://www.amazon.in/dp/B0FJFT8FM1"
   },
   {
+   "key": "XG27AQDMG",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 124319,
+   "risky": false,
+   "title": "ASUS ROG Strix 27\" 1440P OLED Gaming Monitor (XG27AQDMG) - QHD, Bright OLED, 240Hz, 0.03ms, Custom Heatsink, Anti-Flicker, Uniform Brightness, G-SYNC Compatible, DCI-P3",
+   "url": "https://www.amazon.in/dp/B0CZWM44QP"
+  },
+  {
    "key": "MPG341CQPX",
    "generic": false,
    "source": "Amazon.in",
@@ -112,14 +122,14 @@
    "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
-   "key": "~SAMSUNG 27\" QHD 240Hz",
-   "generic": true,
+   "key": "AW2725DF",
+   "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 54894,
+   "price": 95990,
    "risky": false,
-   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync + Logitech C920 HD Pro Webcam",
-   "url": "https://www.amazon.in/dp/B0HDSDG9RL"
+   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment",
+   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
   },
   {
    "key": "AG276QZD2",
@@ -812,16 +822,6 @@
    "url": "https://www.amazon.in/dp/B0GXL1STL2"
   },
   {
-   "key": "MAG341CQP",
-   "generic": false,
-   "source": "BuyHatke · Amazon",
-   "retailer": "amazon",
-   "price": 85999,
-   "risky": false,
-   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
-   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
-  },
-  {
    "key": "32GS95UV",
    "generic": false,
    "source": "BuyHatke · Amazon",
@@ -830,6 +830,16 @@
    "risky": false,
    "title": "LG ‎32GS95UV 32 Inch Ultragear OLED Gaming Monitor, UHD, 3840 x 2160, 240Hz, 0.03ms, DisplayHDR, True Black 400, AMD FreeSync Premium Pro, NVIDIA G-Sync, HDMI 2.1, DP, Tilt/Height/Swivel Stand, Black",
    "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
+  },
+  {
+   "key": "MAG341CQP",
+   "generic": false,
+   "source": "BuyHatke · Amazon",
+   "retailer": "amazon",
+   "price": 85999,
+   "risky": false,
+   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
+   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
   },
   {
    "key": "~SAMSUNG 27\" QHD 180Hz",
@@ -942,26 +952,6 @@
    "url": "https://www.flipkart.com/lg-39gx900a-21-9-ultragear-gx9-800r-curve-99-06-cm-39-inch-curved-uwqhd-oled-panel-gaming-monitor-39gx900a-3440x1440-freesync-premium-hdmi-x2-dp-usb-c-65w-pd-height-swivel/p/itm96c831f029c54"
   },
   {
-   "key": "32G80SH",
-   "generic": false,
-   "source": "Smartprix · Flipkart",
-   "retailer": "flipkart",
-   "price": 89899,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G8 G80SH 32 inch Ultra HD 4K Gaming Monitor (LS32HG800SWXXL)",
-   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-32-inch-ultra-hd-ppd10q65ndr9"
-  },
-  {
-   "key": "AI S322",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 67999,
-   "risky": false,
-   "title": "DELL S Series 81.28 cm (32 inch) 4K Ultra HD OLED Panel with AI-enhanced 3D Spatial Audio, 99% DCI-P3, 1,500,000:1, 1000 nits, 5 Speakers, Ergo, Integrated USB Hub,2 USB Type-C (90w upstream,15w downstream) Monitor (S3225QC)",
-   "url": "https://www.flipkart.com/dell-s-series-81-28-cm-32-inch-4k-ultra-hd-oled-panel-ai-enhanced-3d-spatial-audio-99-dci-p3-1-500-000-1-1000-nits-5-speakers-ergo-integrated-usb-hub-2-type-c-90w-upstream-15w-downstream-monitor-s3225qc/p/itm1df1c13a53515"
-  },
-  {
    "key": "PG27AQDM",
    "generic": false,
    "source": "Flipkart",
@@ -970,6 +960,16 @@
    "risky": false,
    "title": "ASUS ROG Series 68.58 cm (27 Inch) Full HD OLED Panel with custom heatsink, intelligent voltage optimization, uniform brightness, DisplayWidget Center, anti-glare Gaming Monitor (PG27AQDM)",
    "url": "https://www.flipkart.com/asus-rog-series-68-58-cm-27-inch-full-hd-oled-panel-custom-heatsink-intelligent-voltage-optimization-uniform-brightness-displaywidget-center-anti-glare-gaming-monitor-pg27aqdm/p/itmfe1473bbb0a30"
+  },
+  {
+   "key": "XG27AQDMES",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 75999,
+   "risky": false,
+   "title": "ASUS ROG Strix 67.31 cm (27 inch) Quad HD IPS Panel Gaming Monitor (ROG Strix OLED XG27AQDMES gaming monitor 27-inch 1440p QD-OLED, 240 Hz)",
+   "url": "https://www.flipkart.com/asus-rog-strix-67-31-cm-27-inch-quad-hd-ips-panel-gaming-monitor-rog-oled-xg27aqdmes-27-inch-1440p-qd-oled-240-hz/p/itma58efde4943f3"
   },
   {
    "key": "AG276QZD2",
@@ -990,6 +990,16 @@
    "risky": false,
    "title": "Alienware AW2726DM 27 inch WQHD QD OLED Monitor",
    "url": "https://www.smartprix.com/monitors/alienware-aw2726dm-27-inch-wqhd-qd-oled-monitor-ppd1kml1l2fw"
+  },
+  {
+   "key": "32G80SH",
+   "generic": false,
+   "source": "Smartprix · Flipkart",
+   "retailer": "flipkart",
+   "price": 89899,
+   "risky": false,
+   "title": "Samsung Odyssey OLED G8 G80SH 32 inch Ultra HD 4K Gaming Monitor (LS32HG800SWXXL)",
+   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-32-inch-ultra-hd-ppd10q65ndr9"
   },
   {
    "key": "49G93SC",
