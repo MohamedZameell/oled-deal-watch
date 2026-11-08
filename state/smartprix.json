@@ -500,19 +500,12 @@
   ]
  },
  "pd1u9vzjaw2": {
-  "t": "2026-11-08T09:03:59.033Z",
-  "listPrice": 104999,
+  "t": "2026-11-08T11:04:19.908Z",
+  "listPrice": 85485,
   "name": "LG 34GS95QE 34 inch WQHD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/lg-34gs95qe-34-inch-ultra-hd-4k-gaming-monitor-ppd1u9vzjaw2",
-  "drop": -1.0693117,
+  "drop": 0,
   "rows": [
-   {
-    "store": "Flipkart",
-    "price": 104999,
-    "stock": "IN_STOCK",
-    "cond": "new",
-    "offers": []
-   },
    {
     "store": "Amazon",
     "price": 85485,
@@ -521,6 +514,13 @@
     "offers": [
      "Amazon Great Indian Festival"
     ]
+   },
+   {
+    "store": "Flipkart",
+    "price": 104999,
+    "stock": "OUT_OF_STOCK",
+    "cond": "new",
+    "offers": []
    }
   ]
  },
