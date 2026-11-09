@@ -1,9 +1,0 @@
-name: BH probe (temp)
-on: workflow_dispatch
-jobs:
-  probe:
-    runs-on: ubuntu-24.04
-    timeout-minutes: 3
-    steps:
-      - uses: actions/checkout@v5
-      - run: node scripts/bh-probe.mjs
