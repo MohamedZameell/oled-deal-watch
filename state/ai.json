@@ -1086,7 +1086,7 @@
    "model": "LS27HG800SWXXL",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-06"
+   "seen": "2026-11-09"
   },
   "gigabyte aorus fo27q3 27\" 360hz 1440p qhd hdr ready oled panel gaming monitor with dual speakers - black": {
    "kind": "monitor",
@@ -1206,7 +1206,7 @@
    "model": "LS27DG600SWXXL",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-04"
+   "seen": "2026-11-09"
   },
   "msi mpg 341cqpx qd-oled 34 inch monitor": {
    "kind": "monitor",
@@ -1246,7 +1246,7 @@
    "model": "LS49DG930SWXXL",
    "cond": "new",
    "size": 49,
-   "seen": "2026-11-08"
+   "seen": "2026-11-09"
   },
   "asus rog strix 27\" 1440p oled gaming monitor (xg27aqdmg) - qhd, bright oled, 240hz, 0.03ms, custom heatsink, anti-flicker, uniform brightness, g-sync compatible, dci-p3": {
    "kind": "monitor",
@@ -1294,7 +1294,7 @@
    "model": "34GS95QE-BB.ATRLMUN",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-05"
+   "seen": "2026-11-09"
   },
   "msi 80.01 cm (32 inch) full hd ips panel gaming monitor (mag321upx qd oled)": {
    "kind": "monitor",
@@ -1310,7 +1310,7 @@
    "model": "MAG 321UPX",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-05"
+   "seen": "2026-11-09"
   },
   "msi 86.36 cm (34 inch) curved uwqhd oled panel with displayhdr true black 400, clear mr13000, 139.1% srgb, smart crosshair, height adjustable gaming monitor (mpg 341cqpx qd oled)": {
    "kind": "monitor",
@@ -1318,7 +1318,7 @@
    "model": "MPG 341CQPX QD OLED",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-05"
+   "seen": "2026-11-09"
   },
   "asus rog strix xg32ucwg 32 inch ultra hd 4k oled monitor": {
    "kind": "monitor",
@@ -1448,5 +1448,5 @@
   }
  },
  "day": "2026-11-09",
- "calls": 1
+ "calls": 2
 }
