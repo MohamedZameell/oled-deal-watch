@@ -9,7 +9,7 @@ console.log('amazon misc ASINs: http', r.s, 'answered', Object.keys(r.d).length,
 for (const ln of [1398, 1, 2, 3, 5, 10, 20, 100, 500]) {
   try {
     const c = await fetch(`${API}/getCategoryProducts?ln=${ln}&sort=aiscore-desc&limit=15&page=1`, { headers: H, signal: AbortSignal.timeout(30000) });
-    const j = JSON.parse(await c.text()); const items = j.data || j.products || [];
+    const j = JSON.parse(await c.text()); const items = j.data?.categories?.[0]?.items || []; if (!items.length) console.log('raw', ln, JSON.stringify(j).slice(0, 150));
     if (!items.length) { console.log('cat', ln, 'http', c.status, 'items 0'); continue; }
     const pos = {}; items.forEach((x) => { pos[x.pos] = (pos[x.pos] || 0) + 1; });
     const p = await post(items.map((x) => [x.pos, x.pid]));
