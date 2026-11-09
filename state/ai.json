@@ -1438,8 +1438,15 @@
    "price": 0,
    "note": "Question about 1440p OLED monitor under 5:00k",
    "t": "2026-11-06"
+  },
+  "t3_1xrd99u": {
+   "deal": false,
+   "model": null,
+   "price": 0,
+   "note": "Help choosing OLED monitor from two options within ₹50k budget",
+   "t": "2026-11-09"
   }
  },
  "day": "2026-11-09",
- "calls": 0
+ "calls": 1
 }
