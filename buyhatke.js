@@ -55,7 +55,9 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       const chunk = ids.slice(i, i + 50);
       try {
         const r = await fetch(`${API}/thunder/priceData`, { method: 'POST', headers: HEADERS, body: JSON.stringify({ param: chunk.map((w) => [w.pos, w.pid]) }), signal: AbortSignal.timeout(30000) });
-        const data = (await r.json()).data || {};
+        const txt = await r.text(); let j = {}; try { j = JSON.parse(txt); } catch {}
+        const data = j.data || {};
+        if (!i) console.log('BH priceData diag: http', r.status, 'keys', Object.keys(data).length, 'of', chunk.length, 'body', txt.slice(0, 120).replace(/s+/g, ' '));
         for (const w of chunk) {
           const raw = data[`${w.pos}~**~${w.pid}`]; if (!raw) continue;
           const p = JSON.parse(raw);
@@ -68,14 +70,16 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     if (AZ_URL) {
       const have = new Set(out.map((x) => x.w.pid));
       const amazon = ids.filter((w) => w.pos === 63 && !have.has(w.pid));
-      const todo = [...amazon]; const t0 = Date.now(); let n = 0;
+      const todo = [...amazon]; const t0 = Date.now(); let n = 0; const skipped = [];
       await Promise.all(Array.from({ length: 4 }, async () => {
         for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
           const a = await azDetails(w.pid);
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false }); n++; }
+          else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : ' oos') : ' no-data'));
         }
       }));
       console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
+      if (skipped.length) console.log('AMAZON unpriced:', skipped.join(', '));
     }
     return { out, errors };
   }
