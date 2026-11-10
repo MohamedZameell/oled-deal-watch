@@ -246,6 +246,9 @@ export async function azDetails(asin) {
 // Amazon's 503 "dogs" page (2 of 5 worked); 20 s apart 13 of 14 worked, 1-14 s each. So the caller paces them, and a
 // blocked search just returns null (it never counts against azDetails). Search has no pincode: every hit is
 // confirmed with azDetails (price + stock at the pincode) before a ping.
+// what Amazon's own answer (azDetails) says about a listing someone priced at `price`
+export const azVerdict = (az, price) => (az.inStock === false || !az.price ? 'out of stock'
+  : Math.abs(az.price - price) > price * 0.01 ? 'price changed' : az.inStock ? 'verified' : 'stock unknown');
 export function parseAzSearch(json) {
   const items = [];
   for (const p of json?.results || []) {

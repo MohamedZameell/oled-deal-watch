@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
-import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch } from './buyhatke.js';
+import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
   keepListings as keepRule, judgeModel, pushHistory, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
@@ -502,9 +502,8 @@ async function verifyDeal(ctx, it) {
   if (asin) {
     const az = await azDetails(asin);
     if (az) {
-      if (az.inStock === false || !az.price) return 'out of stock';
-      if (Math.abs(az.price - it.price) > it.price * 0.01) return `price changed (Amazon shows ${fmt(az.price)} at your pincode)`;
-      return az.inStock ? 'verified' : 'unverified (Amazon: stock unknown)';
+      const v = azVerdict(az, it.price);
+      return v === 'price changed' ? `price changed (Amazon shows ${fmt(az.price)} at your pincode)` : v === 'stock unknown' ? 'unverified (Amazon: stock unknown)' : v;
     }
     if (!ctx) return 'unverified (Amazon check failed)';   // a plain request from a runner gets Amazon's non-India page: useless
   }

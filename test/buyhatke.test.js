@@ -26,3 +26,13 @@ test('Amazon search results: asin, price and clean product link; rows without a 
   assert.deepEqual(items, [{ title: 'Samsung 27" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice)', price: 39999, mrp: 49500, url: 'https://www.amazon.in/dp/B0G12R9WG3' }]);
   assert.deepEqual(parseAzSearch({ error: 'amazon blocked the request' }), []);
 });
+
+import { azVerdict } from '../buyhatke.js';
+test('azVerdict: Amazon\'s own answer decides whether a search hit may ping', () => {
+  assert.equal(azVerdict({ price: 24000, inStock: true }, 24000), 'verified');
+  assert.equal(azVerdict({ price: 24100, inStock: true }, 24000), 'verified');        // within 1%
+  assert.equal(azVerdict({ price: 46899, inStock: true }, 38999), 'price changed');   // search/non-India price vs the real one (G6, 2026-11-07)
+  assert.equal(azVerdict({ price: 0, inStock: false }, 24000), 'out of stock');
+  assert.equal(azVerdict({ price: 24000, inStock: false }, 24000), 'out of stock');
+  assert.equal(azVerdict({ price: 95990, inStock: null }, 95990), 'stock unknown');   // third-party offers only
+});
