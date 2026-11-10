@@ -138,13 +138,7 @@
       "urls": [
         "https://www.primeabgb.com/?s=oled+monitor&post_type=product"
       ],
-      "part": "shops",
-      "api": {
-        "type": "woo",
-        "urls": [
-          "https://www.primeabgb.com/wp-json/wc/store/v1/products?search=oled&per_page=100"
-        ]
-      }
+      "part": "shops"
     },
     {
       "name": "PCStudio",
@@ -153,13 +147,7 @@
       "urls": [
         "https://pcstudio.in/?s=oled+monitor&post_type=product"
       ],
-      "part": "shops",
-      "api": {
-        "type": "woo",
-        "urls": [
-          "https://pcstudio.in/wp-json/wc/store/v1/products?search=oled&per_page=100"
-        ]
-      }
+      "part": "shops"
     },
     {
       "name": "TPS Technologies",

@@ -1,13 +1,14 @@
-// Shop catalogue APIs: plain HTTP, no browser. Shopify and WooCommerce shops publish their catalogue as JSON
-// (the storefront itself reads it), with the real selling price AND live stock per product.
-//   Elitehubs, TPS Technologies = Shopify:      /collections/<name>/products.json?limit=250
-//   PrimeABGB, PCStudio         = WooCommerce:  /wp-json/wc/store/v1/products?search=oled&per_page=100
+// Shop catalogue APIs: plain HTTP, no browser. Shopify shops publish their catalogue as JSON (the storefront itself
+// reads it), with the real selling price AND live stock per product:
+//   Elitehubs, TPS Technologies:  /collections/<name>/products.json?limit=250
 // config.json: "api": { "type": "shopify" | "woo", "urls": [...] } on a source. Used two ways:
 //   - the 5-minute fast check reads every such shop (seconds, no browser), so a glitch price there pings within
 //     5 minutes instead of waiting for the next full scan;
-//   - the full scan asks the API first and only opens the browser when it returns nothing (PrimeABGB and
-//     PCStudio's search pages wall the runner's browser on most runs).
+//   - the full scan asks the API first and only opens the browser when it returns nothing.
 // Only in-stock products are returned, marked apiChecked (price + stock straight from the shop: no page check needed).
+// WooCommerce shops have the same kind of API (/wp-json/wc/store/v1/products?search=oled&per_page=100), but
+// PrimeABGB and PCStudio answer GitHub's IPs with HTTP 403 (tested 2026-11-10; fine from a home IP), so they have
+// no "api" entry and stay on the browser scrape. The reader is kept for a Woo shop that doesn't wall the runner.
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 const text = (s) => String(s || '').replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n)).replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
   .replace(/&quot;/g, '"').replace(/&amp;/g, '&').replace(/[″“”]/g, '"').replace(/\s+/g, ' ').trim();
