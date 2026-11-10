@@ -1,0 +1,26 @@
+name: Tests
+
+# The deal rules (rules.js), shop API readers (shops.js) and BuyHatke helpers have unit tests in test/.
+# Runs on every code push; the scan jobs' own state commits (state/**) never trigger it.
+on:
+  push:
+    paths-ignore:
+      - 'state/**'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: node --check scan.js
+      - run: node --test

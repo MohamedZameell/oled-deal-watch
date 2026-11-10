@@ -2,3 +2,4 @@ node_modules/
 last-email.html
 .env
 debug/
+parts/

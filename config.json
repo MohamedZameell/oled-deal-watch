@@ -124,7 +124,13 @@
       "urls": [
         "https://elitehubs.com/search?q=oled+monitor"
       ],
-      "part": "shops"
+      "part": "shops",
+      "api": {
+        "type": "shopify",
+        "urls": [
+          "https://elitehubs.com/collections/oled-monitor/products.json?limit=250"
+        ]
+      }
     },
     {
       "name": "PrimeABGB",
@@ -132,7 +138,13 @@
       "urls": [
         "https://www.primeabgb.com/?s=oled+monitor&post_type=product"
       ],
-      "part": "shops"
+      "part": "shops",
+      "api": {
+        "type": "woo",
+        "urls": [
+          "https://www.primeabgb.com/wp-json/wc/store/v1/products?search=oled&per_page=100"
+        ]
+      }
     },
     {
       "name": "PCStudio",
@@ -141,7 +153,13 @@
       "urls": [
         "https://pcstudio.in/?s=oled+monitor&post_type=product"
       ],
-      "part": "shops"
+      "part": "shops",
+      "api": {
+        "type": "woo",
+        "urls": [
+          "https://pcstudio.in/wp-json/wc/store/v1/products?search=oled&per_page=100"
+        ]
+      }
     },
     {
       "name": "TPS Technologies",
@@ -149,7 +167,13 @@
       "urls": [
         "https://www.tpstech.in/search?q=oled+monitor"
       ],
-      "part": "shops"
+      "part": "shops",
+      "api": {
+        "type": "shopify",
+        "urls": [
+          "https://www.tpstech.in/collections/monitor/products.json?limit=250"
+        ]
+      }
     },
     {
       "name": "MD Computers",

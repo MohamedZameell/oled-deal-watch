@@ -1,7 +1,7 @@
 // OLED deal watch: scrape retailers, compare every listing against what OTHER sellers charge for the same
 // model, re-open the product page to confirm price + stock, then email the anomalies.
 // One engine for every region; config.json holds the region, sources and thresholds.
-// Usage: node scan.js [--dry] [--verify-sample]
+// Usage: node scan.js [--dry] [--verify-sample]     (rules: rules.js, shop APIs: shops.js, tests: npm test)
 //   --dry            print the digest instead of sending it, and don't persist state
 //   --verify-sample  also run the product-page check on the 3 cheapest listings (tests the verifier)
 //   --community-only only the community feeds (deal channels, Reddit), Telegram pings, no browser or email
@@ -11,6 +11,9 @@ import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock } from './buyhatke.js';
+import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
+  keepListings as keepRule, judgeModel, pushHistory, notRecent as notRecentAt } from './rules.js';
+import { shopApi } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -33,15 +36,8 @@ const aiTag = (c) => (c.fake ? ` · ⚠️ fake discount? raised to ${fmt(c.fake
 const SALE = (cfg.saleWindows || []).find((w) => Date.now() >= Date.parse(w.from) && Date.now() < Date.parse(w.to) + DAY);
 if (SALE) Object.assign(cfg, cfg.saleOverrides || {});
 
-const MONITOR_OK = /monitor|odyssey|ultragear|alienware|aorus|\brog\b|mpg|mag\s?\d|agon|legion|evnia|mobiuz|xeneon|viewfinity|predator|nitro|xg\d{4}|\bAW\d{4}/i;
-const NOT_MONITOR = /watch|laptop|notebook|\btv\b|television|smartphone|phone|zenbook|ideapad|vivobook|cooler|ryujin|portable monitor|tablet|soundbar|headphone|projector|keyboard|mouse/i;
-// model-code searches ("PG27AQWP", "27Q-10") also return parts and look-alike models: a VESA adapter "compatible with"
-// the monitor, Lenovo's IPS LOQ 27Q-10, Samsung's IPS G5. Titles naming a non-OLED panel or an accessory are dropped.
-// brands Zameel banned (config bannedBrands): never listed, compared, alerted or shown anywhere
-const BANNED = (cfg.bannedBrands || []).length ? new RegExp('\\b(' + cfg.bannedBrands.join('|') + ')\\b', 'i') : /$^/;
-const ACCESSORY = /compatible with|\badapter\b|bracket|wall mount|monitor arm|mount kit|screen (protector|guard)|replacement|power supply|charger|\bcable\b|dust cover/i;
-const NON_OLED_PANEL = /\b(IPS|VA|TN|mini[\s-]?LED)\b/i;
-const RISKY_CONDITION = /open[\s-]?box|refurb|renewed|repackag|pre[\s-]?owned|\bused\b|b[\s-]?grade|display unit|demo/i;
+// what counts as an OLED monitor listing, model keys and the alert maths live in rules.js (tested by `npm test`)
+const BANNED = bannedRe(cfg);   // brands Zameel banned (config bannedBrands): never listed, compared, alerted or shown
 const SKIP_LINE = /emi|\/mo|per month|month|cashback|sav(e|ing)|\boff\b|coupon|exchange|discount|delivery|shipping|instant|bonus|joining/i;
 const OUT_OF_STOCK = /out of stock|sold out|currently unavailable|no longer available|temporarily unavailable|notify me when available/i;
 
@@ -53,55 +49,9 @@ const CUR_IN_LINE = CUR === '₹' ? /₹|Rs\./ : /\$/;
 const money = (s) => { const m = String(s).replace(/,/g, '').match(/\d+(?:\.\d+)?/); return m ? Math.round(parseFloat(m[0])) : 0; };
 const amountsIn = (line) => [...line.matchAll(CUR_RE)].map((m) => Math.round(parseFloat(m[1].replace(/,/g, '')))).filter((n) => n >= R.minAmount);
 const fmt = (n) => CUR + Math.round(n).toLocaleString(R.numberLocale);
-const median = (a) => { const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
-// "Amazon.com", "DealSea · Amazon" and "amazon" are the same retailer
-const retailerOf = (name) => String(name).toLowerCase().replace(/^dealsea · /, '').replace(/\.(com|in)$/, '').replace(/[^a-z0-9&]/g, '');
-// product URLs often carry the full name + model code that a cut-off listing title lost
-// (Samsung "Odyssey OLED G9 Gaming Monitor with 240..." -> ".../odyssey-oled-g9-g93sd-49-inch-oled-dual-qhd-ls49dg930swxxl/")
-const urlWords = (u) => { try { return decodeURIComponent(new URL(u).pathname).replace(/[-_/.]+/g, ' '); } catch { return ''; } };
 const UA_DESKTOP = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
-function modelKey(title) {
-  const t = title.toUpperCase().replace(/[™®‎‏]/g, '');
-  // Samsung: the same panel is sold as "LS27FG500SN" (retailers) and "Odyssey OLED G5 G50SF" (Samsung's own pages);
-  // fold both into size + Odyssey code (27G50SF) so they get compared with each other.
-  const ls = t.match(/\bLS(\d{2})([A-Z])G(\d)(\d)\d[A-Z]{2}/);
-  if (ls) return `${ls[1]}G${ls[3]}${ls[4]}S${ls[2]}`;
-  const ody = t.match(/\bG([3-9])(\d)S([A-Z])\b/);
-  if (ody) { const size = t.match(/\b(\d{2})(?:\.\d)?\s?(?:"|”|″|''|-?\s?INCH|IN\b)/); return `${size ? size[1] : ''}G${ody[1]}${ody[2]}S${ody[3]}`; }
-  // Acer: family+size code (VG277U, X27U, XV275K); the trailing "Xbiip"/"W1bmiipprx" is just a bundle variant
-  const acer = /ACER|NITRO|PREDATOR/.test(t) && t.match(/\b((?:VG|XV|XB|XZ|KG|CB|X)\d{2,3}[A-Z]{0,2})\b/);
-  if (acer) return acer[1];
-  const pats = [
-    [/\bAW\d{4}[A-Z]{1,3}\b/, (m) => m[0]],                                 // Alienware
-    [/\bAG\d{3}[A-Z0-9]{3,5}\b/, (m) => m[0]],                              // AOC Agon
-    [/\bQ\d{2}G[A-Z0-9]{2,4}\b/, (m) => m[0]],                              // AOC Q27G..
-    [/\b\d{2}G[A-Z]\d{2,3}[A-Z]{0,2}(?:-[A-Z])?\b/, (m) => m[0].replace(/-[A-Z]$/, '')], // LG 27GX790A
-    [/\b(MAG|MPG|MEG)\s?(\d{3}[A-Z]{2,5})\b/, (m) => m[1] + m[2]],          // MSI
-    [/\bX?G\d{2}[A-Z]{3,}[A-Z0-9]*\b/, (m) => m[0]],                        // ASUS XG27AQDMG
-    [/\bPG\d{2}[A-Z]{3,}[A-Z0-9]*\b/, (m) => m[0]],
-    [/\bXG\d{4}\b/, (m) => m[0]],                                           // ViewSonic
-    [/\bF[OC]\d{2}[A-Z]\d[A-Z]?\b/, (m) => m[0]],                           // Gigabyte
-    [/\bCO\d{2}DQ\b/, (m) => m[0]],
-    [/\bEX\d{3}UZ\b/, (m) => m[0]],                                         // BenQ
-    [/^(?!.*\bLOQ\b).*27Q-10/, () => 'LEGION27Q-10'],                       // Legion OLED, not the IPS LOQ 27Q-10
-  ];
-  for (const [re, f] of pats) { const m = t.match(re); if (m) return f(m); }
-  return null;
-}
-// No model code in the title (e.g. Best Buy's "Acer - Predator 27" QD-OLED QHD 240Hz"): group by brand + size +
-// resolution + refresh so the listing still shows up in the cheapest-prices table. Never used for alerts,
-// because different models share the same specs.
-const BRANDS = /\b(ACER|ALIENWARE|DELL|ASUS|SAMSUNG|LG|MSI|GIGABYTE|AORUS|AOC|PHILIPS|HP|OMEN|LENOVO|CORSAIR|SONY|BENQ|VIEWSONIC|KTC|INNOCN|SCEPTRE|XIAOMI|ZOWIE)\b/;
-function specKey(title) {
-  const t = title.toUpperCase();
-  const brand = (t.match(BRANDS) || [])[1]; const size = (t.match(/\b(\d{2})(?:\.\d)?\s?(?:"|”|″|''|-?\s?INCH|IN\b)/) || [])[1];
-  if (!brand || !size) return null;
-  const res = /4K|UHD|3840/.test(t) ? '4K' : /5K|5120/.test(t) ? '5K' : /QHD|1440|2560/.test(t) ? 'QHD' : /FHD|1080/.test(t) ? 'FHD' : '';
-  const hz = Math.max(0, ...[...t.matchAll(/(\d{3})\s?HZ/g)].map((m) => +m[1]));
-  return `~${brand} ${size}" ${res}${hz ? ' ' + hz + 'Hz' : ''}`.replace(/\s+/g, ' ');
-}
 const seeds = Object.fromEntries(Object.entries(cfg.streetPriceSeeds || {}).map(([k, v]) => [modelKey(k) || k, v]));
 // models already known to be OLED: a model-code search ("AW2726DM") also finds listings whose title never says OLED
 const savedHistory = readJson('history.json', {});
@@ -306,6 +256,11 @@ async function scrapeSource(ctx, src, deskCtx = ctx, earlierItems = []) {
   if (src.kind === 'smartprix') return smartprixSource(deskCtx, src);
   // listed last in config.json: it learns Amazon/Flipkart ids from the OLED listings the other sources found this run
   if (src.kind === 'buyhatke') return bh.source(deskCtx, src, earlierItems.filter((i) => /oled/i.test(i.title + ' ' + urlWords(i.url || ''))));
+  if (src.api) {   // the shop's own catalogue API (shops.js): real price + stock, no browser; the search page only if it gives nothing
+    const r = await shopApi(src);
+    console.log('SHOP API', src.name, r.items.length, 'in stock,', r.oos, 'out of stock', r.errors.join(','));
+    if (r.items.length) return r;
+  }
   const items = []; const errors = []; const blockedUrls = [];
   const page = await ctx.newPage();
   // Amazon serves a bot wall to a cold session far more often than to one that opened the homepage first
@@ -601,6 +556,16 @@ async function samsungOnly() {
     fast[k] = { price: it.price, t: now };
     deals.push({ title: it.title, price: it.price, why, where: source, url: it.url });
   }
+  // Shops with a catalogue API (Elitehubs, TPS, PrimeABGB, PCStudio: shops.js), all at once, a few seconds, no browser.
+  // Same rules as the full scan's early check (far below usual / under the price target / new all-time low), and the
+  // API gives live stock, so a glitch price at these shops pings within 5 minutes instead of at the next full scan.
+  const shopSrcs = cfg.sources.filter((x) => x.api);
+  const shopRes = await Promise.all(shopSrcs.map((x) => shopApi(x, { timeoutMs: 20000 }).catch((e) => ({ items: [], errors: [String(e.message).slice(0, 60)], oos: 0 }))));
+  earlyState.fast = fast;   // this run's Samsung pings count as "told already"
+  shopSrcs.forEach((x, i) => console.log('SHOP API', x.name, shopRes[i].items.length, 'in stock,', shopRes[i].oos, 'out of stock', shopRes[i].errors.join(',')));
+  for (let i = 0; i < shopSrcs.length; i++) await earlyCheck(keepListings(shopSrcs[i], shopRes[i].items), null);
+  const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
+  console.log('shop alerts', shopPings.length);
   // BuyHatke live prices for every watched OLED id (plain HTTP, one request per 50 ids): a flash deal on Amazon or
   // Flipkart reaches Telegram within 5 minutes instead of waiting for the next full scan. Read-only on
   // buyhatke.json (the full scan owns the watchlist); last-seen prices live in fast.json PER LISTING ("bhid|<pos>~<pid>"):
@@ -621,7 +586,7 @@ async function samsungOnly() {
     // GST-excluded price (BuyHatke quirk on Amazon Business listings): not a real price, don't alert or remember it
     if (exGst(price, fast[id]?.price, w.last, usual)) { console.log('  skip ex-GST price', key, fmt(price)); continue; }
     const seen = fast[id]; fast[id] = { price, t: now };
-    const size = +((w.name.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i) || [])[1] || 0);
+    const size = inches(w.name);
     const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`
       : s.low && price <= s.low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? `new all-time low (was ${fmt(s.low)})`
       // a drop counts only when it also lands well under the model's usual price: going back to normal is not a deal
@@ -640,7 +605,7 @@ async function samsungOnly() {
   }
   // every alert goes to Telegram and into the hourly digest (fast.json .log); email right away only under
   // immediateEmailBelow (₹25k: Zameel's rule, everything else waits for the digest)
-  fast.log = [...(fast.log || []), ...deals.map((d) => ({ ...d, t: now }))].filter((d) => Date.now() - Date.parse(d.t) < 2 * DAY).slice(-60);
+  fast.log = [...(fast.log || []), ...deals.map((d) => ({ ...d, t: now })), ...shopPings].filter((d) => Date.now() - Date.parse(d.t) < 2 * DAY).slice(-60);
   writeJson('fast.json', fast);
   console.log('alerts', deals.length);
   const tg = deals.map((d) => `⚡ <b>${esc(d.where)}</b>: ${esc(d.title.slice(0, 100))}\n<b>${fmt(d.price)}</b>, ${esc(d.why)} · <a href="${esc(d.url)}">open</a>`);
@@ -649,27 +614,10 @@ async function samsungOnly() {
   for (const d of deals.filter(mailNow)) await dealMail(d.title, d.price, d.why, d.where, d.url, '');
 }
 
-// one source's raw items -> the OLED-monitor listings the rules keep, normalised (model key, shop, condition).
-// Used by the early check (right after each source) and by the full comparison at the end.
+// one source's raw items -> the OLED-monitor listings the rules keep (rules.js)
 function keepListings(src, items) {
   if (process.env.DEBUG_ITEMS) console.log(src.name, JSON.stringify(items.slice(0, 6)).slice(0, 1800));
-  // one product per URL (+ store): Flipkart lists each product twice, once with a cut-off title
-  const byUrl = new Map();
-  for (const i of items) { const k = i.url ? i.url + '|' + (i.store || '') : Symbol(); if (!byUrl.has(k) || byUrl.get(k).title.length < i.title.length) byUrl.set(k, i); }
-  const good = [...byUrl.values()].filter((i) => {
-    const full = i.title + ' ' + urlWords(i.url);
-    if (!i.title || BANNED.test(full) || !MONITOR_OK.test(full) || NOT_MONITOR.test(i.title) || ACCESSORY.test(i.title) || i.price < cfg.minPrice || i.price > cfg.maxPrice) return false;
-    if (/oled/i.test(full)) return true;
-    // no "OLED" anywhere: only a known OLED model, no other panel type named, and not absurdly cheap for that model
-    const key = modelKey(full); const usual = usualPrice(key);
-    return knownOled.has(key) && !NON_OLED_PANEL.test(i.title) && (!usual || i.price >= usual * 0.5);
-  });
-  return good.map((g) => {
-    const source = g.store ? `${src.name} · ${g.store}` : src.name;
-    const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
-    return { ...g, source, retailer: ['smartprix', 'buyhatke'].includes(src.kind) ? retailerOf(g.store) : retailerOf(source),
-      feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) };
-  });
+  return keepRule(src, items, { cfg, knownOled, usualPrice });
 }
 
 // EARLY CHECK: the moment one source has been read, look for a glitch among its listings and ping Telegram right
@@ -677,7 +625,6 @@ function keepListings(src, items) {
 // code at a price far below its usual price, under the price target from a known brand, or under its all-time low.
 // Every hit is re-checked on the product page first. The final comparison skips what was already pinged.
 const earlyState = { alerted: null, fast: null, lows: null, stats: null, pinged: new Map() };
-const EARLY_SIZE = (t) => { const m = t.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i); if (m) return +m[1]; const c = t.match(/(\d{2,3}(?:\.\d+)?)\s*cm/i); return c ? +c[1] / 2.54 : 0; };
 async function earlyCheck(listings, verifyCtx) {
   if (!cfg.earlyPing?.enabled) return;
   earlyState.alerted ||= readJson('alerted.json', {}); earlyState.fast ||= readJson('fast.json', {});
@@ -690,7 +637,7 @@ async function earlyCheck(listings, verifyCtx) {
     if (earlyState.pinged.has(k)) continue;
     const usual = earlyState.stats[it.key]?.monthAvg || usualPrice(it.key);
     const L = earlyState.lows[it.key]; const low = L ? Math.min(...Object.values(L.days)) : 0;
-    const size = EARLY_SIZE(it.title);
+    const size = inches(it.title);
     const [kind, why] = usual && it.price <= usual * cfg.crazyThreshold ? ['', `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`]
       : cfg.priceAlertBelow && it.price < cfg.priceAlertBelow && BRANDS.test(it.title.toUpperCase()) && !/portable/i.test(it.title) && (!size || size >= 24) ? ['below|', `under ${fmt(cfg.priceAlertBelow)}`]
       : low && it.price <= low * (1 - (nl.minDropPct ?? 3) / 100) && it.price <= (nl.maxPrice ?? Infinity) && L && Date.now() - Date.parse(L.first) >= (nl.minDays ?? 7) * DAY ? ['low|', `new all-time low (was ${fmt(low)})`]
@@ -701,7 +648,7 @@ async function earlyCheck(listings, verifyCtx) {
     const suspect = usual && it.price < usual * 0.25;
     console.log('EARLY', it.key, it.source, fmt(it.price), why, '->', check);
     if (check === 'out of stock' || (suspect && check !== 'verified')) continue;
-    earlyState.pinged.set(k, { kind, price: it.price, t: now });
+    earlyState.pinged.set(k, { kind, price: it.price, t: now, title: it.title, why, where: it.source, url: it.url });
     if (DRY) { console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why); continue; }
     await sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
     if (mailNow(it)) await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? '✓ price + stock checked' : check);
@@ -875,37 +822,17 @@ async function main() {
   const ownSeries = (key, retailer) => { const d = series[key + '|' + retailer]; return d ? Object.entries(d).sort().map(([day, p]) => [day, day, p]) : null; };
   const crazy = []; const near = [];
   for (const [key, list] of Object.entries(byModel)) {
-    const hist = (history[key] || []).map((h) => h.price);
-    const histRef = hist.length >= 6 ? median(hist) : 0;
-    const bhK = bhStats[key];
-    const lo = Math.min(hist.length ? Math.min(...hist) : Infinity, bhK?.low || Infinity);
-    const lowestSeen = Number.isFinite(lo) ? lo : 0;
-    const bhRef = bhK?.monthAvg || bhK?.yearAvg || 0;   // BuyHatke's 1-month average: an independent "normal price" signal
-    for (const it of list) {
-      if (it.peer || it.generic) continue;
-      // "normal" = what OTHER retailers charge (never the listing itself, never deal-feed or open-box prices),
-      // plus the seeded street price and this model's own price history
-      const others = list.filter((x) => x.retailer !== it.retailer && !x.risky && !x.feed).map((x) => x.price);
-      const signals = [...others, ...(seeds[key] ? [seeds[key]] : []), ...(histRef ? [histRef] : []), ...(bhRef ? [bhRef] : [])];
-      if (!signals.length) continue;
-      const ref = median(signals);
-      const vsRef = it.price / ref; const vsHist = histRef ? it.price / histRef : 1;
-      const rec = { ...it, ref, basis: signals.length, lowestSeen, pct: Math.round((1 - vsRef) * 100), suspect: vsRef < 0.25 };
-      // an alert needs 2+ independent prices: a single comparison is often a brand store's list price
-      // (Samsung.com "From $499" vs a normal $329 street price) and would cry wolf
-      const isCrazy = vsRef <= cfg.crazyThreshold || (vsHist <= cfg.historyThreshold && vsRef < 0.9);
-      if (isCrazy && signals.length >= 2 && !(it.steadyDays >= 3)) crazy.push(rec);
-      else if (isCrazy || vsRef <= cfg.nearMissThreshold) near.push(rec);
-    }
+    const j = judgeModel(list, { hist: (history[key] || []).map((h) => h.price), seed: seeds[key], bhK: bhStats[key], cfg });
+    crazy.push(...j.crazy); near.push(...j.near);
     // history tracks the best NORMAL price (no open-box, no deal-feed) from this scanner's own sources
     const normal = list.filter((x) => !x.peer && !x.risky && !x.feed).map((x) => x.price);
-    if (normal.length) { (history[key] ||= []).push({ t: now, price: Math.min(...normal) }); history[key] = history[key].slice(-120); }
+    if (normal.length) history[key] = pushHistory(history[key] || [], now, Math.min(...normal));   // one point per hour, 5 days
   }
 
   // alert only on new or ≥5% lower prices, or the same deal again after a week; skip what the other scanner already sent
   const aKey = (c) => c.key + '|' + c.retailer;
   const prevOf = (store, c) => { const v = store[aKey(c)]; return typeof v === 'number' ? { price: v, t: now } : v; };
-  const notRecent = (p, price) => !p || price < p.price * 0.95 || Date.now() - Date.parse(p.t) > 7 * DAY;
+  const notRecent = (p, price) => notRecentAt(p, price);
   // the 5-minute Samsung check (--samsung-only) may already have pinged this one
   const fastPinged = readJson('fast.json', {});
   const isFresh = (c) => [prevOf(alerted, c), prevOf(peerAlerted, c), fastPinged[aKey(c)]].every((p) => notRecent(p, c.price));
@@ -921,8 +848,6 @@ async function main() {
   }
   // price-target alerts: any desktop OLED below a fixed price, whatever the "normal" price says
   // (size check keeps small portable OLED panels out; titles give inches or cm)
-  const inches = (t) => { const m = t.match(/(\d{2}(?:\.\d)?)\s*(?:-?\s?inch|in\b|["”])/i); if (m) return +m[1];
-    const c = t.match(/(\d{2,3}(?:\.\d+)?)\s*cm/i); return c ? +c[1] / 2.54 : 0; };
   const below = [];
   if (cfg.priceAlertBelow) {
     const shown = new Set(fresh.map(aKey));

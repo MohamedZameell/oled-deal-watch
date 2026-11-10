@@ -57,7 +57,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
         const r = await fetch(`${API}/thunder/priceData`, { method: 'POST', headers: HEADERS, body: JSON.stringify({ param: chunk.map((w) => [w.pos, w.pid]) }), signal: AbortSignal.timeout(30000) });
         const txt = await r.text(); let j = {}; try { j = JSON.parse(txt); } catch {}
         const data = j.data || {};
-        if (!i) console.log('BH priceData diag: http', r.status, 'keys', Object.keys(data).length, 'of', chunk.length, 'body', txt.slice(0, 120).replace(/s+/g, ' '));
+        if (!i) console.log('BH priceData diag: http', r.status, 'keys', Object.keys(data).length, 'of', chunk.length, 'body', txt.slice(0, 120).replace(/\s+/g, ' '));
         for (const w of chunk) {
           const raw = data[`${w.pos}~**~${w.pid}`]; if (!raw) continue;
           const p = JSON.parse(raw);
