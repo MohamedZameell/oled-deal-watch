@@ -1,4 +1,8 @@
 // BuyHatke (buyhatke.com, India's price-history site): two things we can't get anywhere else.
+// STATUS 2026-11-10: priceData has answered {"data":{}} for every id since 2026-11-06 (dead at BuyHatke's end, not a
+// wall). Its two jobs are covered elsewhere: Amazon ids -> azDetails below (Amazon itself), Flipkart -> the plain-HTTP
+// search reader in shops.js (5-minute check) + the full scan. If priceData comes back it is used again automatically
+// (the fast-check log line "BH priceData diag: ... keys N of M" shows N > 0).
 //  1. LIVE PRICES by store id, plain HTTP, no login, not walled from GitHub's IPs:
 //       POST https://search-new.bitbns.com/buyhatke/thunder/priceData  {"param":[[63,"<ASIN>"],[2,"<Flipkart pid>"]]}
 //       -> {"63~**~<ASIN>":"{\"price\":39799,\"oos\":0}"}   (store codes: 63 Amazon, 2 Flipkart, others per shop)
@@ -75,7 +79,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
         for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
           const a = await azDetails(w.pid);
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false }); n++; }
-          else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : ' oos') : ' no-data'));
+          else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
         }
       }));
       console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
@@ -222,13 +226,15 @@ export async function azDetails(asin) {
     const link = encodeURIComponent('https://www.amazon.in/dp/' + asin);
     const r = await fetch(`${AZ_URL}/products/details?product=${link}&postal_code=${AZ_PIN}`, { signal: AbortSignal.timeout(60000) });
     const d = await r.json();
-    if (d && d.asin === asin && d.availability) {
+    if (d && d.asin === asin) {
       azFails = 0;
       const price = Math.round(d.price?.amount || 0);
       // third-party BUNDLE listings ("G9 + Logitech webcam", seller Clicktech) come back with the add-on's price (₹2,995 for a
       // ₹87k monitor: dry run 2026-11-08 B0HDSK5WMF): never trust a bundle title or a price no OLED monitor sells at
       if (price && (price < 10000 || / \+ /.test(d.title || ''))) console.log('azDetails ignoring bundle/implausible price', asin, price);
-      else res = { price, inStock: !!d.availability.is_in_stock };
+      // some listings come back with a price but no availability block (B0CZSGWLD5, B0CZWM44QP: third-party offers only).
+      // That is a good answer with unknown stock, not a scraper failure: it must not count towards the 3-failures stop.
+      else res = { price, inStock: d.availability ? !!d.availability.is_in_stock : null };
     } else azFails++;
   } catch (e) { azFails++; console.log('azDetails', asin, String(e.message).slice(0, 60)); }
   azCache.set(asin, res);
@@ -239,7 +245,7 @@ const stockCache = new Map(); let amazonWalled = false;
 export async function amazonStock(asin) {
   if (stockCache.has(asin)) return stockCache.get(asin);
   const az = await azDetails(asin);
-  if (az) { const r = az.inStock && az.price ? 'in stock' : 'out of stock'; stockCache.set(asin, r); return r; }
+  if (az) { const r = az.inStock === null ? 'unknown' : az.inStock && az.price ? 'in stock' : 'out of stock'; stockCache.set(asin, r); return r; }
   if (amazonWalled) return 'unknown';
   let res = 'unknown';
   try {

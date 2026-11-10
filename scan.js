@@ -13,7 +13,7 @@ import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
   keepListings as keepRule, judgeModel, pushHistory, notRecent as notRecentAt } from './rules.js';
-import { shopApi } from './shops.js';
+import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -494,6 +494,7 @@ async function communityOnly() {
 async function verifyDeal(ctx, it) {
   if (it.apiChecked) return 'verified';   // price + stock came from the store's own API this run (Samsung)
   if (it.preChecked) return it.preChecked;   // Smartprix: stock from its store table (its page lists every shop, so a page check proves nothing)
+  if (!ctx) return verifyHttp(it);   // the 5-minute check has no browser
   const page = await ctx.newPage();
   try {
     await page.goto(it.url, { waitUntil: 'domcontentloaded', timeout: 40000 });
@@ -530,6 +531,19 @@ async function verifyDeal(ctx, it) {
   } finally { await page.close().catch(() => {}); }
 }
 
+// The same check over plain HTTP, for pages that are server-rendered (Flipkart): the price must be on the product
+// page and the page must not say sold out. Used by the 5-minute check, which runs without a browser.
+async function verifyHttp(it) {
+  try {
+    const r = await fetch(it.url, { headers: { 'user-agent': UA_DESKTOP, accept: 'text/html', 'accept-language': 'en-IN,en;q=0.9' }, signal: AbortSignal.timeout(25000) });
+    if (!r.ok) return 'unverified (page blocked)';
+    const text = (await r.text()).replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, '\n');
+    if (BLOCKED.test(text.slice(0, 1500))) return 'unverified (page blocked)';
+    if (OUT_OF_STOCK.test(text) && !/add to (cart|bag)|buy now|buy at/i.test(text)) return 'out of stock';
+    return amountsIn(text).some((n) => Math.abs(n - it.price) <= Math.max(1, it.price * 0.005)) ? 'verified' : 'unverified (price not on page)';
+  } catch (e) { return 'unverified (page failed to load)'; }
+}
+
 // --samsung-only: the Samsung shop API alone, every 5 min, Telegram only. Plain HTTP, ~5 s. Samsung's
 // repackaged/staff-store stock is the kind that sells out within hours (the ₹25,680 G5 lasted about a day).
 // Pings: any repackaged unit in stock, a crazy price vs the usual one, a 10%+ drop, or anything under the price target.
@@ -556,7 +570,7 @@ async function samsungOnly() {
     fast[k] = { price: it.price, t: now };
     deals.push({ title: it.title, price: it.price, why, where: source, url: it.url });
   }
-  // Shops with a catalogue API (Elitehubs, TPS, PrimeABGB, PCStudio: shops.js), all at once, a few seconds, no browser.
+  // Shops with a catalogue API (Elitehubs, TPS: shops.js), all at once, a few seconds, no browser.
   // Same rules as the full scan's early check (far below usual / under the price target / new all-time low), and the
   // API gives live stock, so a glitch price at these shops pings within 5 minutes instead of at the next full scan.
   const shopSrcs = cfg.sources.filter((x) => x.api);
@@ -564,6 +578,14 @@ async function samsungOnly() {
   earlyState.fast = fast;   // this run's Samsung pings count as "told already"
   shopSrcs.forEach((x, i) => console.log('SHOP API', x.name, shopRes[i].items.length, 'in stock,', shopRes[i].oos, 'out of stock', shopRes[i].errors.join(',')));
   for (let i = 0; i < shopSrcs.length; i++) await earlyCheck(keepListings(shopSrcs[i], shopRes[i].items), null);
+  // Flipkart's search pages over plain HTTP (config fastUrls): what BuyHatke's live Flipkart prices used to cover
+  const fk = cfg.sources.find((x) => x.kind === 'flipkart' && x.fastUrls?.length);
+  if (fk) {
+    const r = await flipkartHttp(fk.fastUrls);
+    const kept = keepListings(fk, r.items);
+    console.log('FLIPKART HTTP', r.items.length, 'cards,', kept.length, 'OLED monitors', r.errors.join(','));
+    await earlyCheck(kept, null);
+  }
   const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
   console.log('shop alerts', shopPings.length);
   // BuyHatke live prices for every watched OLED id (plain HTTP, one request per 50 ids): a flash deal on Amazon or

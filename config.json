@@ -92,7 +92,13 @@
         "https://www.flipkart.com/search?q=Acer+Predator+X27U+monitor",
         "https://www.flipkart.com/search?q=Acer+Predator+X32+monitor"
       ],
-      "part": "web"
+      "part": "web",
+      "fastUrls": [
+        "https://www.flipkart.com/search?q=oled+monitor",
+        "https://www.flipkart.com/search?q=oled+monitor&page=2",
+        "https://www.flipkart.com/search?q=qd-oled+monitor",
+        "https://www.flipkart.com/search?q=oled+gaming+monitor+240hz"
+      ]
     },
     {
       "name": "Smartprix",

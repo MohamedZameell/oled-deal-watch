@@ -29,3 +29,20 @@ test('WooCommerce: prices in minor units (paise) are converted', () => {
 test('bad or empty answers give no items instead of throwing', () => {
   assert.deepEqual(parseShopify(null, 'https://x').items, []); assert.deepEqual(parseWoo({ message: 'error' }).items, []);
 });
+
+import { parseFlipkart } from '../shops.js';
+test('Flipkart search HTML: one item per card with price, MRP, clean product link; ad tiles and sold-out cards skipped', () => {
+  const card = (pid, inner) => `<div data-id="${pid}" style="width:25%"><div>${inner}</div></div>`;
+  const html = '<html><body>' + [
+    card('MONHQ99FGWPGW9V8', '<a class="x" title="Samsung Odyssey G5 QD-OLED 68.58 cm (27 inch) Quad HD OLED Panel Monitor (LS27FG502SWXXL)" href="/samsung-odyssey-g5-qd-oled/p/itm123abc?pid=MONHQ99FGWPGW9V8&amp;lid=L1">Samsung Odyssey G5 QD-OLED...</a><svg><path d="M5 6.4"/></svg><div>4.8</div><div>(13)</div><div>₹41,700</div><div>₹<!-- -->49,500</div><div>15% off</div>'),
+    card('MONHHAATHYP8EVTS', '<a title="Samsung Odyssey OLED G9 124.3 cm (49 inch) Curved DQHD OLED Panel Gaming Monitor" href="/samsung-odyssey-oled-g9/p/itm9?pid=MONHHAATHYP8EVTS">x</a><div>₹1,65,920</div>'),
+    card('MONADTILE0000001', '<img alt="Frontech Ultima Series DUAL PORTS HDMI"/><svg></svg>'),
+    card('MONSOLDOUT000001', '<a title="LG UltraGear 68.58 cm (27 inch) Quad HD OLED Panel Gaming Monitor" href="/lg-ultragear/p/itm7?pid=MONSOLDOUT000001">x</a><div>₹79,999</div><div>Currently unavailable</div>'),
+  ].join('') + '</body></html>';
+  const items = parseFlipkart(html);
+  assert.equal(items.length, 2);
+  assert.deepEqual(items[0], { title: 'Samsung Odyssey G5 QD-OLED 68.58 cm (27 inch) Quad HD OLED Panel Monitor (LS27FG502SWXXL)', price: 41700, mrp: 49500,
+    url: 'https://www.flipkart.com/samsung-odyssey-g5-qd-oled/p/itm123abc?pid=MONHQ99FGWPGW9V8', pid: 'MONHQ99FGWPGW9V8' });
+  assert.equal(items[1].price, 165920); assert.equal(items[1].mrp, 0);
+  assert.deepEqual(parseFlipkart('<html>blocked</html>'), []);
+});

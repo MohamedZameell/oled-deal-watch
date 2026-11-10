@@ -62,3 +62,38 @@ export async function shopApi(src, { timeoutMs = 25000 } = {}) {
   const seen = new Set(); const unique = items.filter((i) => !seen.has(i.url) && seen.add(i.url));
   return { items: unique, errors, blockedUrls: [], oos };
 }
+
+// ---- Flipkart over plain HTTP ----
+// Flipkart's search pages are server-rendered and answer a plain request from GitHub's runners (tested 2026-11-10),
+// so the 5-minute check can read them without a browser. This replaces the Flipkart live prices BuyHatke's
+// priceData API gave until it went empty on 2026-11-06. One card per product: data-id="<pid>", a title attribute,
+// the product link, then the price (first ₹ amount) and the struck-out MRP.
+export function parseFlipkart(html) {
+  const items = [];
+  for (const chunk of String(html || '').split('data-id="').slice(1)) {
+    const pid = chunk.slice(0, chunk.indexOf('"'));
+    const card = chunk.slice(0, 20000);
+    const title = text((card.match(/title="([^"]{15,})"/) || [])[1]);
+    const path = (card.match(/href="(\/[^"?]*\/p\/itm[^"?]*)/) || [])[1];
+    if (!/^[A-Z0-9]{10,20}$/.test(pid) || !title || !path) continue;   // ad tiles carry no title or link
+    const words = card.replace(/<svg[\s\S]*?<\/svg>/g, ' ').replace(/<[^>]+>/g, '|');
+    if (/currently unavailable|sold out|coming soon|out of stock/i.test(words)) continue;
+    const nums = [...words.matchAll(/₹\|?\s?(\d{1,3}(?:,\d{2})*,\d{3}|\d{4,7})(?![\d,])/g)].map((m) => +m[1].replace(/,/g, ''));
+    if (!nums.length) continue;
+    items.push({ title, price: nums[0], mrp: nums[1] > nums[0] ? nums[1] : 0, url: `https://www.flipkart.com${path}?pid=${pid}`, pid });
+  }
+  return items;
+}
+export async function flipkartHttp(urls, { timeoutMs = 25000 } = {}) {
+  const errors = [];
+  const pages = await Promise.all(urls.map(async (u) => {
+    try {
+      const r = await fetch(u, { headers: { 'user-agent': UA, accept: 'text/html', 'accept-language': 'en-IN,en;q=0.9' }, signal: AbortSignal.timeout(timeoutMs) });
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      const items = parseFlipkart(await r.text());
+      if (!items.length) errors.push('0 cards');
+      return items;
+    } catch (e) { errors.push(String(e.message).slice(0, 50)); return []; }
+  }));
+  return { items: pages.flat(), errors, blockedUrls: [] };
+}
