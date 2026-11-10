@@ -1102,7 +1102,7 @@
    "model": "AW2725Q",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   "msi mag 321upx qd-oled 31.5 inch 4k uhd flat gaming monitor - 3840 x 2160 quantum dot oled panel, 240hz / 0.03ms, 99% dci-p3, displayhdr true black 400, kvm - dp 1.4a, hdmi 2.1, usb type-c": {
    "kind": "monitor",
@@ -1286,7 +1286,7 @@
    "model": "MAG341CQP",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-05"
+   "seen": "2026-11-10"
   },
   "lg ultragear 86.36 cm (34 inch) curved wqhd led backlit oled panel with 800r curvature, 1.5m:1 contrast ratio, hdr true black 400, amd free sync compatible, height/tilt/swivel stand gaming monitor (34gs95qe-bb.atrlmun)": {
    "kind": "monitor",
@@ -1431,6 +1431,14 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-10"
+  },
+  "lg 27 inch ultragear oled qhd gaming monitor(2560 x 1440) 240hz, 0.03ms, g-sync compatible, amd freesync™, 1.5m:1 contrast ratio, hdr true black 400, virtually borderless,height, pivot,tilt,27gs95qe": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-10"
   }
  },
  "posts": {
@@ -1464,5 +1472,5 @@
   }
  },
  "day": "2026-11-10",
- "calls": 2
+ "calls": 3
 }
