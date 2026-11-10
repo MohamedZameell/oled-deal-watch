@@ -165,3 +165,21 @@ test('keepListings: an item can name its real source (Amazon price read from Ama
   assert.equal(a.source, 'Amazon (direct)'); assert.equal(a.retailer, 'amazon');
   assert.equal(b.source, 'BuyHatke · Flipkart'); assert.equal(b.retailer, 'flipkart');
 });
+
+test('lowListings: an OLED monitor under the minimum price is kept for an "unconfirmed" ping, junk is not', async () => {
+  const { lowListings } = await import('../rules.js');
+  const src = { name: 'Flipkart', kind: 'flipkart' };
+  const items = [
+    { title: 'Alienware AW2726DM 27 inch QD-OLED Gaming Monitor', price: 3999, url: 'https://shop.example/p/1' },      // the glitch
+    { title: 'Alienware AW2726DM 27 inch QD-OLED Gaming Monitor', price: 39799, url: 'https://shop.example/p/2' },     // normal price: not this rule's job
+    { title: 'Alienware AW2726DM QD-OLED Monitor + Logitech Webcam', price: 2995, url: 'https://shop.example/p/3' },   // bundle = add-on's price
+    { title: 'Screen protector compatible with AW2726DM OLED monitor', price: 899, url: 'https://shop.example/p/4' },  // accessory
+    { title: 'Samsung 27 inch OLED Gaming Monitor 240Hz', price: 4999, url: 'https://shop.example/p/5' },              // no model code
+    { title: 'Alienware AW2726DM QD-OLED Monitor (Refurbished)', price: 5000, url: 'https://shop.example/p/6' },       // open-box/refurb
+    { title: 'LYVON AW2726DM OLED Monitor', price: 4000, url: 'https://shop.example/p/7' },                            // banned brand
+    { title: 'Alienware AW2726DM QD-OLED Monitor', price: 99, url: 'https://shop.example/p/8' },                       // under the floor
+  ];
+  const low = lowListings(src, items, ctx);
+  assert.deepEqual(low.map((i) => i.url), ['https://shop.example/p/1']);
+  assert.equal(low[0].key, 'AW2726DM');
+});

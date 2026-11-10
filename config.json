@@ -358,6 +358,10 @@
   "earlyPing": {
     "enabled": true
   },
+  "lowPriceAlert": {
+    "enabled": true,
+    "floor": 500
+  },
   "digestEveryMin": 60,
   "immediateEmailBelow": 25000
 }

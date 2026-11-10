@@ -54,7 +54,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
   // live price + stock for every watched id, 50 per request
   async function prices() {
     const ids = Object.values(st.ids).filter((w) => Date.now() - Date.parse(w.seen) < 45 * DAY);   // forget ids not seen for 45 days
-    const out = []; const errors = [];
+    const out = []; const errors = []; const low = [];   // low: Amazon ids whose price came back under ₹10,000 (see azLow)
     for (let i = 0; i < ids.length; i += 50) {
       const chunk = ids.slice(i, i + 50);
       try {
@@ -80,12 +80,14 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
           const a = await azDetails(w.pid);
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false, via: 'amazon', seller: a.seller }); n++; }
           else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
+          const lo = !a && azLow(w.pid);
+          if (lo && lo.inStock !== false) low.push({ w, price: lo.price, inStock: lo.inStock });
         }
       }));
       console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
       if (skipped.length) console.log('AMAZON unpriced:', skipped.join(', '));
     }
-    return { out, errors };
+    return { out, errors, low };
   }
 
   // history page -> stats + other-shop matches. Field order differs between pages, so read each by name.
@@ -224,6 +226,9 @@ export function fakeDiscount(series, price, nowMs = Date.now()) {
 // GitHub-IP wall. Only active when AMAZON_SCRAPER_URL is set; any failure returns null and the old paths take over.
 const AZ_URL = process.env.AMAZON_SCRAPER_URL, AZ_PIN = process.env.AMAZON_PINCODE || '622001';
 const azCache = new Map(); let azFails = 0;
+const azLowSeen = new Map();
+// what azDetails saw for a listing it refused to price because the price was under ₹10,000 ({ price, inStock }), if any
+export const azLow = (asin) => azLowSeen.get(asin);
 export async function azDetails(asin) {
   if (!AZ_URL || azFails >= 3) return null;           // 3 failures in a row = scraper is down/blocked: stop asking this run
   if (azCache.has(asin)) return azCache.get(asin);
@@ -237,7 +242,12 @@ export async function azDetails(asin) {
       const price = Math.round(d.price?.amount || 0);
       // third-party BUNDLE listings ("G9 + Logitech webcam", seller Clicktech) come back with the add-on's price (₹2,995 for a
       // ₹87k monitor: dry run 2026-11-08 B0HDSK5WMF): never trust a bundle title or a price no OLED monitor sells at
-      if (price && (price < 10000 || / \+ /.test(d.title || ''))) console.log('azDetails ignoring bundle/implausible price', asin, price);
+      // A price under ₹10,000 on a non-bundle listing is still not used as a price anywhere, but it is remembered
+      // (azLow) so the 5-minute check can ping it as "unconfirmed": it could be the one extreme glitch.
+      if (price && (price < 10000 || / \+ /.test(d.title || ''))) {
+        console.log('azDetails ignoring bundle/implausible price', asin, price);
+        if (!/ \+ /.test(d.title || '')) azLowSeen.set(asin, { price, inStock: d.availability ? !!d.availability.is_in_stock : null });
+      }
       // some listings come back with a price but no availability block (B0CZSGWLD5, B0CZWM44QP: third-party offers only).
       // That is a good answer with unknown stock, not a scraper failure: it must not count towards the 3-failures stop.
       // The all-offers list settles those: a New offer there = in stock at that seller's price; none = not buyable.

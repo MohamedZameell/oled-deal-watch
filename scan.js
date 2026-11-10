@@ -10,9 +10,9 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
-import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict } from './buyhatke.js';
+import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict, azLow } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
-  keepListings as keepRule, judgeModel, pushHistory, typicalPrice, notRecent as notRecentAt } from './rules.js';
+  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -503,7 +503,8 @@ async function verifyDeal(ctx, it) {
   // Not for other-seller offers (?aod=1), whose price is not the buy-box price the scraper reports.
   const asin = !/[?&]aod=1/.test(it.url || '') && ((it.url || '').match(/amazon\.in\/(?:.*\/)?dp\/(\w{10})/) || [])[1];
   if (asin) {
-    const az = await azDetails(asin);
+    // a listing found under ₹10,000 (low-price ping): azDetails refuses to price it, but remembers what Amazon said
+    const az = (await azDetails(asin)) || (it.price < 10000 ? azLow(asin) : null);
     if (az) {
       const v = azVerdict(az, it.price);
       return v === 'price changed' ? `price changed (Amazon shows ${fmt(az.price)} at your pincode)` : v === 'stock unknown' ? 'unverified (Amazon: stock unknown)' : v;
@@ -556,7 +557,9 @@ async function verifyHttp(it) {
     const text = (await r.text()).replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, '\n');
     if (BLOCKED.test(text.slice(0, 1500))) return 'unverified (page blocked)';
     if (OUT_OF_STOCK.test(text) && !/add to (cart|bag)|buy now|buy at/i.test(text)) return 'out of stock';
-    return amountsIn(text).some((n) => Math.abs(n - it.price) <= Math.max(1, it.price * 0.005)) ? 'verified' : 'unverified (price not on page)';
+    // every amount on the page, without amountsIn's minimum: a low-price ping checks prices under that minimum
+    const nums = [...text.matchAll(CUR_RE)].map((m) => Math.round(parseFloat(m[1].replace(/,/g, ''))));
+    return nums.some((n) => Math.abs(n - it.price) <= Math.max(1, it.price * 0.005)) ? 'verified' : 'unverified (price not on page)';
   } catch (e) { return 'unverified (page failed to load)'; }
 }
 
@@ -593,7 +596,7 @@ async function samsungOnly() {
   const shopRes = await Promise.all(shopSrcs.map((x) => shopApi(x, { timeoutMs: 20000 }).catch((e) => ({ items: [], errors: [String(e.message).slice(0, 60)], oos: 0 }))));
   earlyState.fast = fast;   // this run's Samsung pings count as "told already"
   shopSrcs.forEach((x, i) => console.log('SHOP API', x.name, shopRes[i].items.length, 'in stock,', shopRes[i].oos, 'out of stock', shopRes[i].errors.join(',')));
-  for (let i = 0; i < shopSrcs.length; i++) await earlyCheck(keepListings(shopSrcs[i], shopRes[i].items), null);
+  for (let i = 0; i < shopSrcs.length; i++) { await earlyCheck(keepListings(shopSrcs[i], shopRes[i].items), null); await lowCheck(shopSrcs[i], shopRes[i].items); }
   // Flipkart's search pages over plain HTTP (config fastUrls): what BuyHatke's live Flipkart prices used to cover
   const fk = cfg.sources.find((x) => x.kind === 'flipkart' && x.fastUrls?.length);
   if (fk) {
@@ -605,6 +608,7 @@ async function samsungOnly() {
     const kept = keepListings(fk, r.items);
     console.log('FLIPKART HTTP', r.items.length, 'cards,', kept.length, 'OLED monitors', r.errors.join(','));
     await earlyCheck(kept, null);
+    await lowCheck(fk, r.items);
   }
   // NEW Amazon listings (ones not on the watchlist yet): two scraper searches per run, rotating through config
   // fastQueries, at least 20 s apart (back-to-back searches get blocked). The first runs here, the second after the
@@ -626,7 +630,7 @@ async function samsungOnly() {
   // keyed per model+shop, two Amazon listings of one model (G6 "Smartchoice" + another) once faked a ₹54,935 -> ₹46,899
   // "drop" that was just the other listing's normal price.
   for (const k of Object.keys(fast)) if (k.startsWith('bh|')) delete fast[k];   // old per-model keys
-  const { out: live, errors: bhErr } = await bh.livePrices();
+  const { out: live, errors: bhErr, low: azCheap = [] } = await bh.livePrices();
   const stats = bh.statsByKey(); const nl = cfg.newLowAlert || {};
   console.log('BuyHatke live prices', live.length, bhErr.join(','));
   for (const { w, price, oos, seller } of live) {
@@ -667,6 +671,10 @@ async function samsungOnly() {
     const kept = keepListings(azSrc, azFound.filter((x) => !/ \+ /.test(x.title)));
     console.log('AMAZON search found', azFound.length, 'listings,', kept.length, 'OLED monitors');
     await earlyCheck(kept, null);
+    await lowCheck(azSrc, azFound);
+    // watchlist listings Amazon itself priced under ₹10,000 at the pincode (already read from Amazon: no second check)
+    await lowCheck({ name: 'Amazon (direct)', kind: 'amazon' }, azCheap.filter((x) => x.w.name).map((x) => ({ title: x.w.name, price: x.price,
+      url: x.w.url || `https://www.amazon.in/dp/${x.w.pid}`, lowCheck: x.inStock ? 'verified' : 'unverified (Amazon: stock unknown)' })));
   }
   // what the shop / Flipkart / Amazon-search checks pinged (earlyCheck sent them): remembered so nothing repeats them
   const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
@@ -718,6 +726,30 @@ async function earlyCheck(listings, verifyCtx) {
     if (DRY) { console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why); continue; }
     await sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
     if (mailNow(it)) await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? '✓ price + stock checked' : check);
+  }
+}
+
+// LOW-PRICE CHECK (5-minute check only): an OLED monitor listed under cfg.minPrice (₹12,000). No monitor sells there,
+// so the normal rules drop such a price as a misread; but an extreme glitch looks exactly the same. These are pinged
+// once per listing, clearly marked unconfirmed, and never enter the price history, the lows or the comparison.
+// Dedupe key is per listing URL ("cheap|<url>"), so a junk ping never silences a real deal on the same model.
+async function lowCheck(src, items) {
+  if (cfg.lowPriceAlert?.enabled === false) return;
+  const found = lowListings(src, items, { cfg, knownOled, usualPrice });
+  earlyState.fast ||= readJson('fast.json', {});
+  const now = new Date().toISOString();
+  for (const it of found) {
+    const k = 'cheap|' + it.url;
+    const last = earlyState.pinged.get(k) || earlyState.fast[k];
+    if (last && it.price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
+    const check = it.lowCheck || await verifyDeal(null, it);
+    console.log('LOW PRICE', it.key, it.source, fmt(it.price), '->', check);
+    if (gone(check)) continue;
+    const why = `under ${fmt(cfg.minPrice)} for an OLED monitor: UNCONFIRMED, a glitch or an accessory/bundle price, check the page`;
+    earlyState.pinged.set(k, { kind: 'cheap|', price: it.price, t: now, title: it.title, why, where: it.source, url: it.url });
+    if (DRY) { console.log('LOW PRICE PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price)); continue; }
+    await sendTelegram(`⚠️ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' (price is on the page, in stock)' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
+    if (mailNow(it)) await dealMail(it.title, it.price, why, it.source, it.url, check === 'verified' ? 'price is on the page, in stock' : check);
   }
 }
 

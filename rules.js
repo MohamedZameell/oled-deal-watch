@@ -89,6 +89,16 @@ export function keepListings(src, items, { cfg, knownOled, usualPrice }) {
   });
 }
 
+// Listings priced BELOW cfg.minPrice that pass every other rule: a real OLED monitor (known model code, not an
+// accessory, not open-box) at a price no OLED monitor sells at. Either an extreme glitch or a wrong price (an add-on's
+// or a variant's), so the 5-minute check pings these as "unconfirmed" instead of dropping them silently.
+// Bundle titles ("monitor + webcam") carry the add-on's price and are never pinged.
+export function lowListings(src, items, { cfg, knownOled, usualPrice }) {
+  const floor = cfg.lowPriceAlert?.floor ?? 500;
+  const cheap = items.filter((i) => i.price >= floor && i.price < cfg.minPrice && !/ \+ /.test(i.title || ''));
+  return keepListings(src, cheap, { cfg: { ...cfg, minPrice: floor }, knownOled, usualPrice }).filter((i) => !i.generic && !i.risky && !i.feed);
+}
+
 // One model's listings across shops -> { crazy, near }.
 // "normal" = what OTHER retailers charge (never the listing itself, never deal-feed or open-box prices), plus the
 // seeded street price, this model's own price history and BuyHatke's month average.
