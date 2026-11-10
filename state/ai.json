@@ -1487,6 +1487,22 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-10"
+  },
+  "alienware aw2725df - oled gaming monitor - 26.7\" quantom-dot wqhd (2560 x 1440) 360hz 0.03ms display, amd freesync premium pro, hdmi/dp/usb 3.2 gen1, height/tilt adjustment [sold by shopforbest]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725DF",
+   "cond": "new",
+   "size": 26.7,
+   "seen": "2026-11-10"
+  },
+  "asus rog strix 27\" 1440p oled gaming monitor (xg27aqdmg) - qhd, bright oled, 240hz, 0.03ms, custom heatsink, anti-flicker, uniform brightness, g-sync compatible, dci-p3 [sold by newmediastores]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27AQDMG",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-10"
   }
  },
  "posts": {
@@ -1520,5 +1536,5 @@
   }
  },
  "day": "2026-11-10",
- "calls": 4
+ "calls": 5
 }
