@@ -130,7 +130,7 @@
   "rows": []
  },
  "pd17xvre0os": {
-  "t": "2026-11-10T10:50:52.261Z",
+  "t": "2026-11-10T17:05:46.057Z",
   "listPrice": 78499,
   "name": "Samsung Odyssey OLED G7 G73SH 32 inch Ultra HD 4K Gaming Monitor (LS32HG730SWXXL)",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g7-g73sh-32-inch-ultra-ppd17xvre0os",
@@ -811,7 +811,7 @@
   ]
  },
  "pd1gxkwuglf": {
-  "t": "2026-11-10T10:50:52.622Z",
+  "t": "2026-11-10T17:05:46.458Z",
   "listPrice": 152590,
   "name": "LG Ultrafine 27EP950 27 inch UHD 4K OLED Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultrafine-27ep950-27-inch-uhd-4k-oled-ppd1gxkwuglf",
@@ -829,7 +829,7 @@
   ]
  },
  "pd138v5lk73": {
-  "t": "2026-11-10T10:50:52.983Z",
+  "t": "2026-11-10T17:05:47.343Z",
   "listPrice": 155900,
   "name": "LG 32EP950-B 32 inch Ultra HD 4K Monitor",
   "url": "https://www.smartprix.com/monitors/lg-32ep950-b-32-inch-ultra-hd-4k-monitor-ppd138v5lk73",
@@ -847,7 +847,7 @@
   ]
  },
  "pd1yaqe4814": {
-  "t": "2026-11-10T10:50:53.416Z",
+  "t": "2026-11-10T17:05:47.700Z",
   "listPrice": 157900,
   "name": "LG UltraGear 45GR95QE 45 inch OLED Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultragear-45gr95qe-45-inch-oled-gaming-ppd1yaqe4814",
@@ -865,7 +865,7 @@
   ]
  },
  "pd197onjbwt": {
-  "t": "2026-11-10T10:50:53.841Z",
+  "t": "2026-11-10T17:05:48.369Z",
   "listPrice": 166099,
   "name": "Samsung Odyssey OLED G9 LS49CG950SW 49 inch Dual Quad HD Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-49-inch-dual-quad-ppd197onjbwt",
@@ -883,7 +883,7 @@
   ]
  },
  "pd1lz9txawj": {
-  "t": "2026-11-10T10:50:54.267Z",
+  "t": "2026-11-10T17:05:48.741Z",
   "listPrice": 168999,
   "name": "LG UltraFine OLED Pro 32 inch Ultra HD OLED Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultrafine-oled-pro-32-inch-ultra-hd-oled-ppd1lz9txawj",
@@ -901,7 +901,7 @@
   ]
  },
  "pd1973vwhnf": {
-  "t": "2026-11-10T10:50:54.692Z",
+  "t": "2026-11-10T17:05:49.181Z",
   "listPrice": 169999,
   "name": "Samsung Odyssey Neo G9 LS57CG950NW 57 inch Dual 4K Curved Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-neo-g9-8k-oled-gaming-monitor-ppd1973vwhnf",
@@ -917,6 +917,13 @@
     ]
    },
    {
+    "store": "Flipkart",
+    "price": 188599,
+    "stock": "IN_STOCK",
+    "cond": "new",
+    "offers": []
+   },
+   {
     "store": "Croma",
     "price": 198599,
     "stock": "OUT_OF_STOCK",
@@ -926,7 +933,7 @@
   ]
  },
  "pd1ef85ndej": {
-  "t": "2026-11-10T10:50:55.057Z",
+  "t": "2026-11-10T17:05:49.565Z",
   "listPrice": 199964,
   "name": "Corsair Xeneon Flex 45WQHD240 QHD OLED Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/corsair-xeneon-flex-45wqhd240-qhd-oled-gaming-ppd1ef85ndej",
@@ -944,7 +951,7 @@
   ]
  },
  "pd1tn5b709b": {
-  "t": "2026-11-10T10:50:55.502Z",
+  "t": "2026-11-10T17:05:50.003Z",
   "listPrice": 238148,
   "name": "Asus ROG Swift PG34WCDM 34 inch Ultrawide Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg34wcdm-34-inch-quad-hd-gaming-ppd1tn5b709b",
