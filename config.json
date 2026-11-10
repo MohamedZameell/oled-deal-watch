@@ -42,7 +42,12 @@
         "https://www.amazon.in/s?k=Legion+27Q-10+monitor",
         "https://www.amazon.in/s?k=XG27ACDMS+monitor",
         "https://www.amazon.in/s?k=AG276QZD2+monitor",
-        "https://www.amazon.in/s?k=MAG+271QPX+monitor"
+        "https://www.amazon.in/s?k=MAG+271QPX+monitor",
+        "https://www.amazon.in/s?k=BenQ+EX321UZ+monitor",
+        "https://www.amazon.in/s?k=G80SH+monitor",
+        "https://www.amazon.in/s?k=LG+39GX900A+monitor",
+        "https://www.amazon.in/s?k=LG+32GS95UV+monitor",
+        "https://www.amazon.in/s?k=MSI+MAG321UP+monitor"
       ],
       "warmup": "https://www.amazon.in/",
       "offers": 12,
@@ -64,7 +69,12 @@
         "https://www.flipkart.com/search?q=Legion+27Q-10+monitor",
         "https://www.flipkart.com/search?q=XG27ACDMS+monitor",
         "https://www.flipkart.com/search?q=AG276QZD2+monitor",
-        "https://www.flipkart.com/search?q=MAG+271QPX+monitor"
+        "https://www.flipkart.com/search?q=MAG+271QPX+monitor",
+        "https://www.flipkart.com/search?q=BenQ+EX321UZ+monitor",
+        "https://www.flipkart.com/search?q=G80SH+monitor",
+        "https://www.flipkart.com/search?q=LG+39GX900A+monitor",
+        "https://www.flipkart.com/search?q=LG+32GS95UV+monitor",
+        "https://www.flipkart.com/search?q=MSI+MAG321UP+monitor"
       ],
       "part": "web"
     },
@@ -252,7 +262,12 @@
     "MAG341CQP": 72998,
     "MPG341CQPX": 77000,
     "XG27AQDMES": 53199,
-    "PG27AQDM": 71349
+    "PG27AQDM": 71349,
+    "EX321UZ": 128998,
+    "G80SH": 78999,
+    "39GX900A": 114999,
+    "32GS95UV": 110999,
+    "MAG321UP": 99999
   },
   "dropThreshold": 0.9,
   "saleWindows": [
