@@ -47,7 +47,15 @@
         "https://www.amazon.in/s?k=G80SH+monitor",
         "https://www.amazon.in/s?k=LG+39GX900A+monitor",
         "https://www.amazon.in/s?k=LG+32GS95UV+monitor",
-        "https://www.amazon.in/s?k=MSI+MAG321UP+monitor"
+        "https://www.amazon.in/s?k=MSI+MAG321UP+monitor",
+        "https://www.amazon.in/s?k=ASUS+PG27UCDM+monitor",
+        "https://www.amazon.in/s?k=ASUS+PG32UCDM+monitor",
+        "https://www.amazon.in/s?k=ASUS+PG32UCDP+monitor",
+        "https://www.amazon.in/s?k=Gigabyte+FO32U2P+monitor",
+        "https://www.amazon.in/s?k=Corsair+Xeneon+monitor",
+        "https://www.amazon.in/s?k=Philips+Evnia+monitor+OLED",
+        "https://www.amazon.in/s?k=Acer+Predator+X27U+monitor",
+        "https://www.amazon.in/s?k=Acer+Predator+X32+monitor"
       ],
       "warmup": "https://www.amazon.in/",
       "offers": 12,
@@ -74,7 +82,15 @@
         "https://www.flipkart.com/search?q=G80SH+monitor",
         "https://www.flipkart.com/search?q=LG+39GX900A+monitor",
         "https://www.flipkart.com/search?q=LG+32GS95UV+monitor",
-        "https://www.flipkart.com/search?q=MSI+MAG321UP+monitor"
+        "https://www.flipkart.com/search?q=MSI+MAG321UP+monitor",
+        "https://www.flipkart.com/search?q=ASUS+PG27UCDM+monitor",
+        "https://www.flipkart.com/search?q=ASUS+PG32UCDM+monitor",
+        "https://www.flipkart.com/search?q=ASUS+PG32UCDP+monitor",
+        "https://www.flipkart.com/search?q=Gigabyte+FO32U2P+monitor",
+        "https://www.flipkart.com/search?q=Corsair+Xeneon+monitor",
+        "https://www.flipkart.com/search?q=Philips+Evnia+monitor+OLED",
+        "https://www.flipkart.com/search?q=Acer+Predator+X27U+monitor",
+        "https://www.flipkart.com/search?q=Acer+Predator+X32+monitor"
       ],
       "part": "web"
     },
