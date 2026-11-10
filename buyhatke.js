@@ -241,6 +241,33 @@ export async function azDetails(asin) {
   return res;
 }
 
+// Amazon SEARCH through the same scraper: how the 5-minute check finds listings that are not on the watchlist yet
+// (a brand-new listing or seller at a glitch price). Measured from a runner on 2026-11-10: calls back to back get
+// Amazon's 503 "dogs" page (2 of 5 worked); 20 s apart 13 of 14 worked, 1-14 s each. So the caller paces them, and a
+// blocked search just returns null (it never counts against azDetails). Search has no pincode: every hit is
+// confirmed with azDetails (price + stock at the pincode) before a ping.
+export function parseAzSearch(json) {
+  const items = [];
+  for (const p of json?.results || []) {
+    const price = Math.round(p?.price?.amount || 0); const list = Math.round(p?.price?.list_price || 0);
+    if (!/^\w{10}$/.test(p?.asin || '') || !p.title || !price) continue;
+    items.push({ title: String(p.title).replace(/\s+/g, ' ').trim(), price, mrp: list > price ? list : 0, url: `https://www.amazon.in/dp/${p.asin}` });
+  }
+  return items;
+}
+export async function azSearch(query) {
+  if (!AZ_URL) return null;
+  const t0 = Date.now();
+  try {
+    const r = await fetch(`${AZ_URL}/search?country=IN&query=${encodeURIComponent(query)}`, { signal: AbortSignal.timeout(40000) });
+    const j = await r.json().catch(() => null);
+    const items = r.ok ? parseAzSearch(j) : null;
+    // one line per search, every run: the block rate over a week decides whether search can replace the browser scan
+    console.log(`AMAZON search "${query}"`, r.ok ? `ok ${items.length} items` : `BLOCKED http ${r.status} ${String(j?.error || '').slice(0, 70)}`, Date.now() - t0, 'ms');
+    return items;
+  } catch (e) { console.log(`AMAZON search "${query}" FAILED`, String(e.message).slice(0, 60)); return null; }
+}
+
 const stockCache = new Map(); let amazonWalled = false;
 export async function amazonStock(asin) {
   if (stockCache.has(asin)) return stockCache.get(asin);

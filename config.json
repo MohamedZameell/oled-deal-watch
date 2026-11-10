@@ -59,7 +59,17 @@
       ],
       "warmup": "https://www.amazon.in/",
       "offers": 12,
-      "part": "amazon"
+      "part": "amazon",
+      "fastQueries": [
+        "oled monitor",
+        "qd-oled monitor",
+        "oled gaming monitor",
+        "oled monitor 27 inch",
+        "AW2726DM monitor",
+        "Samsung Odyssey OLED G5",
+        "Lenovo Legion 27Q-10 OLED",
+        "oled monitor 32 inch 4k"
+      ]
     },
     {
       "name": "Flipkart",

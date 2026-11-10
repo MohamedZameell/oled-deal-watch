@@ -10,7 +10,7 @@
 import { chromium } from 'playwright';
 import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
-import { createBuyHatke, fakeDiscount, exGst, amazonStock } from './buyhatke.js';
+import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
   keepListings as keepRule, judgeModel, pushHistory, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
@@ -491,9 +491,23 @@ async function communityOnly() {
 
 // Re-open a deal's product page: is the price really there, and is it in stock?
 // A misread price (B&H once parsed as $60 for a $699 monitor) or a sold-out listing must not become an alert.
+// a check result that kills the alert: sold out, or the shop itself now shows a different price
+const gone = (check) => check === 'out of stock' || String(check).startsWith('price changed');
 async function verifyDeal(ctx, it) {
   if (it.apiChecked) return 'verified';   // price + stock came from the store's own API this run (Samsung)
   if (it.preChecked) return it.preChecked;   // Smartprix: stock from its store table (its page lists every shop, so a page check proves nothing)
+  // Amazon listings: ask Amazon itself through the scraper (real price + stock at Zameel's pincode) when it is running.
+  // Not for other-seller offers (?aod=1), whose price is not the buy-box price the scraper reports.
+  const asin = !/[?&]aod=1/.test(it.url || '') && ((it.url || '').match(/amazon\.in\/(?:.*\/)?dp\/(\w{10})/) || [])[1];
+  if (asin) {
+    const az = await azDetails(asin);
+    if (az) {
+      if (az.inStock === false || !az.price) return 'out of stock';
+      if (Math.abs(az.price - it.price) > it.price * 0.01) return `price changed (Amazon shows ${fmt(az.price)} at your pincode)`;
+      return az.inStock ? 'verified' : 'unverified (Amazon: stock unknown)';
+    }
+    if (!ctx) return 'unverified (Amazon check failed)';   // a plain request from a runner gets Amazon's non-India page: useless
+  }
   if (!ctx) return verifyHttp(it);   // the 5-minute check has no browser
   const page = await ctx.newPage();
   try {
@@ -586,8 +600,20 @@ async function samsungOnly() {
     console.log('FLIPKART HTTP', r.items.length, 'cards,', kept.length, 'OLED monitors', r.errors.join(','));
     await earlyCheck(kept, null);
   }
-  const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
-  console.log('shop alerts', shopPings.length);
+  // NEW Amazon listings (ones not on the watchlist yet): two scraper searches per run, rotating through config
+  // fastQueries, at least 20 s apart (back-to-back searches get blocked). The first runs here, the second after the
+  // watchlist prices below, which take about that long anyway.
+  const azSrc = process.env.AMAZON_SCRAPER_URL ? cfg.sources.find((x) => x.kind === 'amazon' && x.fastQueries?.length) : null;
+  const azSlot = Math.floor(Date.now() / 300e3);
+  const azQueries = azSrc ? [0, 1].map((i) => azSrc.fastQueries[(azSlot * 2 + i) % azSrc.fastQueries.length]) : [];
+  const azFound = []; let azLast = 0;
+  const azLook = async (q) => {
+    if (!q) return;
+    const wait = azLast + 20000 - Date.now(); if (azLast && wait > 0) await new Promise((ok) => setTimeout(ok, wait));
+    const r = await azSearch(q); azLast = Date.now();
+    if (r) azFound.push(...r);
+  };
+  await azLook(azQueries[0]);
   // BuyHatke live prices for every watched OLED id (plain HTTP, one request per 50 ids): a flash deal on Amazon or
   // Flipkart reaches Telegram within 5 minutes instead of waiting for the next full scan. Read-only on
   // buyhatke.json (the full scan owns the watchlist); last-seen prices live in fast.json PER LISTING ("bhid|<pos>~<pid>"):
@@ -627,6 +653,16 @@ async function samsungOnly() {
   }
   // every alert goes to Telegram and into the hourly digest (fast.json .log); email right away only under
   // immediateEmailBelow (₹25k: Zameel's rule, everything else waits for the digest)
+  await azLook(azQueries[1]);
+  if (azSrc) {
+    // bundle listings ("monitor + webcam") carry the add-on's price; every hit is confirmed on Amazon (verifyDeal) before a ping
+    const kept = keepListings(azSrc, azFound.filter((x) => !/ \+ /.test(x.title)));
+    console.log('AMAZON search found', azFound.length, 'listings,', kept.length, 'OLED monitors');
+    await earlyCheck(kept, null);
+  }
+  // what the shop / Flipkart / Amazon-search checks pinged (earlyCheck sent them): remembered so nothing repeats them
+  const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
+  console.log('shop alerts', shopPings.length);
   fast.log = [...(fast.log || []), ...deals.map((d) => ({ ...d, t: now })), ...shopPings].filter((d) => Date.now() - Date.parse(d.t) < 2 * DAY).slice(-60);
   writeJson('fast.json', fast);
   console.log('alerts', deals.length);
@@ -669,7 +705,7 @@ async function earlyCheck(listings, verifyCtx) {
     const check = await verifyDeal(verifyCtx, it);
     const suspect = usual && it.price < usual * 0.25;
     console.log('EARLY', it.key, it.source, fmt(it.price), why, '->', check);
-    if (check === 'out of stock' || (suspect && check !== 'verified')) continue;
+    if (gone(check) || (suspect && check !== 'verified')) continue;
     earlyState.pinged.set(k, { kind, price: it.price, t: now, title: it.title, why, where: it.source, url: it.url });
     if (DRY) { console.log('EARLY PING (dry, not sent):', it.title.slice(0, 80), fmt(it.price), why); continue; }
     await sendTelegram(`⚡ <b>${esc(it.source)}</b>: ${esc(it.title.slice(0, 100))}\n<b>${fmt(it.price)}</b>, ${esc(why)}${check === 'verified' ? ' ✓ checked' : ` (${esc(check)})`} · <a href="${esc(it.url)}">open</a>`);
@@ -866,7 +902,7 @@ async function main() {
     const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
     c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
     console.log('VERIFY', c.key, c.source, fmt(c.price), '->', c.check);
-    if (c.check === 'out of stock' || (c.suspect && c.check !== 'verified')) dropped.push(c); else fresh.push(c);
+    if (gone(c.check) || (c.suspect && c.check !== 'verified')) dropped.push(c); else fresh.push(c);
   }
   // price-target alerts: any desktop OLED below a fixed price, whatever the "normal" price says
   // (size check keeps small portable OLED panels out; titles give inches or cm)
@@ -883,7 +919,7 @@ async function main() {
       const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
       c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
       console.log('VERIFY-BELOW', c.key, c.source, fmt(c.price), '->', c.check);
-      if (c.check !== 'out of stock') below.push(c);
+      if (!gone(c.check)) below.push(c);
     }
   }
   // sudden drops (dropFrom, set above): smaller than a crazy deal, but often the first sign of a flash sale
@@ -895,7 +931,7 @@ async function main() {
     const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
     c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
     console.log('VERIFY-DROP', c.key, c.source, fmt(c.dropFrom), '->', fmt(c.price), c.check);
-    if (c.check !== 'out of stock') drops.push(c);
+    if (!gone(c.check)) drops.push(c);
   }
   // new all-time lows: not 35% off, but cheaper than this model has ever been since tracking started
   const newLows = [];
@@ -906,7 +942,7 @@ async function main() {
     const srcCfg = cfg.sources.find((s) => c.source.startsWith(s.name));
     c.check = await verifyDeal(srcCfg?.mobile ? mobileCtx : ctx, c);
     console.log('VERIFY-LOW', c.key, c.source, fmt(c.prevLow), '->', fmt(c.price), c.check);
-    if (c.check !== 'out of stock') newLows.push(c);
+    if (!gone(c.check)) newLows.push(c);
   }
   // fake discounts: a "drop" that only undoes a recent price hike (PriceDive's trick). BuyHatke's price timeline
   // when we have it for that shop, else our own run history. Fake drops are not alerts; anything else gets a tag.

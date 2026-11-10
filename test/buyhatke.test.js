@@ -15,3 +15,14 @@ test('fakeDiscount: price raised in the last 3 weeks, then "dropped" back to nor
   assert.equal(fakeDiscount(series, 33000, now), null);                                  // well under the old normal: a real drop
   assert.equal(fakeDiscount([[day(10, now), day(0, now), 40000]], 36000, now), null);   // too little history to judge
 });
+
+import { parseAzSearch } from '../buyhatke.js';
+test('Amazon search results: asin, price and clean product link; rows without a price or asin skipped', () => {
+  const items = parseAzSearch({ results: [
+    { asin: 'B0G12R9WG3', title: 'Samsung 27" Odyssey QD-OLED G5  Gaming Monitor (Smartchoice)', price: { amount: 39999, currency: 'INR', list_price: 49500 }, is_sponsored: false },
+    { asin: 'B0NOPRICE1', title: 'Currently unavailable OLED monitor', price: null },
+    { asin: 'bad', title: 'x', price: { amount: 5 } },
+  ] });
+  assert.deepEqual(items, [{ title: 'Samsung 27" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice)', price: 39999, mrp: 49500, url: 'https://www.amazon.in/dp/B0G12R9WG3' }]);
+  assert.deepEqual(parseAzSearch({ error: 'amazon blocked the request' }), []);
+});
