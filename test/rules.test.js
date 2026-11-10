@@ -131,3 +131,27 @@ test('notRecent: re-alert only when 5%+ cheaper or after a week', () => {
   assert.equal(notRecent(p, 28000, now), true);
   assert.equal(notRecent({ ...p, t: '2026-11-01T00:00:00Z' }, 30000, now), true);
 });
+
+import { typicalPrice } from '../rules.js';
+test('typicalPrice: median of the last 30 days of daily lows; nothing until 7 days are recorded', () => {
+  const now = Date.parse('2026-11-10T12:00:00Z'); const day = (n) => new Date(now - n * 864e5).toISOString().slice(0, 10);
+  const days = {}; for (let i = 0; i < 20; i++) days[day(i)] = 38449;
+  assert.equal(typicalPrice(days, now), 38449);
+  assert.equal(typicalPrice(Object.fromEntries(Object.entries(days).slice(0, 6)), now), 0);
+  assert.equal(typicalPrice(undefined, now), 0);
+});
+test('typicalPrice: a one-day glitch does not move it, old days fall out of the window', () => {
+  const now = Date.parse('2026-11-10T12:00:00Z'); const day = (n) => new Date(now - n * 864e5).toISOString().slice(0, 10);
+  const days = {}; for (let i = 0; i < 20; i++) days[day(i)] = 40000;
+  days[day(3)] = 24000;                                    // glitch day
+  for (let i = 40; i < 100; i++) days[day(i)] = 55000;     // what it cost two months ago
+  assert.equal(typicalPrice(days, now), 40000);
+});
+test('regression: a shop that is often unreachable must not make its normal price look like a deal (XG27ACDMS 61,335 vs 125,999)', () => {
+  // the cheapest shop has listed it at 61,335 for a month; the usual price is that, not the dearer shop the scan saw last
+  const now = Date.parse('2026-11-10T12:00:00Z'); const days = {};
+  for (let i = 0; i < 29; i++) days[new Date(now - i * 864e5).toISOString().slice(0, 10)] = 61335;
+  const usual = typicalPrice(days, now);
+  assert.equal(usual, 61335);
+  assert.equal(61335 <= usual * 0.65, false);   // no "51% below usual" ping when that shop comes back
+});

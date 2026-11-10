@@ -12,7 +12,7 @@ import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
-  keepListings as keepRule, judgeModel, pushHistory, notRecent as notRecentAt } from './rules.js';
+  keepListings as keepRule, judgeModel, pushHistory, typicalPrice, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -57,7 +57,10 @@ const seeds = Object.fromEntries(Object.entries(cfg.streetPriceSeeds || {}).map(
 const savedHistory = readJson('history.json', {});
 const bh = createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY });
 const knownOled = new Set([...Object.keys(seeds), ...Object.keys(savedHistory)].filter((k) => !k.startsWith('~')).map((k) => modelKey(k) || k));
-const usualPrice = (key) => seeds[key] || (savedHistory[key]?.length ? median(savedHistory[key].slice(-48).map((h) => h.price)) : 0);
+// usual price of a model: its typical price over the last 30 days of our own daily lows (rules.js typicalPrice), else
+// the typed street price from config.json (new models), else the last two days of scan history
+const savedLows = readJson('lows.json', {});
+const usualPrice = (key) => typicalPrice(savedLows[key]?.days) || seeds[key] || (savedHistory[key]?.length ? median(savedHistory[key].slice(-48).map((h) => h.price)) : 0);
 
 // ---------- page extractors (run inside the browser) ----------
 const amazonExtract = () => [...document.querySelectorAll('[data-component-type="s-search-result"]')].map((e) => ({
@@ -594,7 +597,11 @@ async function samsungOnly() {
   // Flipkart's search pages over plain HTTP (config fastUrls): what BuyHatke's live Flipkart prices used to cover
   const fk = cfg.sources.find((x) => x.kind === 'flipkart' && x.fastUrls?.length);
   if (fk) {
-    const r = await flipkartHttp(fk.fastUrls);
+    // the general searches every run, plus two of the model-specific ones in rotation (all of them within the hour)
+    const rest = (fk.urls || []).filter((u) => !fk.fastUrls.includes(u) && !/refurbished|open\+box/.test(u));
+    const slot = Math.floor(Date.now() / 300e3);
+    const extra = rest.length ? [...new Set([0, 1].map((i) => rest[(slot * 2 + i) % rest.length]))] : [];
+    const r = await flipkartHttp([...fk.fastUrls, ...extra]);
     const kept = keepListings(fk, r.items);
     console.log('FLIPKART HTTP', r.items.length, 'cards,', kept.length, 'OLED monitors', r.errors.join(','));
     await earlyCheck(kept, null);
@@ -632,7 +639,9 @@ async function samsungOnly() {
     const id = 'bhid|' + w.pos + '~' + w.pid;
     // GST-excluded price (BuyHatke quirk on Amazon Business listings): not a real price, don't alert or remember it
     if (exGst(price, fast[id]?.price, w.last, usual)) { console.log('  skip ex-GST price', key, fmt(price)); continue; }
-    const seen = fast[id]; fast[id] = { price, t: now };
+    // remembered only when the price changes: stamping every listing on every run rewrote fast.json each time,
+    // which meant a state commit every 5 minutes (289 a day) and most of the push races
+    const seen = fast[id]; if (!seen || seen.price !== price) fast[id] = { price, t: now };
     const size = inches(w.name);
     const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`
       : s.low && price <= s.low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? `new all-time low (was ${fmt(s.low)})`

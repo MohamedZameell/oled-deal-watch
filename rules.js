@@ -125,5 +125,15 @@ export function pushHistory(arr, t, price, keep = 120) {
   return arr.slice(-keep);
 }
 
+// A model's typical price from our own record: the median of its daily lowest prices (state/lows.json: cheapest
+// normal listing per day, any shop) over the last 30 days. 0 until 7 days are recorded. This replaces the hand-typed
+// street prices in config.json as the "usual price" once there is enough data: typed numbers go stale (AW2726DM was
+// typed as ₹40,300 while it sold at ₹38,449 for weeks), and a stale number moves what "35% below usual" means.
+// A one-day glitch barely moves a 30-day median; a lasting price cut becomes the new normal after about two weeks.
+export function typicalPrice(days, nowMs = Date.now(), { windowDays = 30, minDays = 7 } = {}) {
+  const recent = Object.entries(days || {}).filter(([d, p]) => p > 0 && nowMs - Date.parse(d) < windowDays * 864e5 && Date.parse(d) <= nowMs).map(([, p]) => p);
+  return recent.length >= minDays ? Math.round(median(recent)) : 0;
+}
+
 // alert again only for a new listing, a price 5%+ lower than last time, or the same deal after a week
 export const notRecent = (p, price, nowMs = Date.now()) => !p || price < p.price * 0.95 || nowMs - Date.parse(p.t) > 7 * 864e5;
