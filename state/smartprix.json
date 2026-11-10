@@ -163,11 +163,11 @@
   "rows": []
  },
  "pd1d59vk1fv": {
-  "t": "2026-11-10T12:50:32.487Z",
+  "t": "2026-11-10T18:50:42.453Z",
   "listPrice": 83999,
   "name": "Samsung Odyssey OLED G9 LS49DG910SWXXL 49 inch Dual Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49dg910swxxl-49-ppd1d59vk1fv",
-  "drop": -2.8129506,
+  "drop": -2.9560246,
   "rows": [
    {
     "store": "Flipkart",
@@ -206,7 +206,7 @@
   ]
  },
  "pd107m0mske": {
-  "t": "2026-11-10T12:50:31.691Z",
+  "t": "2026-11-10T18:50:42.005Z",
   "listPrice": 77999,
   "name": "LG 27GS95QE 27 inch Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/lg-27gs95qe-27-inch-quad-hd-gaming-monitor-ppd107m0mske",
@@ -214,8 +214,8 @@
   "rows": [
    {
     "store": "Flipkart",
-    "price": 79999,
-    "stock": "IN_STOCK",
+    "price": 77999,
+    "stock": "OUT_OF_STOCK",
     "cond": "new",
     "offers": []
    },
