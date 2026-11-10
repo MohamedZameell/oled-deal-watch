@@ -80,7 +80,9 @@ export function keepListings(src, items, { cfg, knownOled, usualPrice }) {
     return knownOled.has(key) && !NON_OLED_PANEL.test(i.title) && (!usual || i.price >= usual * 0.5);
   });
   return good.map((g) => {
-    const source = g.store ? `${src.name} · ${g.store}` : src.name;
+    // sourceName: an item may name where its price really came from (an Amazon price read from Amazon itself by the
+    // watchlist source is "Amazon (direct)", not "BuyHatke · Amazon")
+    const source = g.sourceName || (g.store ? `${src.name} · ${g.store}` : src.name);
     const key = modelKey(g.title) || modelKey(urlWords(g.url)); const spec = key ? null : specKey(g.title);
     return { ...g, source, retailer: ['smartprix', 'buyhatke'].includes(src.kind) ? retailerOf(g.store) : retailerOf(source),
       feed: !!src.feed, key: key || spec, generic: !key, risky: RISKY_CONDITION.test(g.title) };

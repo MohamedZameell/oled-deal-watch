@@ -155,3 +155,13 @@ test('regression: a shop that is often unreachable must not make its normal pric
   assert.equal(usual, 61335);
   assert.equal(61335 <= usual * 0.65, false);   // no "51% below usual" ping when that shop comes back
 });
+
+test('keepListings: an item can name its real source (Amazon price read from Amazon itself is not a "BuyHatke" price)', () => {
+  const src = { name: 'BuyHatke', kind: 'buyhatke' };
+  const [a, b] = keepListings(src, [
+    { title: 'Alienware AW2726DM QD-OLED Monitor', price: 39799, url: 'https://www.amazon.in/dp/B0GYG3VLMR', store: 'Amazon', sourceName: 'Amazon (direct)' },
+    { title: 'Alienware AW2726DM QD-OLED Monitor', price: 38449, url: 'https://www.flipkart.com/x/p/itm1?pid=MON1', store: 'Flipkart' },
+  ], ctx);
+  assert.equal(a.source, 'Amazon (direct)'); assert.equal(a.retailer, 'amazon');
+  assert.equal(b.source, 'BuyHatke · Flipkart'); assert.equal(b.retailer, 'flipkart');
+});

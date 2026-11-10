@@ -36,3 +36,23 @@ test('azVerdict: Amazon\'s own answer decides whether a search hit may ping', ()
   assert.equal(azVerdict({ price: 24000, inStock: false }, 24000), 'out of stock');
   assert.equal(azVerdict({ price: 95990, inStock: null }, 95990), 'stock unknown');   // third-party offers only
 });
+
+import { parseAzOffers, cheapestNew, sideOffers } from '../buyhatke.js';
+test('Amazon offers: third-party-only listings resolve to the cheapest New offer (B0CZSGWLD5)', () => {
+  const offers = parseAzOffers({ offers: [
+    { condition: 'New', price: { amount: 110779 }, seller: { name: 'STS Shop' } },
+    { condition: 'New', price: { amount: 95990 }, seller: { name: 'ShopForBest' } },
+    { condition: 'Used - Like New', price: { amount: 70000 }, seller: { name: 'Second Life' } },
+    { condition: 'New', price: { amount: 2995 }, seller: { name: 'Webcam add-on' } },   // not a monitor price
+  ] });
+  assert.equal(offers.length, 3);
+  assert.deepEqual(cheapestNew(offers), { cond: 'New', price: 95990, seller: 'ShopForBest' });
+  assert.equal(cheapestNew([{ cond: 'Used - Good', price: 50000, seller: 'x' }]), false);   // nothing new to buy
+  assert.equal(cheapestNew(null), null);                                                    // no answer: unknown
+  assert.deepEqual(parseAzOffers({ error: 'blocked' }), []);
+});
+test('Amazon offers: used/renewed and cheaper-seller offers are listed, the buy-box offer itself is not', () => {
+  const offers = [{ cond: 'New', price: 46899, seller: 'Clicktech' }, { cond: 'New', price: 44000, seller: 'Other' }, { cond: 'Used - Very Good', price: 39000, seller: 'Warehouse' }, { cond: 'New', price: 49000, seller: 'Dearer' }];
+  assert.deepEqual(sideOffers(offers, 46899).map((o) => o.seller), ['Other', 'Warehouse']);
+  assert.deepEqual(sideOffers(null, 46899), []);
+});

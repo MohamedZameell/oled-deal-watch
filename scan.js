@@ -629,7 +629,7 @@ async function samsungOnly() {
   const { out: live, errors: bhErr } = await bh.livePrices();
   const stats = bh.statsByKey(); const nl = cfg.newLowAlert || {};
   console.log('BuyHatke live prices', live.length, bhErr.join(','));
-  for (const { w, price, oos } of live) {
+  for (const { w, price, oos, seller } of live) {
     if (oos || !w.name || BANNED.test(w.name)) continue;
     const key = w.key || modelKey(w.name); if (!key) continue;
     const store = w.store || ({ 63: 'Amazon', 2: 'Flipkart' })[w.pos] || 'shop';
@@ -657,7 +657,7 @@ async function samsungOnly() {
     const last = fast[k];
     if (last && price >= last.price * 0.95 && Date.now() - Date.parse(last.t) < 7 * DAY) continue;
     fast[k] = { price, t: now };
-    deals.push({ title: w.name, price, why: stock === 'in stock' ? why : why + ' (BuyHatke price, stock not confirmed: check before buying)', where: store, url: w.url });
+    deals.push({ title: w.name + (seller ? ` [sold by ${seller}]` : ''), price, why: stock === 'in stock' ? why : why + ' (BuyHatke price, stock not confirmed: check before buying)', where: store, url: w.url });
   }
   // every alert goes to Telegram and into the hourly digest (fast.json .log); email right away only under
   // immediateEmailBelow (₹25k: Zameel's rule, everything else waits for the digest)

@@ -78,7 +78,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       await Promise.all(Array.from({ length: 4 }, async () => {
         for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
           const a = await azDetails(w.pid);
-          if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false }); n++; }
+          if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false, via: 'amazon', seller: a.seller }); n++; }
           else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
         }
       }));
@@ -148,7 +148,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     const refreshed = await refreshHistory(ctx, out.filter((x) => !x.oos).map((x) => x.w), { max: src.historyPerRun ?? 12, budgetMs: src.budgetMs ?? 150000 });
     const items = [];
     let gone = 0; const tally = {};
-    for (const { w, price, oos, exGst: noGst } of out) {
+    for (const { w, price, oos, exGst: noGst, via, seller } of out) {
       if (oos || !w.name || noGst) continue;
       w.last = price;
       // BuyHatke's stock flag is stale (see amazonStock): Amazon listings are confirmed on Amazon itself; the rest
@@ -157,8 +157,14 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       if (w.pos === 63) tally[stock] = (tally[stock] || 0) + 1;
       if (stock === 'out of stock') { gone++; continue; }
       const store = w.store || STORE[w.pos] || `store ${w.pos}`;
-      items.push({ title: w.name, price, mrp: 0, url: w.url || '', store, apiChecked: stock === 'in stock', bh: w.hist || null, bhId: idOf(w.pos, w.pid) });
+      // a price read from Amazon itself is labelled as such ("Amazon (direct)"), not as a BuyHatke price
+      items.push({ title: w.name + (seller ? ` [sold by ${seller}]` : ''), price, mrp: 0, url: w.url || '', store, apiChecked: stock === 'in stock', bh: w.hist || null, bhId: idOf(w.pos, w.pid),
+        ...(via === 'amazon' ? { sourceName: 'Amazon (direct)' } : {}) });
     }
+    // other sellers, used and renewed units of the watched Amazon listings (Amazon's all-offers panel through the
+    // scraper, at the pincode): the browser scan reads that panel too, but Amazon walls it on many runs
+    const offerItems = await otherOffers(out.filter((x) => x.w.pos === 63 && !x.oos && x.w.name), src.offers ?? 12);
+    items.push(...offerItems);
     console.log('BUYHATKE dropped', gone, 'listings Amazon shows as unavailable; Amazon page check', JSON.stringify(tally), amazonWalled ? '(Amazon walled us)' : '');
     console.log('BUYHATKE watching', Object.keys(st.ids).length, 'ids, priced', out.length, '(', out.filter((x) => x.oos).length, 'out of stock ), history refreshed', refreshed);
     writeJson('buyhatke.json', st);
@@ -234,7 +240,12 @@ export async function azDetails(asin) {
       if (price && (price < 10000 || / \+ /.test(d.title || ''))) console.log('azDetails ignoring bundle/implausible price', asin, price);
       // some listings come back with a price but no availability block (B0CZSGWLD5, B0CZWM44QP: third-party offers only).
       // That is a good answer with unknown stock, not a scraper failure: it must not count towards the 3-failures stop.
-      else res = { price, inStock: d.availability ? !!d.availability.is_in_stock : null };
+      // The all-offers list settles those: a New offer there = in stock at that seller's price; none = not buyable.
+      else if (d.availability) res = { price, inStock: !!d.availability.is_in_stock };
+      else {
+        const best = cheapestNew(await azOffers(asin));
+        res = best === null ? { price, inStock: null } : best ? { price: best.price, inStock: true, seller: best.seller } : { price, inStock: false };
+      }
     } else azFails++;
   } catch (e) { azFails++; console.log('azDetails', asin, String(e.message).slice(0, 60)); }
   azCache.set(asin, res);
@@ -246,6 +257,37 @@ export async function azDetails(asin) {
 // Amazon's 503 "dogs" page (2 of 5 worked); 20 s apart 13 of 14 worked, 1-14 s each. So the caller paces them, and a
 // blocked search just returns null (it never counts against azDetails). Search has no pincode: every hit is
 // confirmed with azDetails (price + stock at the pincode) before a ping.
+// Every seller's offer for one listing (Amazon's all-offers panel) at the pincode: [{ cond, price, seller }], or
+// null when the scraper is off or the call failed. Plausible monitor prices only (a bundle add-on is not an offer).
+export function parseAzOffers(json) {
+  return (json?.offers || []).map((o) => ({ cond: String(o.condition || 'New').replace(/\s+/g, ' ').trim(), price: Math.round(o.price?.amount || 0),
+    seller: String(o.seller?.name || '').replace(/\s+/g, ' ').trim() })).filter((o) => o.price >= 10000);
+}
+export async function azOffers(asin) {
+  if (!AZ_URL) return null;
+  try {
+    const r = await fetch(`${AZ_URL}/products/offers?country=IN&postal_code=${AZ_PIN}&product=${asin}`, { signal: AbortSignal.timeout(45000) });
+    return r.ok ? parseAzOffers(await r.json()) : null;
+  } catch (e) { console.log('azOffers', asin, String(e.message).slice(0, 60)); return null; }
+}
+// the cheapest New offer; false when the list has none; null when there is no list (unknown)
+export const cheapestNew = (offers) => (!offers ? null : offers.filter((o) => /^new$/i.test(o.cond)).sort((a, b) => a.price - b.price)[0] || false);
+// offers worth listing next to the buy-box price: used/renewed units, and New from another seller that is cheaper
+export const sideOffers = (offers, buyBoxPrice) => (offers || []).filter((o) => !/^new$/i.test(o.cond) || o.price < buyBoxPrice * 0.99);
+async function otherOffers(priced, max) {
+  if (!AZ_URL || !max) return [];
+  const todo = priced.slice(0, max); const items = []; const t0 = Date.now(); let asked = 0;
+  await Promise.all(Array.from({ length: 4 }, async () => {
+    for (let x; (x = todo.shift()) && Date.now() - t0 < 90000;) {
+      const offers = await azOffers(x.w.pid); asked++;
+      sideOffers(offers, x.price).forEach((o, n) => items.push({ title: `${x.w.name} [${o.cond}${o.seller ? ' · ' + o.seller : ''}]`, price: o.price, mrp: 0,
+        url: `https://www.amazon.in/dp/${x.w.pid}?aod=1&offer=${n}`, store: 'Amazon other sellers', apiChecked: true, sourceName: 'Amazon (direct) · other sellers' }));
+    }
+  }));
+  console.log('AMAZON offers:', asked, 'listings asked,', items.length, 'used/renewed/cheaper-seller offers');
+  return items;
+}
+
 // what Amazon's own answer (azDetails) says about a listing someone priced at `price`
 export const azVerdict = (az, price) => (az.inStock === false || !az.price ? 'out of stock'
   : Math.abs(az.price - price) > price * 0.01 ? 'price changed' : az.inStock ? 'verified' : 'stock unknown');
