@@ -782,7 +782,7 @@
    "model": "MOBIUZ EX271QZ",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-06"
+   "seen": "2026-11-10"
   },
   "asus rog strix oled xg32ucwg 31.5 inch 4k gaming monitor": {
    "kind": "monitor",
@@ -1094,7 +1094,7 @@
    "model": "AORUS FO27Q3",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-06"
+   "seen": "2026-11-10"
   },
   "dell aw series 68.58 cm (27 inch) 4k ultra hd oled panel gaming monitor (aw2725q)": {
    "kind": "monitor",
@@ -1439,6 +1439,54 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-10"
+  },
+  "lg ultragear 27gx790a-b gaming monitor | 27 inch | 480 hz | 0.03 ms | 100% srgb rating": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-10"
+  },
+  "aoc ag276qzd2 qhd qd-oled gaming monitor with 240hz": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AG276QZD2",
+   "cond": "new",
+   "size": null,
+   "seen": "2026-11-10"
+  },
+  "benq mobiuz ex321uz 32 inch 4k qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX321UZ",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-10"
+  },
+  "asus rog swift pg27aqdm 27\" 240hz 1440p gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "ROG Swift PG27AQDM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-10"
+  },
+  "asus rog swift pg32ucdm 32\" 4k 240hz 0.3ms qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "ROG Swift PG32UCDM",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-10"
+  },
+  "lg ultragear 39gs95qe-b 39\" wqhd 240hz oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 39GS95QE-B",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-10"
   }
  },
  "posts": {
@@ -1472,5 +1520,5 @@
   }
  },
  "day": "2026-11-10",
- "calls": 3
+ "calls": 4
 }
