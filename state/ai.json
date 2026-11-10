@@ -94,7 +94,7 @@
    "model": "XG27AQDMES",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   "samsung odyssey g5 ls27fg502sw 27 inch quad hd qd-oled monitor": {
    "kind": "monitor",
@@ -1278,7 +1278,7 @@
    "model": "MAG321UP",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-06"
+   "seen": "2026-11-10"
   },
   "msi 86.36 cm (34 inch) curved full hd ips panel gaming monitor (mag341cqp qd oled)": {
    "kind": "monitor",
@@ -1302,7 +1302,7 @@
    "model": "MAG321UPX",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-05"
+   "seen": "2026-11-10"
   },
   "msi 81.28 cm (32 inch) uhd oled panel with displayhdr true black 400, clear mr13000, 138.2% srgb, smart crosshair, adjustable stand flat gaming monitor (mag 321upx qd oled)": {
    "kind": "monitor",
@@ -1310,7 +1310,7 @@
    "model": "MAG 321UPX",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-09"
+   "seen": "2026-11-10"
   },
   "msi 86.36 cm (34 inch) curved uwqhd oled panel with displayhdr true black 400, clear mr13000, 139.1% srgb, smart crosshair, height adjustable gaming monitor (mpg 341cqpx qd oled)": {
    "kind": "monitor",
@@ -1415,6 +1415,22 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-10"
+  },
+  "asus rog strix 81.28 cm (32 inch) 4k ultra hd ips panel gaming monitor (rog strix oled xg32ucwg gaming monitor 32-inch 4k trueblack glossy oled)": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": null,
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-10"
+  },
+  "lg ultragear 99.06 cm (39 inch) curved uwqhd led backlit oled panel with 800r curvature, 1.5m:1 contrast ratio, hdr true black 400, amd free sync compatible, height/tilt/swivel stand gaming monitor (39gs95qe-bb.atrlmun)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "39GS95QE-BB.ATRLMUN",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-10"
   }
  },
  "posts": {
@@ -1448,5 +1464,5 @@
   }
  },
  "day": "2026-11-10",
- "calls": 0
+ "calls": 1
 }
