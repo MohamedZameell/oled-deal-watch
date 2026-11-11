@@ -36,8 +36,8 @@
   "t": "2026-11-02T17:55:17.404Z"
  },
  "27G61SH|amazon": {
-  "price": 46899,
-  "t": "2026-11-02T18:00:41.735Z"
+  "price": 41999,
+  "t": "2026-11-11T11:35:19.848Z"
  },
  "~LENOVO 26\" 4K 240Hz|amazon": {
   "price": 57965,
@@ -52,8 +52,8 @@
   "t": "2026-11-10T18:25:24.546Z"
  },
  "bhid|63~B0F99Y979X": {
-  "price": 96899,
-  "t": "2026-11-10T19:45:25.787Z"
+  "price": 91599,
+  "t": "2026-11-11T11:35:19.848Z"
  },
  "bhid|2~MONHZTZQRYHJGWGR": {
   "price": 42999,
@@ -108,8 +108,8 @@
   "t": "2026-11-06T01:55:17.385Z"
  },
  "bhid|63~B0GXL1STL2": {
-  "price": 48999,
-  "t": "2026-11-10T18:25:24.546Z"
+  "price": 41999,
+  "t": "2026-11-11T11:35:19.848Z"
  },
  "bhid|63~B0HFNBWVHV": {
   "price": 73599,
@@ -187,6 +187,14 @@
    "where": "Samsung India · Samsung.com",
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g9-g91sd-49-inch-144hz-curved-dual-qhd-ls49dg910swxxl/",
    "t": "2026-11-11T07:15:59.936Z"
+  },
+  {
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync| Free Sync| LS27HG612SWXXL| Black",
+   "price": 41999,
+   "why": "dropped from ₹48,999 (usual ~₹46,899)",
+   "where": "Amazon",
+   "url": "https://www.amazon.in/dp/B0GXL1STL2",
+   "t": "2026-11-11T11:35:19.848Z"
   }
  ],
  "AW2726DM|amazon": {
