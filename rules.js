@@ -27,6 +27,10 @@ export function modelKey(title) {
   if (ls) return `${ls[1]}G${ls[3]}${ls[4]}S${ls[2]}`;
   const ody = t.match(/\bG([3-9])(\d)S([A-Z])\b/);
   if (ody) { const size = t.match(/\b(\d{2})(?:\.\d)?\s?(?:"|”|″|''|-?\s?INCH|IN\b)/); return `${size ? size[1] : ''}G${ody[1]}${ody[2]}S${ody[3]}`; }
+  // Amazon's own G5 listing carries no code at all ("Samsung 27" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice)"),
+  // so it was a spec-only listing that never alerts (B0G12R9WG3 at ₹36,499, 2026-11-11). The 27" OLED G5 is one
+  // model; G6/G8/G9 names cover several codes each and stay unkeyed.
+  if (/\bODYSSEY\b/.test(t) && /\bOLED\b/.test(t) && /\bG5\b/.test(t) && !NON_OLED_PANEL.test(t) && Math.round(inches(title)) === 27) return '27G50SF';
   // Acer: family+size code (VG277U, X27U, XV275K); the trailing "Xbiip"/"W1bmiipprx" is just a bundle variant
   const acer = /ACER|NITRO|PREDATOR/.test(t) && t.match(/\b((?:VG|XV|XB|XZ|KG|CB|X)\d{2,3}[A-Z]{0,2})\b/);
   if (acer) return acer[1];
@@ -145,6 +149,19 @@ export function pushHistory(arr, t, price, keep = 120) {
 export function typicalPrice(days, nowMs = Date.now(), { windowDays = 30, minDays = 7 } = {}) {
   const recent = Object.entries(days || {}).filter(([d, p]) => p > 0 && nowMs - Date.parse(d) < windowDays * 864e5 && Date.parse(d) <= nowMs).map(([, p]) => p);
   return recent.length >= minDays ? Math.round(median(recent)) : 0;
+}
+
+// New all-time low for the 5-minute checks: returns the model's lowest price on any EARLIER day when `price` is
+// minDropPct under it (and the model has been tracked minDays), else 0. Today's own entry is left out on purpose:
+// the full scan writes it as soon as ONE shop shows the new price, and counting it made every other shop at that
+// same price "not a new low" (Samsung.com pinged the G5 at ₹36,499 on 2026-11-11, Amazon at the same price stayed silent).
+export function newLowFrom(price, L, nl = {}, nowMs = Date.now()) {
+  if (!L?.days || !(price > 0)) return 0;
+  const today = new Date(nowMs).toISOString().slice(0, 10);
+  const prev = Object.entries(L.days).filter(([d, p]) => d !== today && p > 0).map(([, p]) => p);
+  if (!prev.length || nowMs - Date.parse(L.first) < (nl.minDays ?? 7) * 864e5) return 0;
+  const low = Math.min(...prev);
+  return price <= low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? low : 0;
 }
 
 // alert again only for a new listing, a price 5%+ lower than last time, or the same deal after a week

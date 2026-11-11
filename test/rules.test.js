@@ -1,7 +1,7 @@
 // Deal rules. Each "regression" case is a false alert (or a missed listing) that really happened; it must stay fixed.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { modelKey, specKey, inches, retailerOf, median, keepListings, judgeModel, pushHistory, notRecent } from '../rules.js';
+import { modelKey, specKey, inches, retailerOf, median, keepListings, judgeModel, pushHistory, notRecent, newLowFrom } from '../rules.js';
 
 const cfg = { minPrice: 12000, maxPrice: 250000, crazyThreshold: 0.65, nearMissThreshold: 0.8, historyThreshold: 0.7, bannedBrands: ['LYVON'] };
 const usual = { AW2726DM: 40300, '27G50SF': 42499, 'LEGION27Q-10': 41999 };
@@ -11,6 +11,19 @@ const keep = (title, price, extra = {}, src = { name: 'Shop', kind: 'text' }) =>
 test('modelKey: the same Samsung panel under its retail code and its Odyssey name is one model', () => {
   assert.equal(modelKey('Samsung Odyssey OLED G5 LS27FG502SWXXL 27 Inch Monitor'), '27G50SF');
   assert.equal(modelKey('Samsung 27" Odyssey OLED G5 G50SF QHD 180Hz'), '27G50SF');
+  // Amazon's own listing B0G12R9WG3 has no code in the title: it sat at ₹36,499 as a spec-only listing, no alert
+  assert.equal(modelKey('Samsung 27" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,'), '27G50SF');
+  assert.equal(modelKey('Samsung 27" Odyssey G5 IPS QHD 180Hz Gaming Monitor'), null);
+  // the G5 on 2026-11-11: ₹39,999 for weeks, then ₹36,499. A second shop at the new price is still a new low
+  // the same day (today's entry, written when the first shop showed it, must not hide it); not again tomorrow.
+  const at = Date.parse('2026-11-11T12:00:00Z'); const nl = { minDropPct: 3, minDays: 7, maxPrice: 60000 };
+  const g5 = { first: '2026-10-08T00:00:00Z', days: { '2026-11-08': 39999, '2026-11-09': 39999, '2026-11-10': 39999, '2026-11-11': 36499 } };
+  assert.equal(newLowFrom(36499, g5, nl, at), 39999);
+  assert.equal(newLowFrom(39499, g5, nl, at), 0);                                   // 1% under: not a new low
+  assert.equal(newLowFrom(36499, g5, nl, at + 864e5), 0);                           // next day: already the low
+  assert.equal(newLowFrom(36499, { ...g5, first: '2026-11-08T00:00:00Z' }, nl, at), 0);   // tracked under 7 days
+  assert.equal(newLowFrom(70000, { first: g5.first, days: { '2026-11-10': 80000 } }, nl, at), 0);   // over maxPrice
+  assert.equal(modelKey('Samsung 32" Odyssey OLED G8 4K 240Hz Gaming Monitor'), null);
   assert.equal(modelKey('SAMSUNG Odyssey G9 LS49DG930SWXXL 49 Inch'), '49G93SD');
 });
 test('modelKey: one key per model across the shops (titles as the shops print them)', () => {

@@ -313,7 +313,7 @@
     "32GS95UV": 110999,
     "MAG321UP": 99999
   },
-  "dropThreshold": 0.9,
+  "dropThreshold": 0.92,
   "saleWindows": [
     {
       "name": "Diwali sales",

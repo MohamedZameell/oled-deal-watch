@@ -12,7 +12,7 @@ import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict, azLow } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
-  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, notRecent as notRecentAt } from './rules.js';
+  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, newLowFrom, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -646,11 +646,13 @@ async function samsungOnly() {
     // remembered only when the price changes: stamping every listing on every run rewrote fast.json each time,
     // which meant a state commit every 5 minutes (289 a day) and most of the push races
     const seen = fast[id]; if (!seen || seen.price !== price) fast[id] = { price, t: now };
-    const size = inches(w.name);
+    const size = inches(w.name); const ownLow = newLowFrom(price, savedLows[key], nl);
     const why = usual && price <= usual * cfg.crazyThreshold ? `${Math.round((1 - price / usual) * 100)}% below the usual ~${fmt(usual)}`
       : s.low && price <= s.low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? `new all-time low (was ${fmt(s.low)})`
+      // BuyHatke's stats are gone, so our own daily lows decide (same rule as the shop checks and the full scan)
+      : ownLow ? `new all-time low (was ${fmt(ownLow)})`
       // a drop counts only when it also lands well under the model's usual price: going back to normal is not a deal
-      : seen && price <= seen.price * (cfg.dropThreshold || 0.9) && usual && price <= usual * 0.9 && !fakeDiscount(w.hist?.series, price)
+      : seen && price <= seen.price * (cfg.dropThreshold || 0.9) && usual && price <= usual * (cfg.dropThreshold || 0.9) && !fakeDiscount(w.hist?.series, price)
         ? `dropped from ${fmt(seen.price)} (usual ~${fmt(usual)})`
       : cfg.priceAlertBelow && price < cfg.priceAlertBelow && BRANDS.test(w.name.toUpperCase()) && (!size || size >= 24) ? `under ${fmt(cfg.priceAlertBelow)}` : '';
     if (!why) continue;
@@ -710,11 +712,11 @@ async function earlyCheck(listings, verifyCtx) {
     const k = it.key + '|' + it.retailer;
     if (earlyState.pinged.has(k)) continue;
     const usual = earlyState.stats[it.key]?.monthAvg || usualPrice(it.key);
-    const L = earlyState.lows[it.key]; const low = L ? Math.min(...Object.values(L.days)) : 0;
+    const low = newLowFrom(it.price, earlyState.lows[it.key], nl);
     const size = inches(it.title);
     const [kind, why] = usual && it.price <= usual * cfg.crazyThreshold ? ['', `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`]
       : cfg.priceAlertBelow && it.price < cfg.priceAlertBelow && BRANDS.test(it.title.toUpperCase()) && !/portable/i.test(it.title) && (!size || size >= 24) ? ['below|', `under ${fmt(cfg.priceAlertBelow)}`]
-      : low && it.price <= low * (1 - (nl.minDropPct ?? 3) / 100) && it.price <= (nl.maxPrice ?? Infinity) && L && Date.now() - Date.parse(L.first) >= (nl.minDays ?? 7) * DAY ? ['low|', `new all-time low (was ${fmt(low)})`]
+      : low ? ['low|', `new all-time low (was ${fmt(low)})`]
       : [null, ''];
     if (kind === null) continue;
     if (recent(earlyState.alerted[kind + k], it.price) || recent(earlyState.fast[k], it.price)) continue;   // told already
@@ -880,7 +882,7 @@ async function main() {
     // a shop cutting its own price 10%+ since it was last seen listing it is how flash sales start
     if (p && it.price <= p.price * (cfg.dropThreshold || 0.9) && Date.parse(now) - Date.parse(p.seen) < 3 * DAY &&
       // and well under the usual price: a cheaper second listing coming back in stock is not a flash sale
-      (!usualPrice(it.key) || it.price <= usualPrice(it.key) * 0.9)) it.dropFrom = p.price;
+      (!usualPrice(it.key) || it.price <= usualPrice(it.key) * (cfg.dropThreshold || 0.9))) it.dropFrom = p.price;
     if (!p || Math.abs(it.price - p.price) > p.price * 0.02) steady[k] = { price: it.price, since: now, seen: now }; else p.seen = now;
     it.steadyDays = (Date.parse(now) - Date.parse(steady[k].since)) / DAY;
   }
