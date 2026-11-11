@@ -635,7 +635,8 @@ async function samsungOnly() {
   console.log('BuyHatke live prices', live.length, bhErr.join(','));
   for (const { w, price, oos, seller } of live) {
     if (oos || !w.name || BANNED.test(w.name)) continue;
-    const key = w.key || modelKey(w.name);
+    // a watchlist key starting with "~" is only a spec group (brand + size), not a model
+    const key = (w.key && !w.key.startsWith('~') ? w.key : null) || modelKey(w.name);
     const store = w.store || ({ 63: 'Amazon', 2: 'Flipkart' })[w.pos] || 'shop';
     if (!key) {
       // no model code in the title: no usual price or all-time low to judge by, so the listing is compared with

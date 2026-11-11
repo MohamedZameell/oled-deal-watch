@@ -32,6 +32,9 @@ test('listings without a model code: one key per listing, alert when its own pri
   assert.equal(listingKey('https://www.flipkart.com/samsung-odyssey/p/itm123?pid=MONHXYZ&lid=1', 'flipkart'), 'lst|fk~MONHXYZ');
   assert.equal(listingKey('https://www.TPStech.in/products/samsung-g9/?variant=1', 'tpstechnologies'), 'lst|tpstech.in/products/samsung-g9|tpstechnologies');
   assert.equal(listingKey('not a url'), null);
+  // the watchlist's remembered model survives a cut-off title; a "~" spec group is not a model
+  assert.equal(keep('Samsung 49" Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD', 91599, { knownKey: '49G93SD' })[0].key, '49G93SD');
+  assert.equal(keep('Samsung 49" Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD', 91599, { knownKey: '~SAMSUNG 49" 5K' })[0].generic, true);
   const at = Date.parse('2026-11-11T12:00:00Z'); const since = (d) => new Date(at - d * 864e5).toISOString();
   assert.equal(listingDrop(null, 80000, 0.92, at), 0);                                              // first sight: nothing to compare
   assert.equal(listingDrop({ price: 91599, t: since(9) }, 82999, 0.92, at), 91599);                // 9.4% drop

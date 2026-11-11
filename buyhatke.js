@@ -161,6 +161,9 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       const store = w.store || STORE[w.pos] || `store ${w.pos}`;
       // a price read from Amazon itself is labelled as such ("Amazon (direct)"), not as a BuyHatke price
       items.push({ title: w.name + (seller ? ` [sold by ${seller}]` : ''), price, mrp: 0, url: w.url || '', store, apiChecked: stock === 'in stock', bh: w.hist || null, bhId: idOf(w.pos, w.pid),
+        // the watchlist remembers the model even when this run's copy of the title is the cut-off search-card one
+        // (Amazon's G9 title loses "LS49DG930SWXXL" at 150 characters and then looked like an unknown model)
+        ...(w.key ? { knownKey: w.key } : {}),
         ...(via === 'amazon' ? { sourceName: 'Amazon (direct)' } : {}) });
     }
     // other sellers, used and renewed units of the watched Amazon listings (Amazon's all-offers panel through the
