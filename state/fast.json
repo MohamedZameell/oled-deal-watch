@@ -195,6 +195,14 @@
    "where": "Amazon",
    "url": "https://www.amazon.in/dp/B0GXL1STL2",
    "t": "2026-11-11T11:35:19.848Z"
+  },
+  {
+   "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
+   "price": 36499,
+   "why": "new all-time low (was ₹39,999)",
+   "where": "Amazon",
+   "url": "https://www.amazon.in/dp/B0G12R9WG3",
+   "t": "2026-11-11T12:40:26.142Z"
   }
  ],
  "AW2726DM|amazon": {
@@ -328,5 +336,13 @@
  "bhid|63~B0GXVHF621": {
   "price": 85998,
   "t": "2026-11-11T06:35:17.602Z"
+ },
+ "bhid|63~B0G12R9WG3": {
+  "price": 36499,
+  "t": "2026-11-11T12:40:26.142Z"
+ },
+ "27G50SF|amazon": {
+  "price": 36499,
+  "t": "2026-11-11T12:40:26.142Z"
  }
 }
