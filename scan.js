@@ -12,7 +12,7 @@ import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict, azLow } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
-  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, newLowFrom, notRecent as notRecentAt } from './rules.js';
+  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, newLowFrom, listingKey, listingDrop, notRecent as notRecentAt } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -635,8 +635,25 @@ async function samsungOnly() {
   console.log('BuyHatke live prices', live.length, bhErr.join(','));
   for (const { w, price, oos, seller } of live) {
     if (oos || !w.name || BANNED.test(w.name)) continue;
-    const key = w.key || modelKey(w.name); if (!key) continue;
+    const key = w.key || modelKey(w.name);
     const store = w.store || ({ 63: 'Amazon', 2: 'Flipkart' })[w.pos] || 'shop';
+    if (!key) {
+      // no model code in the title: no usual price or all-time low to judge by, so the listing is compared with
+      // its own remembered price (rules.js listingDrop), plus the fixed price target
+      const url = w.url || (w.pos === 63 ? `https://www.amazon.in/dp/${w.pid}` : ''); const lk = listingKey(url, retailerOf(store));
+      if (!lk) continue;
+      const mem = fast[lk]; const from = listingDrop(mem, price, cfg.dropThreshold || 0.9); const sz = inches(w.name);
+      const told = mem && price >= mem.price * 0.95 && Date.now() - Date.parse(mem.t) < 7 * DAY;
+      const why = from ? `dropped from ${fmt(from)} at this listing`
+        : !told && cfg.priceAlertBelow && price < cfg.priceAlertBelow && BRANDS.test(w.name.toUpperCase()) && !/portable/i.test(w.name) && sz >= 24 ? `under ${fmt(cfg.priceAlertBelow)}` : '';
+      if (!why) { earlyState.listings.set(lk, price); continue; }
+      const stock = w.pos === 63 ? await amazonStock(w.pid) : 'unknown';
+      console.log('  (no model code)', store, fmt(price), why, stock, w.name.slice(0, 60));
+      if (stock === 'out of stock') continue;
+      fast[lk] = { price, t: now };
+      deals.push({ title: w.name + (seller ? ` [sold by ${seller}]` : ''), price, why: stock === 'in stock' ? why : why + ' (stock not confirmed: check before buying)', where: store, url });
+      continue;
+    }
     const k = key + '|' + retailerOf(store);
     const s = stats[key] || {}; const hist = (history[key] || []).slice(-48).map((h) => h.price);
     const usual = s.monthAvg || (hist.length >= 6 ? median(hist) : seeds[key] || 0);
@@ -679,6 +696,11 @@ async function samsungOnly() {
       url: x.w.url || `https://www.amazon.in/dp/${x.w.pid}`, lowCheck: x.inStock ? 'verified' : 'unverified (Amazon: stock unknown)' })));
   }
   // what the shop / Flipkart / Amazon-search checks pinged (earlyCheck sent them): remembered so nothing repeats them
+  // listings without a model code remember their own price (written only when it changes: no commit every 5 minutes)
+  for (const [lk, price] of earlyState.listings) {
+    const m = fast[lk];
+    if (!m) fast[lk] = { price, t: now }; else if (m.price !== price) fast[lk] = { price, t: now, was: m.price };
+  }
   const shopPings = [...earlyState.pinged].map(([k, e]) => { fast[k] = { price: e.price, t: e.t }; return { title: e.title, price: e.price, why: e.why, where: e.where, url: e.url, t: e.t }; });
   console.log('shop alerts', shopPings.length);
   fast.log = [...(fast.log || []), ...deals.map((d) => ({ ...d, t: now })), ...shopPings].filter((d) => Date.now() - Date.parse(d.t) < 2 * DAY).slice(-60);
@@ -700,7 +722,7 @@ function keepListings(src, items) {
 // away, instead of after the whole ~20-minute scan. Rules only (no AI, no cross-shop comparison yet): a known model
 // code at a price far below its usual price, under the price target from a known brand, or under its all-time low.
 // Every hit is re-checked on the product page first. The final comparison skips what was already pinged.
-const earlyState = { alerted: null, fast: null, lows: null, stats: null, pinged: new Map() };
+const earlyState = { alerted: null, fast: null, lows: null, stats: null, pinged: new Map(), listings: new Map() };
 async function earlyCheck(listings, verifyCtx) {
   if (!cfg.earlyPing?.enabled) return;
   earlyState.alerted ||= readJson('alerted.json', {}); earlyState.fast ||= readJson('fast.json', {});
@@ -708,18 +730,24 @@ async function earlyCheck(listings, verifyCtx) {
   const now = new Date().toISOString(); const nl = cfg.newLowAlert || {};
   const recent = (v, price) => v && price >= (typeof v === 'number' ? v : v.price) * 0.95 && (typeof v === 'number' || Date.now() - Date.parse(v.t) < 7 * DAY);
   for (const it of listings) {
-    if (it.generic || it.feed || it.risky) continue;
-    const k = it.key + '|' + it.retailer;
-    if (earlyState.pinged.has(k)) continue;
-    const usual = earlyState.stats[it.key]?.monthAvg || usualPrice(it.key);
-    const low = newLowFrom(it.price, earlyState.lows[it.key], nl);
+    if (it.feed || it.risky) continue;
+    // a listing without a model code is tracked per listing and judged against its own remembered price
+    const k = it.generic ? listingKey(it.url, it.retailer) : it.key + '|' + it.retailer;
+    if (!k || earlyState.pinged.has(k)) continue;
+    const usual = it.generic ? 0 : earlyState.stats[it.key]?.monthAvg || usualPrice(it.key);
+    const low = it.generic ? 0 : newLowFrom(it.price, earlyState.lows[it.key], nl);
     const size = inches(it.title);
-    const [kind, why] = usual && it.price <= usual * cfg.crazyThreshold ? ['', `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`]
+    const from = it.generic ? listingDrop(earlyState.fast[k], it.price, cfg.dropThreshold || 0.9) : 0;
+    const [kind, why] = from ? ['drop|', `dropped from ${fmt(from)} at this listing`]
+      : it.generic && !(size >= 24) ? [null, '']
+      : usual && it.price <= usual * cfg.crazyThreshold ? ['', `${Math.round((1 - it.price / usual) * 100)}% below the usual ~${fmt(usual)}`]
       : cfg.priceAlertBelow && it.price < cfg.priceAlertBelow && BRANDS.test(it.title.toUpperCase()) && !/portable/i.test(it.title) && (!size || size >= 24) ? ['below|', `under ${fmt(cfg.priceAlertBelow)}`]
       : low ? ['low|', `new all-time low (was ${fmt(low)})`]
       : [null, ''];
-    if (kind === null) continue;
-    if (recent(earlyState.alerted[kind + k], it.price) || recent(earlyState.fast[k], it.price)) continue;   // told already
+    if (kind === null || recent(earlyState.alerted[kind + k], it.price) || recent(earlyState.fast[k], it.price)) {   // nothing to tell, or told already
+      if (it.generic) earlyState.listings.set(k, it.price);
+      continue;
+    }
     const check = await verifyDeal(verifyCtx, it);
     const suspect = usual && it.price < usual * 0.25;
     console.log('EARLY', it.key, it.source, fmt(it.price), why, '->', check);
@@ -877,7 +905,16 @@ async function main() {
   const steady = readJson('steady.json', null) || Object.fromEntries((readJson('snapshot.json', { items: [] }).items)
     .filter((x) => !x.generic).map((x) => [x.key + '|' + x.retailer, { price: x.price, since: '2026-01-01T00:00:00.000Z', seen: now }]));
   for (const it of mine) {
-    if (it.generic) continue;
+    if (it.generic) {
+      // no model code: the listing is compared with its own last price (rules.js listingDrop), kept here per listing
+      const lk = !it.feed && !it.risky && listingKey(it.url, it.retailer); if (!lk) continue;
+      const p = steady[lk];
+      if (p && Date.parse(now) - Date.parse(p.seen) < 3 * DAY && listingDrop({ price: p.price, t: p.since, was: p.was }, it.price, cfg.dropThreshold || 0.9)) it.dropFrom = p.price;
+      if (!p) steady[lk] = { price: it.price, since: now, seen: now };
+      else if (Math.abs(it.price - p.price) > p.price * 0.02) steady[lk] = { price: it.price, since: now, seen: now, was: p.price };
+      else p.seen = now;
+      continue;
+    }
     const k = it.key + '|' + it.retailer; const p = steady[k];
     // a shop cutting its own price 10%+ since it was last seen listing it is how flash sales start
     if (p && it.price <= p.price * (cfg.dropThreshold || 0.9) && Date.parse(now) - Date.parse(p.seen) < 3 * DAY &&
@@ -930,7 +967,8 @@ async function main() {
   }
 
   // alert only on new or ≥5% lower prices, or the same deal again after a week; skip what the other scanner already sent
-  const aKey = (c) => c.key + '|' + c.retailer;
+  // listings without a model code are remembered per listing: their spec key ("~SAMSUNG 49" 5K 240Hz") is shared by different products
+  const aKey = (c) => (c.generic && listingKey(c.url, c.retailer)) || c.key + '|' + c.retailer;
   const prevOf = (store, c) => { const v = store[aKey(c)]; return typeof v === 'number' ? { price: v, t: now } : v; };
   const notRecent = (p, price) => notRecentAt(p, price);
   // the 5-minute Samsung check (--samsung-only) may already have pinged this one

@@ -1,7 +1,7 @@
 // Deal rules. Each "regression" case is a false alert (or a missed listing) that really happened; it must stay fixed.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { modelKey, specKey, inches, retailerOf, median, keepListings, judgeModel, pushHistory, notRecent, newLowFrom } from '../rules.js';
+import { modelKey, specKey, inches, retailerOf, median, keepListings, judgeModel, pushHistory, notRecent, newLowFrom, listingKey, listingDrop } from '../rules.js';
 
 const cfg = { minPrice: 12000, maxPrice: 250000, crazyThreshold: 0.65, nearMissThreshold: 0.8, historyThreshold: 0.7, bannedBrands: ['LYVON'] };
 const usual = { AW2726DM: 40300, '27G50SF': 42499, 'LEGION27Q-10': 41999 };
@@ -23,6 +23,22 @@ test('modelKey: the same Samsung panel under its retail code and its Odyssey nam
   assert.equal(newLowFrom(36499, g5, nl, at + 864e5), 0);                           // next day: already the low
   assert.equal(newLowFrom(36499, { ...g5, first: '2026-11-08T00:00:00Z' }, nl, at), 0);   // tracked under 7 days
   assert.equal(newLowFrom(70000, { first: g5.first, days: { '2026-11-10': 80000 } }, nl, at), 0);   // over maxPrice
+});
+
+test('listings without a model code: one key per listing, alert when its own price drops', () => {
+  assert.equal(listingKey('https://www.amazon.in/Samsung-Odyssey/dp/B0G12R9WG3/ref=sr_1_3?keywords=oled', 'amazon'), 'lst|az~B0G12R9WG3');
+  assert.equal(listingKey('https://www.amazon.in/dp/B0G12R9WG3', 'amazondirect'), 'lst|az~B0G12R9WG3');
+  assert.equal(listingKey('https://www.amazon.in/dp/B0G12R9WG3?aod=1&offer=2', 'amazon'), null);   // another seller's price
+  assert.equal(listingKey('https://www.flipkart.com/samsung-odyssey/p/itm123?pid=MONHXYZ&lid=1', 'flipkart'), 'lst|fk~MONHXYZ');
+  assert.equal(listingKey('https://www.TPStech.in/products/samsung-g9/?variant=1', 'tpstechnologies'), 'lst|tpstech.in/products/samsung-g9|tpstechnologies');
+  assert.equal(listingKey('not a url'), null);
+  const at = Date.parse('2026-11-11T12:00:00Z'); const since = (d) => new Date(at - d * 864e5).toISOString();
+  assert.equal(listingDrop(null, 80000, 0.92, at), 0);                                              // first sight: nothing to compare
+  assert.equal(listingDrop({ price: 91599, t: since(9) }, 82999, 0.92, at), 91599);                // 9.4% drop
+  assert.equal(listingDrop({ price: 91599, t: since(9) }, 86999, 0.92, at), 0);                    // 5%: too small
+  assert.equal(listingDrop({ price: 105000, t: since(4), was: 91599 }, 91599, 0.92, at), 0);       // hiked 4 days ago, back to normal
+  assert.equal(listingDrop({ price: 105000, t: since(4), was: 91599 }, 79999, 0.92, at), 105000);  // well under the old price too
+  assert.equal(listingDrop({ price: 105000, t: since(40), was: 91599 }, 91599, 0.92, at), 105000); // the higher price stood 40 days
   assert.equal(modelKey('Samsung 32" Odyssey OLED G8 4K 240Hz Gaming Monitor'), null);
   assert.equal(modelKey('SAMSUNG Odyssey G9 LS49DG930SWXXL 49 Inch'), '49G93SD');
 });

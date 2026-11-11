@@ -164,5 +164,29 @@ export function newLowFrom(price, L, nl = {}, nowMs = Date.now()) {
   return price <= low * (1 - (nl.minDropPct ?? 3) / 100) && price <= (nl.maxPrice ?? Infinity) ? low : 0;
 }
 
+// PER-LISTING PRICE MEMORY, for listings whose title gives no model code (2 of 108 on 2026-11-11, e.g. Amazon's
+// "Samsung 49" Odyssey OLED G9 Curved Gaming Monitor (Smartchoice)"). Without a model there is no usual price, no
+// all-time low and no other shop to compare with, so such a listing could only alert under the fixed price target.
+// It now remembers its OWN last price and alerts when that drops.
+// listingKey: one stable key per listing (Amazon ASIN, Flipkart pid, else host + path + shop). null = no memory
+// (Amazon's other-seller offers share the ASIN's page but carry a different seller's price).
+export function listingKey(url, retailer = '') {
+  let u; try { u = new URL(url); } catch { return null; }
+  if (u.searchParams.get('aod')) return null;
+  const host = u.hostname.replace(/^www\./, '').toLowerCase();
+  const asin = /amazon\./.test(host) && (u.pathname.match(/\/(?:dp|gp\/product)\/([A-Z0-9]{10})/i) || [])[1];
+  if (asin) return 'lst|az~' + asin.toUpperCase();
+  const pid = /flipkart\./.test(host) && u.searchParams.get('pid');
+  if (pid) return 'lst|fk~' + pid;
+  return 'lst|' + host + u.pathname.replace(/\/+$/, '').toLowerCase() + '|' + retailer;
+}
+// mem = { price, t (since when at that price), was (the price before it) }. Returns the price it dropped from, or 0.
+// A drop that only goes back to where the listing stood before a hike in the last 21 days is not a deal.
+export function listingDrop(mem, price, threshold = 0.92, nowMs = Date.now()) {
+  if (!mem?.price || !(price > 0) || price > mem.price * threshold) return 0;
+  if (mem.was && price >= mem.was * 0.95 && nowMs - Date.parse(mem.t) < 21 * 864e5) return 0;
+  return mem.price;
+}
+
 // alert again only for a new listing, a price 5%+ lower than last time, or the same deal after a week
 export const notRecent = (p, price, nowMs = Date.now()) => !p || price < p.price * 0.95 || nowMs - Date.parse(p.t) > 7 * 864e5;
