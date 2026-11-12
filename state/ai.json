@@ -1519,6 +1519,30 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-12"
+  },
+  "dell alienware aw3225qf 32 inch curved 4k qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3225QF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-12"
+  },
+  "samsung odyssey g8 g80sh ls27hg800swxxl 24 inch oled silver gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "G80SH",
+   "cond": "new",
+   "size": 24,
+   "seen": "2026-11-12"
+  },
+  "lg ultragear 27gx790a-b 27 inch oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 27GX790A-B",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-12"
   }
  },
  "posts": {
@@ -1552,5 +1576,5 @@
   }
  },
  "day": "2026-11-12",
- "calls": 3
+ "calls": 4
 }
