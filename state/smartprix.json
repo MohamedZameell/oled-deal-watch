@@ -24,11 +24,11 @@
   ]
  },
  "pd1lvg3mewi": {
-  "t": "2026-11-12T11:20:48.542Z",
+  "t": "2026-11-12T17:21:11.419Z",
   "listPrice": 36499,
   "name": "Samsung Odyssey G5 LS27FG502SW 27 inch Quad HD QD-OLED Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-g5-ls27fg502sw-27-inch-quad-ppd1lvg3mewi",
-  "drop": 13.681168,
+  "drop": 13.5111065,
   "rows": [
    {
     "store": "Amazon",
@@ -151,11 +151,11 @@
   "rows": []
  },
  "pd1d59vk1fv": {
-  "t": "2026-11-12T11:20:48.996Z",
+  "t": "2026-11-12T17:21:11.916Z",
   "listPrice": 78499,
   "name": "Samsung Odyssey OLED G9 LS49DG910SWXXL 49 inch Dual Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49dg910swxxl-49-ppd1d59vk1fv",
-  "drop": 3.651381,
+  "drop": 3.517315,
   "rows": [
    {
     "store": "Flipkart",
@@ -581,15 +581,15 @@
   ]
  },
  "pd1vkoty4nf": {
-  "t": "2026-11-12T10:50:48.048Z",
+  "t": "2026-11-12T17:21:12.378Z",
   "listPrice": 121099,
   "name": "LG 39GS95QE 39 inch Ultra HD 4K Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/lg-39gs95qe-39-inch-ultra-hd-4k-gaming-monitor-ppd1vkoty4nf",
-  "drop": 0.32986978,
+  "drop": -7.4401326,
   "rows": [
    {
     "store": "Flipkart",
-    "price": 112526,
+    "price": 121099,
     "stock": "IN_STOCK",
     "cond": "new",
     "offers": []
