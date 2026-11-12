@@ -1,5 +1,5 @@
 {
- "t": "2026-11-12T19:25:12.994Z",
+ "t": "2026-11-12T19:42:28.430Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,14 +22,14 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "AI 69D0GACBIN",
+   "key": "AI 68CEGACBIN",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 80599,
+   "price": 74879,
    "risky": false,
-   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
-   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
    "key": "27GX790A",
@@ -42,14 +42,24 @@
    "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
-   "key": "AI 68CEGACBIN",
+   "key": "XG27AQDMG",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 74879,
+   "price": 120649,
    "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+   "title": "ASUS ROG Strix 27\" 1440P OLED Gaming Monitor (XG27AQDMG) - QHD, Bright OLED, 240Hz, 0.03ms, Custom Heatsink, Anti-Flicker, Uniform Brightness, G-SYNC Compatible, DCI-P3",
+   "url": "https://www.amazon.in/dp/B0CZWM44QP"
+  },
+  {
+   "key": "AI 69D0GACBIN",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 80599,
+   "risky": false,
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
    "key": "MAG321UP",
@@ -120,16 +130,6 @@
    "risky": false,
    "title": "Asus ROG Swift PG27AQDM 27 inch Quad HD Gaming Monitor",
    "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg27aqdm-27-inch-quad-hd-gaming-ppd1btl9e4wn"
-  },
-  {
-   "key": "XG27AQDMG",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 120649,
-   "risky": false,
-   "title": "ASUS ROG Strix 27\" 1440P OLED Gaming Monitor (XG27AQDMG) - QHD, Bright OLED, 240Hz, 0.03ms, Custom Heatsink, Anti-Flicker, Uniform Brightness, G-SYNC Compatible, DCI-P3",
-   "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
    "key": "AW2725DF",
