@@ -1503,6 +1503,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-12"
+  },
+  "alienware aw2725df - oled gaming monitor - 26.7\" quantom-dot wqhd (2560 x 1440) 360hz 0.03ms display, amd freesync premium pro, hdmi/dp/usb 3.2 gen1, height/tilt adjustment [new · sts shop] [sold by shopforbest]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725DF",
+   "cond": "new",
+   "size": 26.7,
+   "seen": "2026-11-12"
   }
  },
  "posts": {
@@ -1536,5 +1544,5 @@
   }
  },
  "day": "2026-11-12",
- "calls": 0
+ "calls": 1
 }
