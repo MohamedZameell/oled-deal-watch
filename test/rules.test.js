@@ -215,3 +215,22 @@ test('lowListings: an OLED monitor under the minimum price is kept for an "uncon
   assert.deepEqual(low.map((i) => i.url), ['https://shop.example/p/1']);
   assert.equal(low[0].key, 'AW2726DM');
 });
+
+// 2026-11-12 false alerts: MD Computers' G8 (₹80,000) pinged at ₹51,000 and ₹39,300. Those were the prices of the
+// next cards (G6 G61SH, AW2726DM), whose titles do not say "OLED" and so did not end the G8's price block.
+import { parseTextBlocks } from '../rules.js';
+test('text parser: a neighbouring card without OLED in its title does not lend its price', () => {
+  const opts = {
+    parser: 'minmax', curInLine: /₹|Rs\./, skipLine: /emi|cashback|sav(e|ing)|\boff\b|discount|delivery/i,
+    amountsIn: (l) => [...l.matchAll(/₹\s?([\d,]+)/g)].map((m) => +m[1].replace(/,/g, '')).filter((n) => n >= 5000),
+  };
+  const text = [
+    'Samsung Odyssey G8 G80SH LS27HG800SWXXL 24 Inch OLED Silver Gaming Monitor', '₹116,900', '₹80,000',
+    'LG UltraGear 39GX900A-B 39 Inch Curved Gaming Monitor', '₹180,000', '₹99,990',
+    'Dell Alienware AW2726DM 27 Inch 2K Gaming Monitor', '₹48,537', '₹39,300',
+    'Samsung Odyssey G6 G61SH LS27HG612SWXXL QHD 27 Inch Gaming Monitor', '₹63,900', '₹51,000',
+    'Lenovo Legion 27Q-10 QD-OLED 27 inch Gaming Monitor', 'Free delivery over ₹9,999', '₹55,000', '₹39,500',
+  ].join('\n');
+  const got = parseTextBlocks(text, [], 'https://shop.example/search', opts);
+  assert.deepEqual(got.map((i) => [i.price, i.mrp]), [[80000, 116900], [39500, 55000]]);
+});

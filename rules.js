@@ -191,3 +191,48 @@ export function listingDrop(mem, price, threshold = 0.92, nowMs = Date.now()) {
 
 // alert again only for a new listing, a price 5%+ lower than last time, or the same deal after a week
 export const notRecent = (p, price, nowMs = Date.now()) => !p || price < p.price * 0.95 || nowMs - Date.parse(p.t) > 7 * 864e5;
+
+// Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
+//  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
+//  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
+export function parseTextBlocks(text, anchors, fallbackUrl, { parser, amountsIn, curInLine, skipLine }) {
+  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
+  const isTitle = (l) => /oled/i.test(l) && l.length >= 20 && l.length <= 220 && !curInLine.test(l) && MONITOR_OK.test(l) && !NOT_MONITOR.test(l);
+  const otherTitle = (l) => l.length >= 20 && l.length <= 220 && !curInLine.test(l) && !skipLine.test(l) && MONITOR_OK.test(l);
+  const out = [];
+  for (let i = 0; i < lines.length; i++) {
+    if (!isTitle(lines[i])) continue;
+    let price = 0; let mrp = 0;
+    if (parser === 'minmax') {
+      const nums = [];
+      for (let j = i + 1; j < Math.min(lines.length, i + 10); j++) {
+        if (isTitle(lines[j])) break;
+        // the next product card: shops also list OLED monitors whose title does not say OLED (MD Computers:
+        // "Samsung Odyssey G6 G61SH ... Gaming Monitor"), and that card's lower price must not be read as this one's
+        if (nums.length && otherTitle(lines[j])) break;
+        if (skipLine.test(lines[j]) && !/mrp|total price|original price/i.test(lines[j])) continue;
+        nums.push(...amountsIn(lines[j]));
+      }
+      if (!nums.length) continue;
+      price = Math.min(...nums); mrp = Math.max(...nums);
+    } else {
+      const prices = []; const refs = [];
+      for (let j = i + 1; j < Math.min(lines.length, i + 14); j++) {
+        const l = lines[j];
+        if (isTitle(l) || /^(save|compare|view product page|quick view|add to cart|buy)$/i.test(l)) break;
+        if (/\/mo\b|per month|financ|\bapr\b|earn|back in|rewards/i.test(l)) continue;
+        const am = amountsIn(l); if (!am.length) continue;
+        if (/estimated value|\bwas\b|msrp|list price|original price|reg(ular)?\.? price/i.test(l)) refs.push(...am);
+        else if (/^(from |now )?\$/i.test(l)) prices.push(am[0]);
+      }
+      if (!prices.length) continue;
+      price = prices[0]; mrp = Math.max(0, ...refs);
+    }
+    const key = lines[i].slice(0, 22).toLowerCase();
+    const code = (lines[i].match(/\b[A-Z]{1,3}\d{2,4}[A-Z0-9]{0,6}\b/g) || []).pop();
+    const hit = anchors.find(([, h]) => code && h.toLowerCase().includes(code.toLowerCase())) ||
+      anchors.find(([t]) => t.toLowerCase().startsWith(key) || lines[i].toLowerCase().startsWith(t.toLowerCase().slice(0, 22)));
+    out.push({ title: lines[i], price, mrp: mrp > price ? mrp : 0, url: hit ? hit[1] : fallbackUrl });
+  }
+  return out;
+}
