@@ -12,7 +12,7 @@ import nodemailer from 'nodemailer';
 import { createAI } from './ai.js';
 import { createBuyHatke, fakeDiscount, exGst, amazonStock, azDetails, azSearch, azVerdict, azLow } from './buyhatke.js';
 import { MONITOR_OK, NOT_MONITOR, RISKY_CONDITION, BRANDS, median, retailerOf, urlWords, inches, modelKey, bannedRe,
-  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, newLowFrom, listingKey, listingDrop, notRecent as notRecentAt } from './rules.js';
+  keepListings as keepRule, lowListings, judgeModel, pushHistory, typicalPrice, newLowFrom, listingKey, listingDrop, notRecent as notRecentAt, parseTextBlocks as parseText } from './rules.js';
 import { shopApi, flipkartHttp } from './shops.js';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -115,43 +115,7 @@ const anchorsExtract = () => [...document.querySelectorAll('a[href]')].map((a) =
 // Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
 //  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
 //  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
-function parseTextBlocks(text, anchors, fallbackUrl) {
-  const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
-  const isTitle = (l) => /oled/i.test(l) && l.length >= 20 && l.length <= 220 && !CUR_IN_LINE.test(l) && MONITOR_OK.test(l) && !NOT_MONITOR.test(l);
-  const out = [];
-  for (let i = 0; i < lines.length; i++) {
-    if (!isTitle(lines[i])) continue;
-    let price = 0; let mrp = 0;
-    if (R.textParser === 'minmax') {
-      const nums = [];
-      for (let j = i + 1; j < Math.min(lines.length, i + 10); j++) {
-        if (isTitle(lines[j])) break;
-        if (SKIP_LINE.test(lines[j]) && !/mrp|total price|original price/i.test(lines[j])) continue;
-        nums.push(...amountsIn(lines[j]));
-      }
-      if (!nums.length) continue;
-      price = Math.min(...nums); mrp = Math.max(...nums);
-    } else {
-      const prices = []; const refs = [];
-      for (let j = i + 1; j < Math.min(lines.length, i + 14); j++) {
-        const l = lines[j];
-        if (isTitle(l) || /^(save|compare|view product page|quick view|add to cart|buy)$/i.test(l)) break;
-        if (/\/mo\b|per month|financ|\bapr\b|earn|back in|rewards/i.test(l)) continue;
-        const am = amountsIn(l); if (!am.length) continue;
-        if (/estimated value|\bwas\b|msrp|list price|original price|reg(ular)?\.? price/i.test(l)) refs.push(...am);
-        else if (/^(from |now )?\$/i.test(l)) prices.push(am[0]);
-      }
-      if (!prices.length) continue;
-      price = prices[0]; mrp = Math.max(0, ...refs);
-    }
-    const key = lines[i].slice(0, 22).toLowerCase();
-    const code = (lines[i].match(/\b[A-Z]{1,3}\d{2,4}[A-Z0-9]{0,6}\b/g) || []).pop();
-    const hit = anchors.find(([, h]) => code && h.toLowerCase().includes(code.toLowerCase())) ||
-      anchors.find(([t]) => t.toLowerCase().startsWith(key) || lines[i].toLowerCase().startsWith(t.toLowerCase().slice(0, 22)));
-    out.push({ title: lines[i], price, mrp: mrp > price ? mrp : 0, url: hit ? hit[1] : fallbackUrl });
-  }
-  return out;
-}
+const parseTextBlocks = (text, anchors, fallbackUrl) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE });
 
 // ---------- scrape ----------
 const BLOCKED = /captcha|robot check|access denied|unusual traffic|enter the characters|security verification|verify you are (a )?human|are you a human|just a moment|robot or human|503 - service unavailable|rush hour and traffic/i;
@@ -541,8 +505,11 @@ async function verifyDeal(ctx, it) {
     const structured = sd.prices.map((p) => Math.round(parseFloat(String(p).replace(/[^0-9.]/g, '')))).filter((n) => n >= R.minAmount);
     if (/OutOfStock|SoldOut|Discontinued/i.test(sd.avail) && !/InStock/i.test(sd.avail)) return 'out of stock';
     if (OUT_OF_STOCK.test(top) && !/add to (cart|bag)|buy now/i.test(top)) return 'out of stock';
-    if (structured.length && !structured.some(close)) return `unverified (page data says ${fmt(Math.min(...structured))})`;
-    return seen || structured.some(close) ? 'verified' : 'unverified (price not on page)';
+    // the product page loaded with prices on it, and ours is not one of them: the listing price was a misread
+    // (MD Computers 2026-11-12: a neighbouring card's ₹39,300 read as the ₹80,000 G8). That kills the alert.
+    if (structured.length && !structured.some(close)) return seen ? `unverified (page data says ${fmt(Math.min(...structured))})` : `price changed (product page shows ${fmt(Math.min(...structured))})`;
+    if (seen || structured.some(close)) return 'verified';
+    return amountsIn(text).length ? 'price changed (not on the product page)' : 'unverified (price not on page)';
   } catch (e) {
     return 'unverified (page failed to load)';
   } finally { await page.close().catch(() => {}); }
