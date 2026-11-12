@@ -1511,6 +1511,14 @@
    "cond": "new",
    "size": 26.7,
    "seen": "2026-11-12"
+  },
+  "benq mobiuz ex271uz (smartchoice) 27” 4k uhd 4th gen qd-oled 240hz gaming monitor| 0.03ms gtg|hdmi 2.0, dp 1.4|usb-c(90w)|99% dci-p3|amd freesync premium pro|kvm|height,swivel, tilt adjustable(white) [new · clicktech retail private ltd]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "MOBIUZ EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-12"
   }
  },
  "posts": {
@@ -1544,5 +1552,5 @@
   }
  },
  "day": "2026-11-12",
- "calls": 2
+ "calls": 3
 }
