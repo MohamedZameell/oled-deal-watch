@@ -1,26 +1,6 @@
 {
- "t": "2026-11-12T12:11:28.616Z",
+ "t": "2026-11-12T12:23:00.939Z",
  "items": [
-  {
-   "key": "MAG321UP",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 80999,
-   "risky": false,
-   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 165Hz / 0.03ms, 99% DCI-P3, ΔE≤2, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD@165Hz), USB Type-C",
-   "url": "https://www.amazon.in/dp/B0DMSVDHXX"
-  },
-  {
-   "key": "PG27AQDM",
-   "generic": false,
-   "source": "Smartprix · Amazon",
-   "retailer": "amazon",
-   "price": 75999,
-   "risky": false,
-   "title": "Asus ROG Swift PG27AQDM 27 inch Quad HD Gaming Monitor",
-   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg27aqdm-27-inch-quad-hd-gaming-ppd1btl9e4wn"
-  },
   {
    "key": "AW2725D",
    "generic": false,
@@ -82,6 +62,16 @@
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
   },
   {
+   "key": "MAG321UP",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 80999,
+   "risky": false,
+   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 165Hz / 0.03ms, 99% DCI-P3, ΔE≤2, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD@165Hz), USB Type-C",
+   "url": "https://www.amazon.in/dp/B0DMSVDHXX"
+  },
+  {
    "key": "MPG341CQPX",
    "generic": false,
    "source": "Amazon.in",
@@ -100,6 +90,16 @@
    "risky": false,
    "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
    "url": "https://www.amazon.in/dp/B0GL83RWPV"
+  },
+  {
+   "key": "PG27AQDM",
+   "generic": false,
+   "source": "Smartprix · Amazon",
+   "retailer": "amazon",
+   "price": 75999,
+   "risky": false,
+   "title": "Asus ROG Swift PG27AQDM 27 inch Quad HD Gaming Monitor",
+   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg27aqdm-27-inch-quad-hd-gaming-ppd1btl9e4wn"
   },
   {
    "key": "AW2725DF",
@@ -762,6 +762,16 @@
    "url": "https://www.tpstech.in/products/gigabyte-aorus-fo27q3-27-360hz-1440p-hdr-oled-gaming-monitor"
   },
   {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "MD Computers",
+   "retailer": "mdcomputers",
+   "price": 79500,
+   "risky": false,
+   "title": "LG UltraGear 27GX790A-B 27 Inch OLED Gaming Monitor",
+   "url": "https://mdcomputers.in/product/lg-ultragear-27-inch-gaming-monitor-27gx790a-b"
+  },
+  {
    "key": "LEGION27Q-10",
    "generic": false,
    "source": "MD Computers",
@@ -770,16 +780,6 @@
    "risky": false,
    "title": "Lenovo Legion 27Q-10 QD-OLED 27 inch Gaming Monitor",
    "url": "https://mdcomputers.in/product/lenovo-legion-27-inch-gaming-monitor-67e1gac1in"
-  },
-  {
-   "key": "49G93SD",
-   "generic": false,
-   "source": "MD Computers",
-   "retailer": "mdcomputers",
-   "price": 88100,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G9 2K DQHD LS49DG930SWXXL 49 Inch Curved Gaming Monitor",
-   "url": "https://mdcomputers.in/product/samsung-odyssey-g9-49-inch-curved-gaming-monitor-ls49dg930swxxl"
   },
   {
    "key": "MAG341CQP",
@@ -792,6 +792,26 @@
    "url": "https://mdcomputers.in/product/msi-34-inch-gaming-mag-341cqp-qd-oled"
   },
   {
+   "key": "49G93SD",
+   "generic": false,
+   "source": "MD Computers",
+   "retailer": "mdcomputers",
+   "price": 88100,
+   "risky": false,
+   "title": "Samsung Odyssey OLED G9 2K DQHD LS49DG930SWXXL 49 Inch Curved Gaming Monitor",
+   "url": "https://mdcomputers.in/product/samsung-odyssey-g9-49-inch-curved-gaming-monitor-ls49dg930swxxl"
+  },
+  {
+   "key": "AW3225QF",
+   "generic": false,
+   "source": "MD Computers",
+   "retailer": "mdcomputers",
+   "price": 96000,
+   "risky": false,
+   "title": "Dell Alienware AW3225QF 32 Inch Curved 4K QD-OLED Gaming Monitor",
+   "url": "https://mdcomputers.in/product/dell-alienware-32-inch-curved-gaming-monitor-aw3225qf"
+  },
+  {
    "key": "MPG341CQPX",
    "generic": false,
    "source": "MD Computers",
@@ -802,34 +822,14 @@
    "url": "https://mdcomputers.in/product/msi-34-inch-gaming-monitor-mpg-341cqpx-qd-oled"
   },
   {
-   "key": "AW3225QF",
-   "generic": false,
-   "source": "MD Computers",
-   "retailer": "mdcomputers",
-   "price": 86140,
-   "risky": false,
-   "title": "Dell Alienware AW3225QF 32 Inch Curved 4K QD-OLED Gaming Monitor",
-   "url": "https://mdcomputers.in/product/dell-alienware-32-inch-curved-gaming-monitor-aw3225qf"
-  },
-  {
    "key": "27G80SH",
    "generic": false,
    "source": "MD Computers",
    "retailer": "mdcomputers",
-   "price": 80000,
+   "price": 51000,
    "risky": false,
    "title": "Samsung Odyssey G8 G80SH LS27HG800SWXXL 24 Inch OLED Silver Gaming Monitor",
    "url": "https://mdcomputers.in/product/samsung-odyssey-g8-g80sh-27-inch-gaming-monitor-ls27hg800swxxl"
-  },
-  {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "MD Computers",
-   "retailer": "mdcomputers",
-   "price": 79500,
-   "risky": false,
-   "title": "LG UltraGear 27GX790A-B 27 Inch OLED Gaming Monitor",
-   "url": "https://mdcomputers.in/product/lg-ultragear-27-inch-gaming-monitor-27gx790a-b"
   },
   {
    "key": "27G80SH",
@@ -932,16 +932,6 @@
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
   },
   {
-   "key": "32GS95UV",
-   "generic": false,
-   "source": "LG India",
-   "retailer": "lgindia",
-   "price": 110999,
-   "risky": false,
-   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
-   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
-  },
-  {
    "key": "27G61SH",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1012,16 +1002,6 @@
    "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
-   "key": "AI MOBIUZEX271QZ",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 85998,
-   "risky": false,
-   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
-   "url": "https://www.amazon.in/dp/B0GXVHF621"
-  },
-  {
    "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1030,6 +1010,16 @@
    "risky": false,
    "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
    "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+  },
+  {
+   "key": "AI MOBIUZEX271QZ",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 85998,
+   "risky": false,
+   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
+   "url": "https://www.amazon.in/dp/B0GXVHF621"
   },
   {
    "key": "LEGION27Q-10",
