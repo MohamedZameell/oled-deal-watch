@@ -1,5 +1,5 @@
 {
- "t": "2026-11-12T22:53:02.199Z",
+ "t": "2026-11-12T23:09:20.245Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,14 +22,14 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "AI 68CEGACBIN",
+   "key": "AI 69D0GACBIN",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 74879,
+   "price": 80599,
    "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
    "key": "27GX790A",
@@ -42,24 +42,14 @@
    "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
-   "key": "AI 69D0GACBIN",
+   "key": "AI 68CEGACBIN",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 80599,
+   "price": 74879,
    "risky": false,
-   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
-   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
-  },
-  {
-   "key": "PG27AQDM",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 81849,
-   "risky": false,
-   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
-   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
    "key": "MAG321UP",
@@ -120,6 +110,16 @@
    "risky": false,
    "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
    "url": "https://www.amazon.in/dp/B0CTRXPJMC"
+  },
+  {
+   "key": "PG27AQDM",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 81849,
+   "risky": false,
+   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
+   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
    "key": "AW2725DF",
@@ -792,14 +792,14 @@
    "url": "https://mdcomputers.in/product/lenovo-legion-27-inch-gaming-monitor-67e1gac1in"
   },
   {
-   "key": "32G73SH",
+   "key": "AW3225QF",
    "generic": false,
    "source": "MD Computers",
    "retailer": "mdcomputers",
-   "price": 69999,
+   "price": 96000,
    "risky": false,
-   "title": "Samsung Odyssey G7 G73SH LS32HG730SWXXL 32 Inch OLED Gaming Monitor",
-   "url": "https://mdcomputers.in/product/samsung-odyssey-g7-g73sh-32-inch-gaming-monitor-ls32hg730swxxl"
+   "title": "Dell Alienware AW3225QF 32 Inch Curved 4K QD-OLED Gaming Monitor",
+   "url": "https://mdcomputers.in/product/dell-alienware-32-inch-curved-gaming-monitor-aw3225qf"
   },
   {
    "key": "MAG341CQP",
@@ -822,14 +822,14 @@
    "url": "https://mdcomputers.in/product/samsung-odyssey-g9-49-inch-curved-gaming-monitor-ls49dg930swxxl"
   },
   {
-   "key": "AW3225QF",
+   "key": "32G73SH",
    "generic": false,
    "source": "MD Computers",
    "retailer": "mdcomputers",
-   "price": 96000,
+   "price": 69999,
    "risky": false,
-   "title": "Dell Alienware AW3225QF 32 Inch Curved 4K QD-OLED Gaming Monitor",
-   "url": "https://mdcomputers.in/product/dell-alienware-32-inch-curved-gaming-monitor-aw3225qf"
+   "title": "Samsung Odyssey G7 G73SH LS32HG730SWXXL 32 Inch OLED Gaming Monitor",
+   "url": "https://mdcomputers.in/product/samsung-odyssey-g7-g73sh-32-inch-gaming-monitor-ls32hg730swxxl"
   },
   {
    "key": "MPG341CQPX",
@@ -950,6 +950,16 @@
    "risky": false,
    "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
+  },
+  {
+   "key": "32GS95UV",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 110999,
+   "risky": false,
+   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
   },
   {
    "key": "27G61SH",
