@@ -245,7 +245,7 @@
   "rows": []
  },
  "pd1btl9e4wn": {
-  "t": "2026-11-13T03:50:46.823Z",
+  "t": "2026-11-13T10:05:48.005Z",
   "listPrice": 81849,
   "name": "Asus ROG Swift PG27AQDM 27 inch Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg27aqdm-27-inch-quad-hd-gaming-ppd1btl9e4wn",
@@ -732,7 +732,7 @@
   "rows": []
  },
  "pd1l6ucevsp": {
-  "t": "2026-11-13T03:50:47.257Z",
+  "t": "2026-11-13T10:05:48.466Z",
   "listPrice": 151990,
   "name": "Asus ROG Swift PG42UQ 42-inch 4K OLED Gaming Monitors",
   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg42uq-42-inch-4k-oled-gaming-ppd1l6ucevsp",
@@ -748,7 +748,7 @@
   ]
  },
  "pd1gxkwuglf": {
-  "t": "2026-11-13T03:50:47.684Z",
+  "t": "2026-11-13T10:05:48.904Z",
   "listPrice": 152590,
   "name": "LG Ultrafine 27EP950 27 inch UHD 4K OLED Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultrafine-27ep950-27-inch-uhd-4k-oled-ppd1gxkwuglf",
@@ -764,7 +764,7 @@
   ]
  },
  "pd138v5lk73": {
-  "t": "2026-11-13T03:50:48.099Z",
+  "t": "2026-11-13T10:05:49.374Z",
   "listPrice": 155900,
   "name": "LG 32EP950-B 32 inch Ultra HD 4K Monitor",
   "url": "https://www.smartprix.com/monitors/lg-32ep950-b-32-inch-ultra-hd-4k-monitor-ppd138v5lk73",
@@ -780,7 +780,7 @@
   ]
  },
  "pd1yaqe4814": {
-  "t": "2026-11-13T03:50:48.979Z",
+  "t": "2026-11-13T10:05:49.857Z",
   "listPrice": 157900,
   "name": "LG UltraGear 45GR95QE 45 inch OLED Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultragear-45gr95qe-45-inch-oled-gaming-ppd1yaqe4814",
@@ -796,7 +796,7 @@
   ]
  },
  "pd197onjbwt": {
-  "t": "2026-11-13T03:50:49.400Z",
+  "t": "2026-11-13T10:05:50.317Z",
   "listPrice": 166099,
   "name": "Samsung Odyssey OLED G9 LS49CG950SW 49 inch Dual Quad HD Monitor",
   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-49-inch-dual-quad-ppd197onjbwt",
@@ -812,7 +812,7 @@
   ]
  },
  "pd1lz9txawj": {
-  "t": "2026-11-13T03:50:49.821Z",
+  "t": "2026-11-13T10:05:50.781Z",
   "listPrice": 168999,
   "name": "LG UltraFine OLED Pro 32 inch Ultra HD OLED Monitor",
   "url": "https://www.smartprix.com/monitors/lg-ultrafine-oled-pro-32-inch-ultra-hd-oled-ppd1lz9txawj",
@@ -851,7 +851,7 @@
   ]
  },
  "pd1ef85ndej": {
-  "t": "2026-11-13T03:50:50.214Z",
+  "t": "2026-11-13T10:05:51.310Z",
   "listPrice": 199964,
   "name": "Corsair Xeneon Flex 45WQHD240 QHD OLED Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/corsair-xeneon-flex-45wqhd240-qhd-oled-gaming-ppd1ef85ndej",
@@ -867,7 +867,7 @@
   ]
  },
  "pd1tn5b709b": {
-  "t": "2026-11-13T03:50:50.626Z",
+  "t": "2026-11-13T10:05:51.779Z",
   "listPrice": 238148,
   "name": "Asus ROG Swift PG34WCDM 34 inch Ultrawide Quad HD Gaming Monitor",
   "url": "https://www.smartprix.com/monitors/asus-rog-swift-pg34wcdm-34-inch-quad-hd-gaming-ppd1tn5b709b",
@@ -887,6 +887,14 @@
   "listPrice": 49999,
   "name": "AOC U32U4 32 inch UHD 4K QD-OLED Monitor",
   "url": "https://www.smartprix.com/monitors/aoc-u32u4-32-inch-uhd-4k-qd-oled-monitor-ppd1etgwokz0",
+  "drop": 0,
+  "rows": []
+ },
+ "pd1ja53b0su": {
+  "t": "2026-11-13T10:05:47.514Z",
+  "listPrice": 49999,
+  "name": "Philips Evnia 27M4N8500V 27 inch QD-OLED Monitor",
+  "url": "https://www.smartprix.com/monitors/philips-evnia-27m4n8500v-27-inch-qd-oled-ppd1ja53b0su",
   "drop": 0,
   "rows": []
  }
