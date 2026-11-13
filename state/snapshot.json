@@ -1,5 +1,5 @@
 {
- "t": "2026-11-13T17:10:13.944Z",
+ "t": "2026-11-13T17:23:36.871Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,16 +22,6 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 78000,
-   "risky": false,
-   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
-   "url": "https://www.amazon.in/dp/B0DYVNZR13"
-  },
-  {
    "key": "AI 69D0GACBIN",
    "generic": false,
    "source": "Amazon.in",
@@ -40,6 +30,16 @@
    "risky": false,
    "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 78000,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
    "key": "AI 68CEGACBIN",
@@ -112,16 +112,6 @@
    "url": "https://www.amazon.in/dp/B0CTRXPJMC"
   },
   {
-   "key": "MAG321UPX",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 113999,
-   "risky": false,
-   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
-  },
-  {
    "key": "PG27AQDM",
    "generic": false,
    "source": "Amazon.in",
@@ -130,6 +120,26 @@
    "risky": false,
    "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
    "url": "https://www.amazon.in/dp/B0C32SVFDQ"
+  },
+  {
+   "key": "AI MOBIUZEX271QZ",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 85998,
+   "risky": false,
+   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
+   "url": "https://www.amazon.in/dp/B0GXVHF621"
+  },
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Smartprix · Amazon",
+   "retailer": "amazon",
+   "price": 114999,
+   "risky": false,
+   "title": "LG UltraGear 39GX900A 39 inch WQHD Gaming Monitor",
+   "url": "https://www.smartprix.com/monitors/lg-ultragear-39gx900a-39-inch-wqhd-gaming-ppd1jyw8h682"
   },
   {
    "key": "MPG341CQPX",
@@ -812,16 +822,6 @@
    "url": "https://www.amazon.in/dp/B0G1BRCP3V"
   },
   {
-   "key": "39GX900A",
-   "generic": false,
-   "source": "Smartprix · Amazon",
-   "retailer": "amazon",
-   "price": 114999,
-   "risky": false,
-   "title": "LG UltraGear 39GX900A 39 inch WQHD Gaming Monitor",
-   "url": "https://www.smartprix.com/monitors/lg-ultragear-39gx900a-39-inch-wqhd-gaming-ppd1jyw8h682"
-  },
-  {
    "key": "27G50SF",
    "generic": false,
    "source": "Amazon (direct)",
@@ -842,14 +842,14 @@
    "url": "https://www.amazon.in/dp/B0CZSGWLD5"
   },
   {
-   "key": "AI MOBIUZEX271QZ",
+   "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
    "retailer": "amazon",
-   "price": 85998,
+   "price": 114045,
    "risky": false,
-   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
-   "url": "https://www.amazon.in/dp/B0GXVHF621"
+   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
   },
   {
    "key": "AI 32\"OLED4KODYSSEYG7",
@@ -910,6 +910,16 @@
    "risky": false,
    "title": "LG UltraGear 68.58 cm (27 inch) Quad HD LED Backlit OLED Panel with 1.5M:1 Contrast Ratio, HDR True Black 400, AMD Free Sync Compatible, Height/Tilt/Pivot Stand, Virtually Borderless Gaming Monitor (27GS95QE-BB.ATRLMUN)",
    "url": "https://www.flipkart.com/lg-ultragear-68-58-cm-27-inch-quad-hd-led-backlit-oled-panel-1-5m-1-contrast-ratio-hdr-true-black-400-amd-free-sync-compatible-height-tilt-pivot-stand-virtually-borderless-gaming-monitor-27gs95qe-bb-atrlmun/p/itm7ba509ab048e4"
+  },
+  {
+   "key": "34G85SB",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 101299,
+   "risky": false,
+   "title": "Samsung Odyssey G9 86.36 cm (34 inch) Curved UWQHD OLED Panel with HDR10+, Gaming, Speaker, IoT Hub, Voice Assistants, Height Adjustable Stand, Neo Quantum Processor, OLED Safeguard, Smart Gaming Monitor (LS34BG850SWXXL)",
+   "url": "https://www.flipkart.com/samsung-odyssey-g9-86-36-cm-34-inch-curved-uwqhd-oled-panel-hdr10-gaming-speaker-iot-hub-voice-assistants-height-adjustable-stand-neo-quantum-processor-safeguard-smart-gaming-monitor-ls34bg850swxxl/p/itmf481c09b6ef26"
   },
   {
    "key": "39GX900A",
@@ -1040,16 +1050,6 @@
    "risky": false,
    "title": "Samsung Odyssey OLED G9 LS49CG930SW 49 inch Dual QHD Ultrawide Curved Monitor",
    "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49cg930sw-49-inch-ppd1xs9iyxp1"
-  },
-  {
-   "key": "34G85SB",
-   "generic": false,
-   "source": "Smartprix · Flipkart",
-   "retailer": "flipkart",
-   "price": 101299,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G8 LS34BG850SW 34 inch Quad HD Smart Gaming Monitor",
-   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g8-34-inch-quad-hd-smart-ppd1cmv7wo5l"
   },
   {
    "key": "AI M90SF",
