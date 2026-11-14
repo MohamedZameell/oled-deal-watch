@@ -181,6 +181,7 @@
     },
     {
       "name": "MD Computers",
+      "knownModelTitles": true,
       "kind": "text",
       "urls": [
         "https://mdcomputers.in/index.php?route=product/search&search=oled%20monitor"
@@ -235,7 +236,7 @@
       "kind": "reddit",
       "needDealWords": true,
       "urls": [
-        "https://www.reddit.com/r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/search.rss?q=oled&restrict_sr=1&sort=new&limit=50"
+        "https://www.reddit.com/r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/new/.rss?limit=100"
       ]
     },
     {

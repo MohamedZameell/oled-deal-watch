@@ -115,7 +115,9 @@ const anchorsExtract = () => [...document.querySelectorAll('a[href]')].map((a) =
 // Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
 //  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
 //  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
-const parseTextBlocks = (text, anchors, fallbackUrl) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE });
+// knownTitles (config `knownModelTitles`, MD Computers): also read cards whose title has a known OLED model code but not the word OLED.
+// Off for brand sites: Lenovo sells a non-OLED 27" "Legion 27Q-10" next to the OLED one of the same name.
+const parseTextBlocks = (text, anchors, fallbackUrl, knownTitles) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE, knownOled: knownTitles ? knownOled : null });
 
 // ---------- scrape ----------
 const BLOCKED = /captcha|robot check|access denied|unusual traffic|enter the characters|security verification|verify you are (a )?human|are you a human|just a moment|robot or human|503 - service unavailable|rush hour and traffic/i;
@@ -282,7 +284,7 @@ async function scrapeSource(ctx, src, deskCtx = ctx, earlierItems = []) {
           items.push({ title: r.title, price: money(pm[1]), mrp: rm ? money(rm[1]) : 0, url: r.url || url });
         }
       } else {
-        items.push(...parseTextBlocks(body, await page.evaluate(anchorsExtract), url));
+        items.push(...parseTextBlocks(body, await page.evaluate(anchorsExtract), url, src.knownModelTitles));
       }
       if (items.length === before) {
         // zero rows from a search page: record what the page really was (title, text, screenshot) so a silent bot wall shows up
@@ -324,7 +326,7 @@ const decode = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&qu
 const strip = (s) => s.replace(/<[^>]+>/g, ' ');
 const unhtml = (s) => strip(decode(strip(decode(String(s))))).replace(/\s+/g, ' ').trim();
 const parsers = {
-  // Reddit search RSS (Atom): one <entry> per post; the JSON API and HTML search are blocked from GitHub IPs, RSS is not
+  // Reddit "new posts" RSS (Atom) of the watched subreddits: one <entry> per post, filtered for OLED below. The JSON API, HTML search and (since 2026-11-10) search.rss answer GitHub IPs with 403; this feed does not
   reddit: (s) => s.split('<entry>').slice(1).map((e) => ({ id: (e.match(/<id>([^<]+)/) || [])[1], title: unhtml((e.match(/<title>([^<]*)/) || [])[1] || ''),
     body: unhtml((e.match(/<content[^>]*>([\s\S]*?)<\/content>/) || [])[1] || '').slice(0, 1500), url: (e.match(/<link href="([^"]+)"/) || [])[1],
     t: (e.match(/<published>([^<]+)/) || [])[1], where: 'r/' + ((e.match(/<category term="([^"]+)"/) || [])[1] || 'reddit') })),
@@ -359,7 +361,10 @@ async function fetchCommunity() {
       try {
         let r;
         for (let i = 0; i < 2; i++) {   // Reddit answers bursts with 429: one slow retry
-          r = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'accept-language': 'en-IN,en;q=0.9' } });
+          // Reddit answers a browser user-agent from a datacenter IP with 403 (since 2026-11-10) but serves its feeds to a client that names itself
+          const ua = src.kind === 'reddit' ? 'github-actions:oled-deal-watch:v1.0 (personal price watcher)'
+            : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
+          r = await fetch(url, { headers: { 'user-agent': ua, 'accept-language': 'en-IN,en;q=0.9' } });
           if (r.status !== 429) break;
           await new Promise((ok) => setTimeout(ok, 15000));
         }
