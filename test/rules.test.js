@@ -233,4 +233,10 @@ test('text parser: a neighbouring card without OLED in its title does not lend i
   ].join('\n');
   const got = parseTextBlocks(text, [], 'https://shop.example/search', opts);
   assert.deepEqual(got.map((i) => [i.price, i.mrp]), [[80000, 116900], [39500, 55000]]);
+  // with the known OLED models passed in, the cards whose titles do not say OLED are read too, each with its own price
+  const all = parseTextBlocks(text, [], 'https://shop.example/search', { ...opts, knownOled: new Set(['27G61SH', '39GX900A', 'AW2726DM']) });
+  assert.deepEqual(all.map((i) => i.price), [80000, 99990, 39300, 51000, 39500]);
+  // a title that names another panel type is not taken as OLED, even with a known model code
+  const ips = parseTextBlocks('Samsung Odyssey G6 G61SH 27 Inch IPS Gaming Monitor\n₹20,000', [], 'u', { ...opts, knownOled: new Set(['27G61SH']) });
+  assert.equal(ips.length, 0);
 });

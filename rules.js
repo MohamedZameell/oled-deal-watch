@@ -195,9 +195,12 @@ export const notRecent = (p, price, nowMs = Date.now()) => !p || price < p.price
 // Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
 //  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
 //  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
-export function parseTextBlocks(text, anchors, fallbackUrl, { parser, amountsIn, curInLine, skipLine }) {
+//  knownOled (optional Set of model keys): a monitor title WITHOUT the word OLED still counts when its model code is a
+//  known OLED model (MD Computers: "Samsung Odyssey G8 G80SH LS27HG800SWXXL 27 Inch UHD 4K Silver Gaming Monitor").
+export function parseTextBlocks(text, anchors, fallbackUrl, { parser, amountsIn, curInLine, skipLine, knownOled }) {
   const lines = text.split('\n').map((l) => l.trim()).filter(Boolean);
-  const isTitle = (l) => /oled/i.test(l) && l.length >= 20 && l.length <= 220 && !curInLine.test(l) && MONITOR_OK.test(l) && !NOT_MONITOR.test(l);
+  const oledLine = (l) => /oled/i.test(l) || (!!knownOled && !NON_OLED_PANEL.test(l) && knownOled.has(modelKey(l)));
+  const isTitle = (l) => oledLine(l) && l.length >= 20 && l.length <= 220 && !curInLine.test(l) && MONITOR_OK.test(l) && !NOT_MONITOR.test(l);
   const otherTitle = (l) => l.length >= 20 && l.length <= 220 && !curInLine.test(l) && !skipLine.test(l) && MONITOR_OK.test(l);
   const out = [];
   for (let i = 0; i < lines.length; i++) {

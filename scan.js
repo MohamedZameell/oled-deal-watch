@@ -115,7 +115,7 @@ const anchorsExtract = () => [...document.querySelectorAll('a[href]')].map((a) =
 // Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
 //  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
 //  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
-const parseTextBlocks = (text, anchors, fallbackUrl) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE });
+const parseTextBlocks = (text, anchors, fallbackUrl) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE, knownOled });
 
 // ---------- scrape ----------
 const BLOCKED = /captcha|robot check|access denied|unusual traffic|enter the characters|security verification|verify you are (a )?human|are you a human|just a moment|robot or human|503 - service unavailable|rush hour and traffic/i;
