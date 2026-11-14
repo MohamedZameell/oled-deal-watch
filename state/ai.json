@@ -1623,6 +1623,22 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-14"
+  },
+  "samsung odyssey oled g9 2k dqhd 49 inch 240hz 5120 x 1440 resolution panel gaming monitors ls49dg930swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-14"
+  },
+  "samsung odyssey oled g8 ls32hg800swxxl 32-inch 4k uhd qd-oled gaming monitor ls32hg800swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS32HG800SWXXL",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1656,5 +1672,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 4
+ "calls": 5
 }
