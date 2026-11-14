@@ -1575,6 +1575,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-14"
+  },
+  "lenovo legion pro 32ud-10 31.5\" 4k uhd (3840x2160) oled gaming monitor, 240hz, 0.03ms, displayhdr true black 400, freesync premium pro, 99% dci-p3, usb-c pd, hdmi 2.1, 69d0gacbin [sold by clicktech retail private ltd]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "69D0GACBIN",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1608,5 +1616,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 2
+ "calls": 3
 }
