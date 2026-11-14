@@ -359,7 +359,10 @@ async function fetchCommunity() {
       try {
         let r;
         for (let i = 0; i < 2; i++) {   // Reddit answers bursts with 429: one slow retry
-          r = await fetch(url, { headers: { 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36', 'accept-language': 'en-IN,en;q=0.9' } });
+          // Reddit answers a browser user-agent from a datacenter IP with 403 (since 2026-11-10) but serves its feeds to a client that names itself
+          const ua = src.kind === 'reddit' ? 'github-actions:oled-deal-watch:v1.0 (personal price watcher)'
+            : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36';
+          r = await fetch(url, { headers: { 'user-agent': ua, 'accept-language': 'en-IN,en;q=0.9' } });
           if (r.status !== 429) break;
           await new Promise((ok) => setTimeout(ok, 15000));
         }
