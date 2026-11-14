@@ -235,7 +235,7 @@
       "kind": "reddit",
       "needDealWords": true,
       "urls": [
-        "https://www.reddit.com/r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/search.rss?q=oled&restrict_sr=1&sort=new&limit=50"
+        "https://www.reddit.com/r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/new/.rss?limit=100"
       ]
     },
     {

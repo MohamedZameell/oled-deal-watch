@@ -324,7 +324,7 @@ const decode = (s) => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&qu
 const strip = (s) => s.replace(/<[^>]+>/g, ' ');
 const unhtml = (s) => strip(decode(strip(decode(String(s))))).replace(/\s+/g, ' ').trim();
 const parsers = {
-  // Reddit search RSS (Atom): one <entry> per post; the JSON API and HTML search are blocked from GitHub IPs, RSS is not
+  // Reddit "new posts" RSS (Atom) of the watched subreddits: one <entry> per post, filtered for OLED below. The JSON API, HTML search and (since 2026-11-10) search.rss answer GitHub IPs with 403; this feed does not
   reddit: (s) => s.split('<entry>').slice(1).map((e) => ({ id: (e.match(/<id>([^<]+)/) || [])[1], title: unhtml((e.match(/<title>([^<]*)/) || [])[1] || ''),
     body: unhtml((e.match(/<content[^>]*>([\s\S]*?)<\/content>/) || [])[1] || '').slice(0, 1500), url: (e.match(/<link href="([^"]+)"/) || [])[1],
     t: (e.match(/<published>([^<]+)/) || [])[1], where: 'r/' + ((e.match(/<category term="([^"]+)"/) || [])[1] || 'reddit') })),
