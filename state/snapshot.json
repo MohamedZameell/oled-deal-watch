@@ -1,5 +1,5 @@
 {
- "t": "2026-11-14T22:55:10.828Z",
+ "t": "2026-11-14T23:07:00.923Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,14 +22,14 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "XG27ACDMS",
+   "key": "MPG341CQPX",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 66839,
+   "price": 101024,
    "risky": false,
-   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
-   "url": "https://www.amazon.in/dp/B0FQV3222X"
+   "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W)",
+   "url": "https://www.amazon.in/dp/B0DKNZSP3Q"
   },
   {
    "key": "AI 68CEGACBIN",
@@ -40,6 +40,16 @@
    "risky": false,
    "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
    "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+  },
+  {
+   "key": "XG27ACDMS",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 66839,
+   "risky": false,
+   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
+   "url": "https://www.amazon.in/dp/B0FQV3222X"
   },
   {
    "key": "27GX790A",
@@ -102,16 +112,6 @@
    "url": "https://www.amazon.in/dp/B0GL83RWPV"
   },
   {
-   "key": "MPG341CQPX",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 101024,
-   "risky": false,
-   "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W)",
-   "url": "https://www.amazon.in/dp/B0DKNZSP3Q"
-  },
-  {
    "key": "AI MOBIUZEX271QZ",
    "generic": false,
    "source": "Amazon.in",
@@ -120,16 +120,6 @@
    "risky": false,
    "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
    "url": "https://www.amazon.in/dp/B0GXVHF621"
-  },
-  {
-   "key": "MPG341CQPX",
-   "generic": false,
-   "source": "Amazon.in · other sellers",
-   "retailer": "amazoninothersellers",
-   "price": 103900,
-   "risky": false,
-   "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W) [New · Amazeo My Pride]",
-   "url": "https://www.amazon.in/dp/B0DKNZSP3Q?aod=1&offer=0"
   },
   {
    "key": "AG276QZD2",
@@ -982,16 +972,6 @@
    "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
-   "key": "27GS95QE",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79999,
-   "risky": false,
-   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE [sold by Clicktech Retail Private Ltd]",
-   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
-  },
-  {
    "key": "27G50SF",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1000,6 +980,16 @@
    "risky": false,
    "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
+  },
+  {
+   "key": "27GS95QE",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 79999,
+   "risky": false,
+   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE [sold by Clicktech Retail Private Ltd]",
+   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "AW3423DWF",
@@ -1062,16 +1052,6 @@
    "url": "https://www.flipkart.com/samsung-odyssey-oled-g8-67-7-cm-27-inch-4k-ultra-hd-led-backlit-panel-gaming-monitor-ls27hg800swxxl/p/itm3eea75d256490"
   },
   {
-   "key": "XG27ACDMS",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 64999,
-   "risky": false,
-   "title": "ASUS ROG Strix 68.58 cm (27 inch) Quad HD IPS Panel Gaming Monitor (ROG Strix OLED XG27ACDMS gaming monitor 27-inch, 1440p QD-OLED, 280 Hz, 0.03 ms)",
-   "url": "https://www.flipkart.com/asus-rog-strix-68-58-cm-27-inch-quad-hd-ips-panel-gaming-monitor-rog-oled-xg27acdms-27-inch-1440p-qd-oled-280-hz-0-03-ms/p/itm607e2be069762"
-  },
-  {
    "key": "27GS95QE",
    "generic": false,
    "source": "Flipkart",
@@ -1112,14 +1092,14 @@
    "url": "https://www.flipkart.com/lg-39gx900a-21-9-ultragear-gx9-800r-curve-99-06-cm-39-inch-curved-uwqhd-oled-panel-gaming-monitor-39gx900a-3440x1440-freesync-premium-hdmi-x2-dp-usb-c-65w-pd-height-swivel/p/itm96c831f029c54"
   },
   {
-   "key": "AG276QZD2",
+   "key": "XG27ACDMS",
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 59999,
+   "price": 64999,
    "risky": false,
-   "title": "AOC 68.58 cm (27 inch) Quad HD LED Backlit OLED Panel with USB Hub,HDMI 2.0, HDR400 Gaming Monitor (AG276QZD2)",
-   "url": "https://www.flipkart.com/aoc-68-58-cm-27-inch-quad-hd-led-backlit-oled-panel-usb-hub-hdmi-2-0-hdr400-gaming-monitor-ag276qzd2/p/itmaa64aa607ec96"
+   "title": "ASUS ROG Strix 68.58 cm (27 inch) Quad HD IPS Panel Gaming Monitor (ROG Strix OLED XG27ACDMS gaming monitor 27-inch, 1440p QD-OLED, 280 Hz, 0.03 ms)",
+   "url": "https://www.flipkart.com/asus-rog-strix-68-58-cm-27-inch-quad-hd-ips-panel-gaming-monitor-rog-oled-xg27acdms-27-inch-1440p-qd-oled-280-hz-0-03-ms/p/itm607e2be069762"
   },
   {
    "key": "AI S322",
