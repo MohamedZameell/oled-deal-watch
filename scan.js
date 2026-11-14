@@ -115,7 +115,9 @@ const anchorsExtract = () => [...document.querySelectorAll('a[href]')].map((a) =
 // Free-text listing pages: find OLED monitor title lines, then read the prices under each one.
 //  'labeled' (US): the first "$x" / "From $x" line is the price; was/MSRP/estimated-value lines are the reference.
 //  'minmax' (India): lowest amount under the title is the price, highest the MRP, skipping EMI/cashback lines.
-const parseTextBlocks = (text, anchors, fallbackUrl) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE, knownOled });
+// knownTitles (config `knownModelTitles`, MD Computers): also read cards whose title has a known OLED model code but not the word OLED.
+// Off for brand sites: Lenovo sells a non-OLED 27" "Legion 27Q-10" next to the OLED one of the same name.
+const parseTextBlocks = (text, anchors, fallbackUrl, knownTitles) => parseText(text, anchors, fallbackUrl, { parser: R.textParser, amountsIn, curInLine: CUR_IN_LINE, skipLine: SKIP_LINE, knownOled: knownTitles ? knownOled : null });
 
 // ---------- scrape ----------
 const BLOCKED = /captcha|robot check|access denied|unusual traffic|enter the characters|security verification|verify you are (a )?human|are you a human|just a moment|robot or human|503 - service unavailable|rush hour and traffic/i;
@@ -282,7 +284,7 @@ async function scrapeSource(ctx, src, deskCtx = ctx, earlierItems = []) {
           items.push({ title: r.title, price: money(pm[1]), mrp: rm ? money(rm[1]) : 0, url: r.url || url });
         }
       } else {
-        items.push(...parseTextBlocks(body, await page.evaluate(anchorsExtract), url));
+        items.push(...parseTextBlocks(body, await page.evaluate(anchorsExtract), url, src.knownModelTitles));
       }
       if (items.length === before) {
         // zero rows from a search page: record what the page really was (title, text, screenshot) so a silent bot wall shows up
