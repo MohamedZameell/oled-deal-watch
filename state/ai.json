@@ -1567,6 +1567,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-14"
+  },
+  "asus rog strix oled xg27acdms gaming monitor ― 27-inch (26.5-inch viewable) 1440p qd-oled panel, 280 hz, 0.03 ms, custom heatsink, neo proximity sensor, oled care pro, g-sync® compatible, 99% dci-p3": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG27ACDMS",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1600,5 +1608,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 1
+ "calls": 2
 }
