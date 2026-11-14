@@ -1639,6 +1639,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-14"
+  },
+  "asus rog swift 32” 4k oled gaming monitor (pg32ucdm) - uhd (3840 x 2160), qd-oled, 240hz, 0.03ms, g-sync compatible, custom heatsink, graphene film, 99% dci-p3, true 10-bit, 90w usb-c": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG32UCDM",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1672,5 +1680,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 5
+ "calls": 6
 }
