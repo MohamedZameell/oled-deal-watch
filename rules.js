@@ -232,7 +232,8 @@ export function parseTextBlocks(text, anchors, fallbackUrl, { parser, amountsIn,
       price = prices[0]; mrp = Math.max(0, ...refs);
     }
     const key = lines[i].slice(0, 22).toLowerCase();
-    const code = (lines[i].match(/\b[A-Z]{1,3}\d{2,4}[A-Z0-9]{0,6}\b/g) || []).pop();
+    // up to 12 trailing characters: Samsung's full codes (LS49DG930SWXXL) tell the two G9 cards apart, the title start does not
+    const code = (lines[i].match(/\b[A-Z]{1,3}\d{2,4}[A-Z0-9]{0,12}\b/g) || []).pop();
     const hit = anchors.find(([, h]) => code && h.toLowerCase().includes(code.toLowerCase())) ||
       anchors.find(([t]) => t.toLowerCase().startsWith(key) || lines[i].toLowerCase().startsWith(t.toLowerCase().slice(0, 22)));
     out.push({ title: lines[i], price, mrp: mrp > price ? mrp : 0, url: hit ? hit[1] : fallbackUrl });
