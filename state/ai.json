@@ -1559,6 +1559,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-14"
+  },
+  "lg 27 inch ultragear oled qhd gaming monitor(2560 x 1440) 240hz, 0.03ms, g-sync compatible, amd freesync™, 1.5m:1 contrast ratio, hdr true black 400, virtually borderless,height, pivot,tilt,27gs95qe [sold by clicktech retail private ltd]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1592,5 +1600,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 0
+ "calls": 1
 }
