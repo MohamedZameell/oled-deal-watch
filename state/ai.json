@@ -1398,7 +1398,7 @@
    "model": "LS49DG910SWXXL",
    "cond": "new",
    "size": 49,
-   "seen": "2026-11-07"
+   "seen": "2026-11-14"
   },
   "benq mobiuz ex271qz 27 2k qhd 3rd gen qd-oled 500hz gaming monitor": {
    "kind": "monitor",
@@ -1583,6 +1583,46 @@
    "cond": "new",
    "size": 31.5,
    "seen": "2026-11-14"
+  },
+  "dell alienware 34\" curved qd-oled gaming monitor - aw3423dwf, alienfx lighting system, response time 0.1 ms, anti-reflective,": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3423DWF",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-14"
+  },
+  "samsung odyssey g6 g61sh ls27hg612swxxl qhd 27 inch gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "G61SH",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-14"
+  },
+  "samsung odyssey g8 g80sh ls27hg800swxxl 27 inch uhd 4k silver gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "G80SH",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-14"
+  },
+  "benq mobiuz ex271uz 27 inch 4k gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "Mobiuz EX271UZ",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-14"
+  },
+  "lg ultragear 39gx900a-b 39 inch curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "UltraGear 39GX900A-B",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-14"
   }
  },
  "posts": {
@@ -1616,5 +1656,5 @@
   }
  },
  "day": "2026-11-14",
- "calls": 3
+ "calls": 4
 }
