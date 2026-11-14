@@ -11,7 +11,5 @@ jobs:
       - run: |
           U='r/IndianGaming+IndiaTech+pcmasterraceindia+IndianPCHardware+indiadeals/search.rss?q=oled&restrict_sr=1&sort=new&limit=50'
           t(){ curl -s -A "$1" "$2" -o out -w "%{http_code} %{size_download} | $1 | $2\n" || true; head -c 150 out | tr '\n' ' '; echo; sleep 20; }
-          t 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36' "https://www.reddit.com/$U"
+
           t 'github-actions:oled-deal-watch:v1.0 (personal price watcher)' "https://www.reddit.com/$U"
-          t 'github-actions:oled-deal-watch:v1.0 (personal price watcher)' "https://old.reddit.com/$U"
-          t 'github-actions:oled-deal-watch:v1.0 (personal price watcher)' "https://www.reddit.com/r/IndianGaming/new/.rss"
