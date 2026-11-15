@@ -87,6 +87,22 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
       if (skipped.length) console.log('AMAZON unpriced:', skipped.join(', '));
     }
+    // last fallback: BuyHatke's own product page (see bhPage) for every watched id still without a price, i.e. Flipkart
+    // pids and Amazon ids the scraper could not read. Never overrides Amazon's own "out of stock" at the pincode.
+    {
+      const have = new Set(out.map((x) => x.w.pid));
+      const todo = ids.filter((w) => !have.has(w.pid) && w.url && !(w.pos === 63 && azCache.get(w.pid)));   // azCache hit = the scraper answered (oos/bundle): keep that verdict
+      const t0 = Date.now(); let n = 0, miss = 0;
+      await Promise.all(Array.from({ length: 4 }, async () => {
+        for (let w; (w = todo.shift()) && Date.now() - t0 < 90000;) {
+          const p = await bhPage(w);
+          if (!p) { miss++; continue; }
+          if (p.inStock === false) continue;
+          out.push({ w, price: p.price, oos: false, exGst: exGst(p.price, w.last), via: 'bhpage' }); n++;
+        }
+      }));
+      console.log('BH page fallback priced', n, 'ids (no or old page data for', miss + ')');
+    }
     return { out, errors, low };
   }
 
@@ -345,4 +361,33 @@ export async function amazonStock(asin) {
   if (amazonWalled && res === 'unknown') console.log('amazonStock walled at', asin);
   stockCache.set(asin, res);
   return res;
+}
+
+// BuyHatke PRODUCT PAGE as a price fallback (2026-11-16: priceData is still empty, but the server-rendered page is
+// current again: cur_price matched our own Amazon-scraper price for 6 of 6 monitors, history ran to the previous day).
+// `buyhatke.com/<store url>` embeds `cur_price:N` ... `inStock:1` ... `pid:"<id>"`. Only used for watch ids that priceData
+// and the Amazon scraper left unanswered (mostly Flipkart pids). The page can be slow or half-rendered (some fetches
+// answer in 0.3 s with the full 94 KB page, others hang 30 s and return 40 KB without data), so a miss is just null.
+// Returns { price, inStock, asOf } or null. asOf = last day of the price history (the page is a cache: too old = ignore).
+export function parseBhPage(html, pid) {
+  if (!html || !pid) return null;
+  const i = html.indexOf(`pid:"${pid}"`);
+  // the product's own block is `...cur_price:N,...,inStock:0|1,pid:"<pid>"`: read backwards from its pid
+  const head = i < 0 ? '' : html.slice(Math.max(0, i - 700), i);
+  const price = [...head.matchAll(/cur_price:(\d+(?:\.\d+)?)/g)].pop();
+  const stock = [...head.matchAll(/inStock:([01])/g)].pop();
+  if (!price || +price[1] < 10000) return null;
+  const tl = html.match(/predictedData:\{history:\[([\s\S]*?)\]/);
+  const last = tl ? [...tl[1].matchAll(/to:"(\d{4}-\d\d-\d\d)/g)].pop() : null;
+  return { price: Math.round(+price[1]), inStock: stock ? stock[1] === '1' : null, asOf: last ? last[1] : null };
+}
+const BH_MAX_AGE_DAYS = 4;
+export const bhPageFresh = (p, nowMs = Date.now()) => !!p && !!p.asOf && nowMs - Date.parse(p.asOf) <= BH_MAX_AGE_DAYS * 86400000;
+export async function bhPage(w) {
+  if (!w.url) return null;
+  try {
+    const r = await fetch('https://buyhatke.com/' + w.url, { headers: { 'user-agent': HEADERS['user-agent'] }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
+    const p = parseBhPage(await r.text(), w.pid);
+    return bhPageFresh(p) ? p : null;
+  } catch { return null; }
 }

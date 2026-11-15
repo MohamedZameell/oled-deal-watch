@@ -56,3 +56,22 @@ test('Amazon offers: used/renewed and cheaper-seller offers are listed, the buy-
   assert.deepEqual(sideOffers(offers, 46899).map((o) => o.seller), ['Other', 'Warehouse']);
   assert.deepEqual(sideOffers(null, 46899), []);
 });
+
+import { parseBhPage, bhPageFresh } from '../buyhatke.js';
+// shape copied from the live G5 page (2026-11-16): product block ends with inStock + pid, history timeline further down
+const BH_HTML = 'x{prod:"Samsung 27 Odyssey G5",link:"http://www.amazon.in/gp/product/B0G12R9WG3",cur_price:36499,site_pos:63,inStock:1,pid:"B0G12R9WG3",internalPid:1},'
+  + '{prod:"other",link:"x",price:39999,position:63,PID:"B0OTHER",oos:0},predictedData:{history:[{from:"2026-10-28 00:34:43",to:"2026-11-11 00:16:10",price:39999},{from:"2026-11-12 09:18:11",to:"2026-11-14 01:30:07",price:36499}],scores:[1]}';
+test('parseBhPage: price, stock and history date of the product itself', () => {
+  assert.deepEqual(parseBhPage(BH_HTML, 'B0G12R9WG3'), { price: 36499, inStock: true, asOf: '2026-11-14' });
+  assert.equal(parseBhPage(BH_HTML, 'B0NOTTHERE'), null);          // some other product's page / half-rendered page
+  assert.equal(parseBhPage('', 'B0G12R9WG3'), null);
+  assert.equal(parseBhPage(BH_HTML.replace('cur_price:36499', 'cur_price:2995'), 'B0G12R9WG3'), null);   // add-on price, not a monitor
+  assert.equal(parseBhPage(BH_HTML.replace('inStock:1', 'inStock:0'), 'B0G12R9WG3').inStock, false);
+});
+test('bhPageFresh: the page is a cache, a history that stopped days ago is not trusted', () => {
+  const now = Date.parse('2026-11-16T12:00:00Z');
+  assert.equal(bhPageFresh({ price: 1, asOf: '2026-11-14' }, now), true);
+  assert.equal(bhPageFresh({ price: 1, asOf: '2026-11-08' }, now), false);   // 11-08: the July-stale era
+  assert.equal(bhPageFresh({ price: 1, asOf: null }, now), false);
+  assert.equal(bhPageFresh(null, now), false);
+});
