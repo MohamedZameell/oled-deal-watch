@@ -381,13 +381,14 @@ export function parseBhPage(html, pid) {
   const last = tl ? [...tl[1].matchAll(/to:"(\d{4}-\d\d-\d\d)/g)].pop() : null;
   return { price: Math.round(+price[1]), inStock: stock ? stock[1] === '1' : null, asOf: last ? last[1] : null };
 }
-const BH_MAX_AGE_DAYS = 4;
+const BH_MAX_AGE_DAYS = 4; let bhDiag = 0;
 export const bhPageFresh = (p, nowMs = Date.now()) => !!p && !!p.asOf && nowMs - Date.parse(p.asOf) <= BH_MAX_AGE_DAYS * 86400000;
 export async function bhPage(w) {
   if (!w.url) return null;
   try {
     const r = await fetch('https://buyhatke.com/' + w.url, { headers: { 'user-agent': HEADERS['user-agent'] }, redirect: 'follow', signal: AbortSignal.timeout(20000) });
-    const p = parseBhPage(await r.text(), w.pid);
+    const txt = await r.text(); const p = parseBhPage(txt, w.pid);
+    if (!p && bhDiag++ < 2) console.log('BH page diag:', w.pid, 'http', r.status, 'bytes', txt.length, txt.slice(0, 80).replace(/s+/g, ' '));
     return bhPageFresh(p) ? p : null;
   } catch { return null; }
 }
