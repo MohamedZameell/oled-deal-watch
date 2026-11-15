@@ -1677,8 +1677,15 @@
    "price": 0,
    "note": "Help choosing OLED monitor from two options within ₹50k budget",
    "t": "2026-11-09"
+  },
+  "t3_1xwtig0": {
+   "deal": false,
+   "model": null,
+   "price": 0,
+   "note": "Question about Samsung G6 vs Alienware 2726D QD-OLED, not a deal",
+   "t": "2026-11-15"
   }
  },
  "day": "2026-11-15",
- "calls": 0
+ "calls": 1
 }
