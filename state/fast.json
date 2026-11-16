@@ -120,8 +120,8 @@
   "t": "2026-11-10T12:40:28.907Z"
  },
  "bhid|63~B0H41XJ8JF": {
-  "price": 78999,
-  "t": "2026-11-06T11:40:19.599Z"
+  "price": 69999,
+  "t": "2026-11-16T02:25:23.059Z"
  },
  "bhid|63~B0DMSVDHXX": {
   "price": 80999,
@@ -147,7 +147,16 @@
   "price": 91998,
   "t": "2026-11-11T22:30:37.059Z"
  },
- "log": [],
+ "log": [
+  {
+   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
+   "price": 72032,
+   "why": "dropped from ₹85,998 at this listing",
+   "where": "Amazon",
+   "url": "https://www.amazon.in/dp/B0GXVHF621",
+   "t": "2026-11-16T02:25:23.059Z"
+  }
+ ],
  "AW2726DM|amazon": {
   "price": 33728,
   "t": "2026-11-02T20:05:19.692Z"
@@ -181,8 +190,8 @@
   "t": "2026-11-06T01:20:26.013Z"
  },
  "bhid|63~B0BSLKDLMV": {
-  "price": 114045,
-  "t": "2026-11-16T01:50:29.325Z"
+  "price": 113999,
+  "t": "2026-11-16T02:25:23.059Z"
  },
  "bhid|2~MONHE5DPSVGWRUXX": {
   "price": 67999,
@@ -317,9 +326,8 @@
   "t": "2026-11-11T13:25:23.977Z"
  },
  "lst|az~B0GXVHF621": {
-  "price": 85998,
-  "t": "2026-11-11T22:30:37.059Z",
-  "was": 84998
+  "price": 72032,
+  "t": "2026-11-16T02:25:23.059Z"
  },
  "lst|fk~MONHNG5X2GAJUETF": {
   "price": 93999,
