@@ -1,6 +1,26 @@
 {
- "t": "2026-11-16T06:26:39.475Z",
+ "t": "2026-11-16T06:41:15.803Z",
  "items": [
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 119999,
+   "risky": false,
+   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
+   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 79900,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
+  },
   {
    "key": "AW2725D",
    "generic": false,
@@ -30,16 +50,6 @@
    "risky": false,
    "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
    "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
-  },
-  {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79900,
-   "risky": false,
-   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
-   "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
    "key": "XG27ACDMS",
@@ -122,24 +132,14 @@
    "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
-   "key": "39GX900A",
-   "generic": false,
+   "key": "~SAMSUNG 27\" QHD 240Hz",
+   "generic": true,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 119999,
+   "price": 50294,
    "risky": false,
-   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
-   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
-  },
-  {
-   "key": "PG32UCDM",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 153399,
-   "risky": false,
-   "title": "ASUS ROG Swift 32” 4K OLED Gaming Monitor (PG32UCDM) - UHD (3840 x 2160), QD-OLED, 240Hz, 0.03ms, G-SYNC Compatible, Custom Heatsink, Graphene Film, 99% DCI-P3, True 10-bit, 90W USB-C",
-   "url": "https://www.amazon.in/dp/B0D6GFLPFL"
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync + Logitech C920 HD Pro Webcam",
+   "url": "https://www.amazon.in/dp/B0HDSDG9RL"
   },
   {
    "key": "AW2726DM",
@@ -1002,16 +1002,6 @@
    "url": "https://www.amazon.in/dp/B0CTRXPJMC"
   },
   {
-   "key": "27G50SF",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 36499,
-   "risky": false,
-   "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
-   "url": "https://www.amazon.in/dp/B0G12R9WG3"
-  },
-  {
    "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1020,6 +1010,16 @@
    "risky": false,
    "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
    "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+  },
+  {
+   "key": "27G50SF",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 36499,
+   "risky": false,
+   "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
+   "url": "https://www.amazon.in/dp/B0G12R9WG3"
   },
   {
    "key": "27GS95QE",
@@ -1042,16 +1042,6 @@
    "url": "https://www.amazon.in/dp/B0CZSGWLD5"
   },
   {
-   "key": "32GS95UV",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 107999,
-   "risky": false,
-   "title": "LG ‎32GS95UV 32 Inch Ultragear OLED Gaming Monitor, UHD, 3840 x 2160, 240Hz, 0.03ms, DisplayHDR, True Black 400, AMD FreeSync Premium Pro, NVIDIA G-Sync, HDMI 2.1, DP, Tilt/Height/Swivel Stand, Black",
-   "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
-  },
-  {
    "key": "AW3423DWF",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1060,6 +1050,16 @@
    "risky": false,
    "title": "Dell ALIENWARE 34\" CURVED QD-OLED Gaming Monitor - AW3423DWF, AlienFX lighting system, Response Time 0.1 ms, Anti-reflective,",
    "url": "https://www.amazon.in/dp/B0BP94J8VD"
+  },
+  {
+   "key": "32GS95UV",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 107999,
+   "risky": false,
+   "title": "LG ‎32GS95UV 32 Inch Ultragear OLED Gaming Monitor, UHD, 3840 x 2160, 240Hz, 0.03ms, DisplayHDR, True Black 400, AMD FreeSync Premium Pro, NVIDIA G-Sync, HDMI 2.1, DP, Tilt/Height/Swivel Stand, Black",
+   "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
   },
   {
    "key": "27G61SH",
