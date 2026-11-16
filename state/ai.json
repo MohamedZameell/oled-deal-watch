@@ -1647,6 +1647,38 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-16"
+  },
+  "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-16"
+  },
+  "80 cm (32) odyssey oled g8 g80sh 4k 240hz gaming monitor ls32hg800sw": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS32HG800SW",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-16"
+  },
+  "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw [student]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-16"
+  },
+  "80 cm (32) odyssey oled g8 g80sh 4k 240hz gaming monitor ls32hg800sw [student]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS32HG800SW",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-16"
   }
  },
  "posts": {
@@ -1687,5 +1719,5 @@
   }
  },
  "day": "2026-11-16",
- "calls": 1
+ "calls": 2
 }
