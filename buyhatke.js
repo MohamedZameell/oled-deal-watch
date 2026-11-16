@@ -81,7 +81,10 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
       const todo = [...amazon]; const t0 = Date.now(); let n = 0; const skipped = [];
       await Promise.all(Array.from({ length: 4 }, async () => {
         for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
-          const a = await azDetails(w.pid);
+          let a = await azDetails(w.pid);
+          // 2026-11-16: the 32" G7 (B0H1CTHJDW) was priced at the 27" G6's ₹41,999 (sibling variants share one page family).
+          // The scraper's title must name the same screen size / model code as our listing, or its price is not used.
+          if (a && a.title && w.name && sizeClash(w.name, a.title)) { console.log('azDetails title clash', w.pid, '|', a.title.slice(0, 70), '|', String(w.name).slice(0, 70), a.price); azIgnored.add(w.pid); a = null; }
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false, via: 'amazon', seller: a.seller }); n++; }
           else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
           if (!a && bhAz.has(w.pid) && !azIgnored.has(w.pid)) out.push(bhAz.get(w.pid));   // scraper had no answer: BuyHatke's price stays (stock is checked before any ping)
@@ -237,6 +240,13 @@ export function fakeDiscount(series, price, nowMs = Date.now()) {
 const AZ_URL = process.env.AMAZON_SCRAPER_URL, AZ_PIN = process.env.AMAZON_PINCODE || '622001';
 const azCache = new Map(); let azFails = 0;
 const azLowSeen = new Map();
+// screen size (20-59") or Samsung model code differing between two titles = a different product
+export function sizeClash(a, b) {
+  const size = (t) => (String(t).match(/\b([2-5]\d)(?:\.\d)?\s?(?:"|”|inch|-inch)/i) || [])[1];
+  const code = (t) => (String(t).match(/\bLS\w{6,}/i) || [])[0]?.toUpperCase().slice(0, 9);
+  const [sa, sb, ca, cb] = [size(a), size(b), code(a), code(b)];
+  return !!((sa && sb && sa !== sb) || (ca && cb && ca !== cb));
+}
 const azIgnored = new Set();   // bundle / implausible-price listings: no price source may stand in for them
 // what azDetails saw for a listing it refused to price because the price was under ₹10,000 ({ price, inStock }), if any
 export const azLow = (asin) => azLowSeen.get(asin);
@@ -263,10 +273,10 @@ export async function azDetails(asin) {
       // some listings come back with a price but no availability block (B0CZSGWLD5, B0CZWM44QP: third-party offers only).
       // That is a good answer with unknown stock, not a scraper failure: it must not count towards the 3-failures stop.
       // The all-offers list settles those: a New offer there = in stock at that seller's price; none = not buyable.
-      else if (d.availability) res = { price, inStock: !!d.availability.is_in_stock };
+      else if (d.availability) res = { price, inStock: !!d.availability.is_in_stock, title: d.title || '' };
       else {
         const best = cheapestNew(await azOffers(asin));
-        res = best === null ? { price, inStock: null } : best ? { price: best.price, inStock: true, seller: best.seller } : { price, inStock: false };
+        res = best === null ? { price, inStock: null, title: d.title || '' } : best ? { price: best.price, inStock: true, seller: best.seller, title: d.title || '' } : { price, inStock: false, title: d.title || '' };
       }
     } else azFails++;
   } catch (e) { azFails++; console.log('azDetails', asin, String(e.message).slice(0, 60)); }
