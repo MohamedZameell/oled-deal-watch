@@ -1,5 +1,5 @@
 {
- "t": "2026-11-16T20:39:52.556Z",
+ "t": "2026-11-16T20:52:04.340Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,14 +22,24 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "XG27ACDMS",
+   "key": "AI 68CEGACBIN",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 66839,
+   "price": 74879,
    "risky": false,
-   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
-   "url": "https://www.amazon.in/dp/B0FQV3222X"
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 79900,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
    "key": "AI 69D0GACBIN",
@@ -42,14 +52,14 @@
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
-   "key": "AI 68CEGACBIN",
+   "key": "XG27ACDMS",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 74879,
+   "price": 66839,
    "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
+   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
+   "url": "https://www.amazon.in/dp/B0FQV3222X"
   },
   {
    "key": "27G80SH",
@@ -60,16 +70,6 @@
    "risky": false,
    "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
-  },
-  {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79900,
-   "risky": false,
-   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
-   "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
    "key": "MAG321UP",
