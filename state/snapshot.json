@@ -1,5 +1,5 @@
 {
- "t": "2026-11-16T13:25:29.717Z",
+ "t": "2026-11-16T13:37:30.693Z",
  "items": [
   {
    "key": "AW2725D",
@@ -122,14 +122,14 @@
    "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
-   "key": "39GX900A",
+   "key": "AW2725DF",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 114999,
+   "price": 95990,
    "risky": false,
-   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
-   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
+   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment",
+   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
   },
   {
    "key": "MPG341CQPX",
@@ -1014,7 +1014,7 @@
   {
    "key": "49G91SD",
    "generic": false,
-   "source": "BuyHatke · Flipkart",
+   "source": "Flipkart",
    "retailer": "flipkart",
    "price": 78499,
    "risky": false,
@@ -1222,6 +1222,16 @@
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
   },
   {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 114999,
+   "risky": false,
+   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
+   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
+  },
+  {
    "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1232,14 +1242,14 @@
    "url": "https://www.amazon.in/dp/B0BSLKDLMV"
   },
   {
-   "key": "AW2725DF",
+   "key": "27GS95QE",
    "generic": false,
    "source": "Amazon (direct)",
    "retailer": "amazon",
-   "price": 95990,
+   "price": 79999,
    "risky": false,
-   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment [sold by ShopForBest]",
-   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
+   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE [sold by Clicktech Retail Private Ltd]",
+   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "32GS95UV",
@@ -1250,16 +1260,6 @@
    "risky": false,
    "title": "LG ‎Ultragear 32GS95UV 32-inch Ultra HD 4K OLED Gaming Monitor",
    "url": "https://www.smartprix.com/monitors/lg-ultragear-32gs95uv-32-inch-ultra-hd-4k-ppd10gg11ku0"
-  },
-  {
-   "key": "27GS95QE",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79999,
-   "risky": false,
-   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE [sold by Clicktech Retail Private Ltd]",
-   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "AI 32\"OLED4KODYSSEYG7",
