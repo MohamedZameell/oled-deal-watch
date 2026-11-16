@@ -84,7 +84,7 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
           const a = await azDetails(w.pid);
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false, via: 'amazon', seller: a.seller }); n++; }
           else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
-          if (!a && bhAz.has(w.pid)) out.push(bhAz.get(w.pid));   // scraper had no answer: BuyHatke's price stays (stock is checked before any ping)
+          if (!a && bhAz.has(w.pid) && !azIgnored.has(w.pid)) out.push(bhAz.get(w.pid));   // scraper had no answer: BuyHatke's price stays (stock is checked before any ping)
           bhAz.delete(w.pid);
           const lo = !a && azLow(w.pid);
           if (lo && lo.inStock !== false) low.push({ w, price: lo.price, inStock: lo.inStock });
@@ -237,6 +237,7 @@ export function fakeDiscount(series, price, nowMs = Date.now()) {
 const AZ_URL = process.env.AMAZON_SCRAPER_URL, AZ_PIN = process.env.AMAZON_PINCODE || '622001';
 const azCache = new Map(); let azFails = 0;
 const azLowSeen = new Map();
+const azIgnored = new Set();   // bundle / implausible-price listings: no price source may stand in for them
 // what azDetails saw for a listing it refused to price because the price was under ₹10,000 ({ price, inStock }), if any
 export const azLow = (asin) => azLowSeen.get(asin);
 export async function azDetails(asin) {
@@ -256,6 +257,7 @@ export async function azDetails(asin) {
       // (azLow) so the 5-minute check can ping it as "unconfirmed": it could be the one extreme glitch.
       if (price && (price < 10000 || / \+ /.test(d.title || ''))) {
         console.log('azDetails ignoring bundle/implausible price', asin, price);
+        azIgnored.add(asin);
         if (!/ \+ /.test(d.title || '')) azLowSeen.set(asin, { price, inStock: d.availability ? !!d.availability.is_in_stock : null });
       }
       // some listings come back with a price but no availability block (B0CZSGWLD5, B0CZWM44QP: third-party offers only).
