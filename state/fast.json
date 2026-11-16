@@ -136,8 +136,8 @@
   "t": "2026-11-16T03:10:42.538Z"
  },
  "bhid|63~B0GL83RWPV": {
-  "price": 49999,
-  "t": "2026-11-10T12:40:28.907Z"
+  "price": 42203,
+  "t": "2026-11-16T03:15:32.942Z"
  },
  "bhid|63~B0GMQCNYZ1": {
   "price": 119999,
@@ -155,6 +155,14 @@
    "where": "Amazon",
    "url": "https://www.amazon.in/dp/B0GXVHF621",
    "t": "2026-11-16T02:25:23.059Z"
+  },
+  {
+   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
+   "price": 42203,
+   "why": "dropped from ₹49,999 (usual ~₹49,999)",
+   "where": "Amazon",
+   "url": "https://www.amazon.in/dp/B0GL83RWPV",
+   "t": "2026-11-16T03:15:32.942Z"
   }
  ],
  "AW2726DM|amazon": {
@@ -190,8 +198,8 @@
   "t": "2026-11-06T01:20:26.013Z"
  },
  "bhid|63~B0BSLKDLMV": {
-  "price": 114045,
-  "t": "2026-11-16T03:10:42.538Z"
+  "price": 113999,
+  "t": "2026-11-16T03:15:32.942Z"
  },
  "bhid|2~MONHE5DPSVGWRUXX": {
   "price": 67999,
@@ -199,7 +207,7 @@
  },
  "XG2738|amazon": {
   "price": 42203,
-  "t": "2026-11-03T11:15:20.562Z"
+  "t": "2026-11-16T03:15:32.942Z"
  },
  "32GS95UV|amazon": {
   "price": 95110,
