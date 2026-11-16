@@ -44,8 +44,8 @@
   "t": "2026-11-02T18:05:17.792Z"
  },
  "bhid|63~B0GYG3VLMR": {
-  "price": 39799,
-  "t": "2026-11-06T02:15:24.615Z"
+  "price": 34830,
+  "t": "2026-11-16T03:50:38.678Z"
  },
  "bhid|63~B0FHB4KWBF": {
   "price": 57499,
@@ -76,8 +76,8 @@
   "t": "2026-11-06T02:15:24.615Z"
  },
  "bhid|2~MONHRGMYBMGAAUUY": {
-  "price": 125999,
-  "t": "2026-11-06T02:15:24.615Z"
+  "price": 64999,
+  "t": "2026-11-16T03:50:38.678Z"
  },
  "bhid|2~MONGZ75ZEVHFCPPH": {
   "price": 101299,
@@ -136,8 +136,8 @@
   "t": "2026-11-16T03:10:42.538Z"
  },
  "bhid|63~B0GL83RWPV": {
-  "price": 42203,
-  "t": "2026-11-16T03:15:32.942Z"
+  "price": 49999,
+  "t": "2026-11-16T03:50:38.678Z"
  },
  "bhid|63~B0GMQCNYZ1": {
   "price": 119999,
@@ -163,6 +163,14 @@
    "where": "Amazon",
    "url": "https://www.amazon.in/dp/B0GL83RWPV",
    "t": "2026-11-16T03:15:32.942Z"
+  },
+  {
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "price": 68304,
+   "why": "dropped from ₹80,599 at this listing",
+   "where": "Amazon",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV",
+   "t": "2026-11-16T03:50:38.678Z"
   }
  ],
  "AW2726DM|amazon": {
@@ -198,8 +206,8 @@
   "t": "2026-11-06T01:20:26.013Z"
  },
  "bhid|63~B0BSLKDLMV": {
-  "price": 113999,
-  "t": "2026-11-16T03:40:35.614Z"
+  "price": 114045,
+  "t": "2026-11-16T03:50:38.678Z"
  },
  "bhid|2~MONHE5DPSVGWRUXX": {
   "price": 67999,
@@ -360,8 +368,8 @@
   "t": "2026-11-12T15:30:37.030Z"
  },
  "lst|az~B0HFNBWVHV": {
-  "price": 80599,
-  "t": "2026-11-14T03:40:37.424Z"
+  "price": 68304,
+  "t": "2026-11-16T03:50:38.678Z"
  },
  "bhid|63~B0D7HHPW2W": {
   "price": 79999,
