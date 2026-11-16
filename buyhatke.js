@@ -71,20 +71,27 @@ export function createBuyHatke({ readJson, writeJson, modelKey, HOUR, DAY }) {
     }
     // BuyHatke's priceData went empty on 2026-11-06: Amazon ids it did not answer are read from Amazon itself instead
     // (4 at a time, 150 s budget). If priceData comes back it answers first and this loop has nothing to do.
+    // 2026-11-16: priceData answers again, but its Amazon prices can sit ~15% UNDER what Amazon shows (XG2738 42,203 vs
+    // 49,999, Legion 32UD 68,304 vs 80,599, EX271QZ 72,032 vs 85,998: three false pings). With the scraper up EVERY Amazon
+    // id is read from Amazon itself; BuyHatke's number is only the fallback for ids the scraper gave no answer for.
     if (AZ_URL) {
-      const have = new Set(out.map((x) => x.w.pid));
-      const amazon = ids.filter((w) => w.pos === 63 && !have.has(w.pid));
+      const bhAz = new Map(out.filter((x) => x.w.pos === 63).map((x) => [x.w.pid, x]));
+      for (let i = out.length; i--;) if (out[i].w.pos === 63) out.splice(i, 1);
+      const amazon = ids.filter((w) => w.pos === 63);
       const todo = [...amazon]; const t0 = Date.now(); let n = 0; const skipped = [];
       await Promise.all(Array.from({ length: 4 }, async () => {
         for (let w; (w = todo.shift()) && Date.now() - t0 < 150000;) {
           const a = await azDetails(w.pid);
           if (a && a.price > 0 && a.inStock) { out.push({ w, price: a.price, oos: false, exGst: false, via: 'amazon', seller: a.seller }); n++; }
           else skipped.push(w.pid + (a ? (a.inStock ? ' price ' + a.price : a.inStock === null ? ' stock-unknown ' + a.price : ' oos') : ' no-data'));
+          if (!a && bhAz.has(w.pid)) out.push(bhAz.get(w.pid));   // scraper had no answer: BuyHatke's price stays (stock is checked before any ping)
+          bhAz.delete(w.pid);
           const lo = !a && azLow(w.pid);
           if (lo && lo.inStock !== false) low.push({ w, price: lo.price, inStock: lo.inStock });
         }
       }));
-      console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids without a BuyHatke price');
+      for (const x of bhAz.values()) out.push(x);          // ids the 150 s budget never reached
+      console.log('AMAZON scraper priced', n, 'of', amazon.length, 'Amazon ids (BuyHatke price only where the scraper had no answer)');
       if (skipped.length) console.log('AMAZON unpriced:', skipped.join(', '));
     }
     return { out, errors, low };
