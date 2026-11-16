@@ -1,5 +1,5 @@
 {
- "t": "2026-11-16T23:22:35.419Z",
+ "t": "2026-11-16T23:39:43.959Z",
  "items": [
   {
    "key": "AW2725D",
@@ -22,24 +22,14 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "AI 68CEGACBIN",
+   "key": "XG27ACDMS",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 74879,
+   "price": 66839,
    "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
-  },
-  {
-   "key": "27GX790A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79900,
-   "risky": false,
-   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
-   "url": "https://www.amazon.in/dp/B0DYVNZR13"
+   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
+   "url": "https://www.amazon.in/dp/B0FQV3222X"
   },
   {
    "key": "AI 69D0GACBIN",
@@ -52,14 +42,14 @@
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
-   "key": "XG27ACDMS",
+   "key": "AI 68CEGACBIN",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 66839,
+   "price": 74879,
    "risky": false,
-   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
-   "url": "https://www.amazon.in/dp/B0FQV3222X"
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
    "key": "27G80SH",
@@ -70,6 +60,16 @@
    "risky": false,
    "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 79900,
+   "risky": false,
+   "title": "LG 27GX790A-B 27-inch Ultragear OLED Gaming Monitor QHD 1440p 480Hz",
+   "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
    "key": "MAG321UP",
@@ -110,16 +110,6 @@
    "risky": false,
    "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
    "url": "https://www.amazon.in/dp/B0GXVHF621"
-  },
-  {
-   "key": "MAG321UPX",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 113999,
-   "risky": false,
-   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
   },
   {
    "key": "PG27AQDM",
@@ -1002,6 +992,16 @@
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
   },
   {
+   "key": "32GS95UV",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 110999,
+   "risky": false,
+   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
+  },
+  {
    "key": "LEGION27Q-10",
    "generic": false,
    "source": "BuyHatke · Flipkart",
@@ -1200,6 +1200,16 @@
    "risky": false,
    "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
    "url": "https://www.amazon.in/dp/B0CTRXPJMC"
+  },
+  {
+   "key": "MAG321UPX",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 114045,
+   "risky": false,
+   "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLKDLMV"
   },
   {
    "key": "27G50SF",
