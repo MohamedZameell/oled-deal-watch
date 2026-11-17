@@ -1206,7 +1206,7 @@
    "model": "LS27DG600SWXXL",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-09"
+   "seen": "2026-11-17"
   },
   "msi mpg 341cqpx qd-oled 34 inch monitor": {
    "kind": "monitor",
@@ -1743,6 +1743,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-17"
+  },
+  "tonzo 218.44 cm (86 inch) 4k ultra hd oled panel monitor (edla interactive flat panel display 8gb/128gb android 14 oled monitor)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "218.44",
+   "cond": "new",
+   "size": 86,
+   "seen": "2026-11-17"
   }
  },
  "posts": {
@@ -1783,5 +1791,5 @@
   }
  },
  "day": "2026-11-17",
- "calls": 1
+ "calls": 2
 }
