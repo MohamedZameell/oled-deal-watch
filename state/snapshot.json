@@ -1,16 +1,6 @@
 {
- "t": "2026-11-17T19:27:06.240Z",
+ "t": "2026-11-17T19:37:56.185Z",
  "items": [
-  {
-   "key": "MAG321UP",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 98990,
-   "risky": false,
-   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
-  },
   {
    "key": "AW2725D",
    "generic": false,
@@ -102,14 +92,14 @@
    "url": "https://www.amazon.in/dp/B0DKNZSP3Q"
   },
   {
-   "key": "AI MOBIUZEX271QZ",
+   "key": "MAG321UP",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 84998,
+   "price": 98990,
    "risky": false,
-   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
-   "url": "https://www.amazon.in/dp/B0GXVHF621"
+   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
   },
   {
    "key": "PG27AQDM",
@@ -1202,14 +1192,14 @@
    "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
   },
   {
-   "key": "27GS95QE",
+   "key": "AI MOBIUZEX271QZ",
    "generic": false,
    "source": "Amazon (direct)",
    "retailer": "amazon",
-   "price": 79999,
+   "price": 84998,
    "risky": false,
-   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
-   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
+   "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
+   "url": "https://www.amazon.in/dp/B0GXVHF621"
   },
   {
    "key": "MAG341CQP",
@@ -1220,6 +1210,16 @@
    "risky": false,
    "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
    "url": "https://www.amazon.in/dp/B0CTRXPJMC"
+  },
+  {
+   "key": "27GS95QE",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 79999,
+   "risky": false,
+   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
+   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "27G50SF",
