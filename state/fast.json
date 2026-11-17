@@ -60,8 +60,8 @@
   "t": "2026-11-16T03:35:18.808Z"
  },
  "bhid|2~MONHHAATHYP8EVTS": {
-  "price": 78499,
-  "t": "2026-11-17T14:40:33.795Z"
+  "price": 77999,
+  "t": "2026-11-17T14:56:01.699Z"
  },
  "bhid|2~MONHZ3KBSZFPWQFM": {
   "price": 82999,
@@ -427,5 +427,9 @@
  "lst|fk~MONHT2E8NFNVZKV3": {
   "price": 29999,
   "t": "2026-11-16T23:25:24.563Z"
+ },
+ "lst|flipkart.com/tonzo-218-44-cm-86-inch-4k-ultra-hd-oled-panel-monitor-edla-interactive-flat-display-8gb-128gb-android-14-monitor/p/itm75d4596457a14|flipkart": {
+  "price": 152009,
+  "t": "2026-11-17T14:56:01.699Z"
  }
 }
