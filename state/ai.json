@@ -1815,6 +1815,14 @@
    "cond": "renewed",
    "size": 27,
    "seen": "2026-11-18"
+  },
+  "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw (repackaged) [corporate/student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "G61SH",
+   "cond": "renewed",
+   "size": 27,
+   "seen": "2026-11-18"
   }
  },
  "posts": {
@@ -1855,5 +1863,5 @@
   }
  },
  "day": "2026-11-18",
- "calls": 6
+ "calls": 7
 }
