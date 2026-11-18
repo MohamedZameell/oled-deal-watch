@@ -742,7 +742,7 @@
    "model": "Legion 27Q-10",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-13"
+   "seen": "2026-11-18"
   },
   "lg 39gx900a smartchoice 99cm (39 inch) ultragear oled (3440x1440) curved gaming monitor, 240hz, 0.03ms(gtg), nvidia g-sync, amd freesync premium pro, hdmi x 2, dp, usb-c, tilt/height/swivel adjustable": {
    "kind": "monitor",
@@ -1014,7 +1014,7 @@
    "model": "341CQP",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-13"
+   "seen": "2026-11-18"
   },
   "asus rog swift oled pg27aqwp-g 20th edition 27 inch monitor": {
    "kind": "monitor",
@@ -1214,7 +1214,7 @@
    "model": "MPG 341CQPX",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-13"
+   "seen": "2026-11-18"
   },
   "samsung 49\" (124.4cm) odyssey oled g9 curved gaming monitor (smartchoice) dual qhd 5120 x 1440|240hz|0.03ms|dci 99%|oled safeguard|freesync premium pro|g-sync + logitech c920 hd pro webcam": {
    "kind": "monitor",
@@ -1526,7 +1526,7 @@
    "model": "AW3225QF",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-13"
+   "seen": "2026-11-18"
   },
   "samsung odyssey g8 g80sh ls27hg800swxxl 24 inch oled silver gaming monitor": {
    "kind": "monitor",
@@ -1831,6 +1831,22 @@
    "cond": "renewed",
    "size": null,
    "seen": "2026-11-18"
+  },
+  "dell alienware aw2726dm 27 inch 2k gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-18"
+  },
+  "aoc agon pro ag276qzd2 27 inch gaming monitor": {
+   "kind": "monitor",
+   "panel": "lcd",
+   "model": "AG276QZD2",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-18"
   }
  },
  "posts": {
@@ -1871,5 +1887,5 @@
   }
  },
  "day": "2026-11-18",
- "calls": 8
+ "calls": 9
 }
