@@ -1775,6 +1775,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-18"
+  },
+  "aoc q27gazd 27\" qd oled gaming monitor, qhd 2560x1440, 240hz 0.03ms, 1x hdmi 2.0 x1, 1 display port, g-sync compatible, console gaming, zero brightness point": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "Q27GAZD",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-18"
   }
  },
  "posts": {
@@ -1815,5 +1823,5 @@
   }
  },
  "day": "2026-11-18",
- "calls": 1
+ "calls": 2
 }
