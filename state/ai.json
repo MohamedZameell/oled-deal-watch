@@ -1791,6 +1791,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-18"
+  },
+  "samsung 67.8 cm (27\") odyssey oled qhd 2k gaming, 360hz, 0.03ms gtg, height adjustable, dynamic cooling, sleek metal design, glare free, amd freesync premium pro (ls27dg600swxxl, black)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27DG6:00SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-18"
   }
  },
  "posts": {
@@ -1831,5 +1839,5 @@
   }
  },
  "day": "2026-11-18",
- "calls": 3
+ "calls": 4
 }
