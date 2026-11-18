@@ -163,6 +163,22 @@
    "where": "Flipkart",
    "url": "https://www.flipkart.com/dell-s-series-81-28-cm-32-inch-4k-ultra-hd-oled-panel-ai-enhanced-3d-spatial-audio-99-dci-p3-1-500-000-1-1000-nits-5-speakers-ergo-integrated-usb-hub-2-type-c-90w-upstream-15w-downstream-monitor-s3225qc/p/itm1df1c13a53515",
    "t": "2026-11-17T13:00:45.423Z"
+  },
+  {
+   "title": "68.5 cm (27) Odyssey OLED G6 G61SH QHD 240Hz Gaming Monitor LS27HG612SW (repackaged) [Corporate]",
+   "price": 29400,
+   "why": "repackaged unit in stock",
+   "where": "Samsung India · Staff stores",
+   "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g6-g61sh-27-inch-240hz-oled-qhd-ls27hg612swxxl/",
+   "t": "2026-11-18T13:15:51.369Z"
+  },
+  {
+   "title": "1.24 m Odyssey OLED G9 Gaming Monitor with 0.03 ms response time and 144 Hz refresh rate LS49DG910SW (repackaged) [Student/Business]",
+   "price": 55120,
+   "why": "repackaged unit in stock",
+   "where": "Samsung India · Staff stores",
+   "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g9-g91sd-49-inch-144hz-curved-dual-qhd-ls49dg910swxxl/",
+   "t": "2026-11-18T13:15:51.369Z"
   }
  ],
  "AW2726DM|amazon": {
@@ -452,5 +468,13 @@
  "bhid|63~B0FTS1KC43": {
   "price": 158402,
   "t": "2026-11-18T11:25:24.669Z"
+ },
+ "27G61SH|samsungindiastaffstores": {
+  "price": 29400,
+  "t": "2026-11-18T13:15:51.369Z"
+ },
+ "49G91SD|samsungindiastaffstores": {
+  "price": 55120,
+  "t": "2026-11-18T13:15:51.369Z"
  }
 }
