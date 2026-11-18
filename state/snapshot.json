@@ -1,5 +1,5 @@
 {
- "t": "2026-11-18T04:23:58.342Z",
+ "t": "2026-11-18T04:37:12.314Z",
  "items": [
   {
    "key": "AW2725D",
@@ -52,16 +52,6 @@
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
-   "key": "27G80SH",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 82999,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
-   "url": "https://www.amazon.in/dp/B0H41XJ8JF"
-  },
-  {
    "key": "XG27ACDMS",
    "generic": false,
    "source": "Amazon.in",
@@ -70,6 +60,16 @@
    "risky": false,
    "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
    "url": "https://www.amazon.in/dp/B0FQV3222X"
+  },
+  {
+   "key": "27G80SH",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 82999,
+   "risky": false,
+   "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
+   "url": "https://www.amazon.in/dp/B0H41XJ8JF"
   },
   {
    "key": "XG2738",
@@ -122,14 +122,34 @@
    "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
-   "key": "~SAMSUNG 27\" QHD 240Hz",
-   "generic": true,
+   "key": "MAG321UP",
+   "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 50294,
+   "price": 98990,
    "risky": false,
-   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync + Logitech C920 HD Pro Webcam",
-   "url": "https://www.amazon.in/dp/B0HDSDG9RL"
+   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
+   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
+  },
+  {
+   "key": "MAG341CQP",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 85999,
+   "risky": false,
+   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
+   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
+  },
+  {
+   "key": "PG32UCDM",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 153399,
+   "risky": false,
+   "title": "ASUS ROG Swift 32” 4K OLED Gaming Monitor (PG32UCDM) - UHD (3840 x 2160), QD-OLED, 240Hz, 0.03ms, G-SYNC Compatible, Custom Heatsink, Graphene Film, 99% DCI-P3, True 10-bit, 90W USB-C",
+   "url": "https://www.amazon.in/dp/B0D6GFLPFL"
   },
   {
    "key": "AW2725DF",
@@ -150,6 +170,16 @@
    "risky": false,
    "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
    "url": "https://www.amazon.in/dp/B0D7HHPW2W"
+  },
+  {
+   "key": "MPG341CQPX",
+   "generic": false,
+   "source": "Amazon.in · other sellers",
+   "retailer": "amazoninothersellers",
+   "price": 103900,
+   "risky": false,
+   "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W) [New · Amazeo My Pride]",
+   "url": "https://www.amazon.in/dp/B0DKNZSP3Q?aod=1&offer=0"
   },
   {
    "key": "AG276QZD2",
@@ -962,6 +992,16 @@
    "url": "https://www.lenovo.com/in/en/p/accessories-and-software/monitors/gaming/67e1gac1in"
   },
   {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 81999,
+   "risky": false,
+   "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
+  },
+  {
    "key": "32GS95UV",
    "generic": false,
    "source": "LG India",
@@ -1172,16 +1212,6 @@
    "url": "https://www.amazon.in/dp/B0FCYHQLNQ"
   },
   {
-   "key": "MAG341CQP",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 85999,
-   "risky": false,
-   "title": "MSI MAG341CQP QD-OLED 34\" Curved Gaming Monitor, 3440 x 1440 (UWQHD), 0.03ms Response Time, 175Hz, True Black HDR 400, HDMI, DP Port, USB Type-C, Tilt, Height Adjustable",
-   "url": "https://www.amazon.in/dp/B0CTRXPJMC"
-  },
-  {
    "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1202,16 +1232,6 @@
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
   },
   {
-   "key": "MAG321UP",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 98990,
-   "risky": false,
-   "title": "MSI MAG 321UP QD-OLED 31.5 Inch 4K UHD Gaming Monitor - 3840x2160 Quantum Dot OLED Panel, 165Hz,0.03ms,DCI-P3, DisplayHDR True Black 400 - DP 1.4a, HDMI 2.1(UHD 165Hz), USB Type-C",
-   "url": "https://www.amazon.in/dp/B0BSLPJP2L"
-  },
-  {
    "key": "27G61SH",
    "generic": false,
    "source": "Smartprix · Amazon",
@@ -1222,16 +1242,6 @@
    "url": "https://www.smartprix.com/monitors/samsung-odyssey-g6-g61sh-27-inch-qd-oled-ppd1m7m989hl"
   },
   {
-   "key": "49G93SC",
-   "generic": false,
-   "source": "Smartprix · Amazon",
-   "retailer": "amazon",
-   "price": 91599,
-   "risky": false,
-   "title": "Samsung Odyssey OLED G9 LS49CG930SW 49 inch Dual QHD Ultrawide Curved Monitor",
-   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49cg930sw-49-inch-ppd1xs9iyxp1"
-  },
-  {
    "key": "CO49DQ",
    "generic": false,
    "source": "Smartprix · Amazon",
@@ -1240,6 +1250,16 @@
    "risky": false,
    "title": "Gigabyte Aorus CO49DQ 49 inch DQHD Gaming Monitor",
    "url": "https://www.smartprix.com/monitors/gigabyte-aorus-co49dq-49-inch-dqhd-gaming-ppd1r8yp2fcz"
+  },
+  {
+   "key": "49G93SC",
+   "generic": false,
+   "source": "Smartprix · Amazon",
+   "retailer": "amazon",
+   "price": 91599,
+   "risky": false,
+   "title": "Samsung Odyssey OLED G9 LS49CG930SW 49 inch Dual QHD Ultrawide Curved Monitor",
+   "url": "https://www.smartprix.com/monitors/samsung-odyssey-oled-g9-ls49cg930sw-49-inch-ppd1xs9iyxp1"
   },
   {
    "key": "AI M90SF",
