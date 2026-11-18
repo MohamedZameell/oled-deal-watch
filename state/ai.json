@@ -1847,6 +1847,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-18"
+  },
+  "1.24 m odyssey oled g9 gaming monitor with 0.03 ms response time and 144 hz refresh rate ls49dg910sw (repackaged) [student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SW",
+   "cond": "renewed",
+   "size": null,
+   "seen": "2026-11-18"
   }
  },
  "posts": {
@@ -1887,5 +1895,5 @@
   }
  },
  "day": "2026-11-18",
- "calls": 9
+ "calls": 10
 }
