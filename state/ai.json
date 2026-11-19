@@ -1871,6 +1871,14 @@
    "cond": "new",
    "size": 26.7,
    "seen": "2026-11-19"
+  },
+  "msi mag 341cqp qd-oled 34 inch 2k uwqhd curved gaming monitor - 1800r, 3440 x 1440 qd-oled panel, 175hz / 0.03ms, 99% dci-p3, δe≤2, displayhdr true black 400, kvm - dp 1.4a, hdmi 2.1, usb type-c dp": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-19"
   }
  },
  "posts": {
@@ -1911,5 +1919,5 @@
   }
  },
  "day": "2026-11-19",
- "calls": 1
+ "calls": 2
 }
