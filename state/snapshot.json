@@ -1,5 +1,5 @@
 {
- "t": "2026-11-20T03:52:12.139Z",
+ "t": "2026-11-20T04:10:39.013Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -32,26 +32,6 @@
    "url": "https://www.amazon.in/dp/B0F99Y979X"
   },
   {
-   "key": "AI 68CEGACBIN",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 74879,
-   "risky": false,
-   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
-   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
-  },
-  {
-   "key": "PG27AQDM",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 81849,
-   "risky": false,
-   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
-   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
-  },
-  {
    "key": "AI 69D0GACBIN",
    "generic": false,
    "source": "Amazon.in",
@@ -60,6 +40,16 @@
    "risky": false,
    "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+  },
+  {
+   "key": "AI 68CEGACBIN",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 74879,
+   "risky": false,
+   "title": "Lenovo Legion Pro 27UD-10 26.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 68CEGACBIN",
+   "url": "https://www.amazon.in/dp/B0HFN6Y3RH"
   },
   {
    "key": "XG27ACDMS",
@@ -72,6 +62,16 @@
    "url": "https://www.amazon.in/dp/B0FQV3222X"
   },
   {
+   "key": "MAG341CQP",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 67600,
+   "risky": false,
+   "title": "MSI MAG 341CQP QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 1800R, 3440 x 1440 QD-OLED Panel, 175Hz / 0.03ms, 99% DCI-P3, ΔE≤2, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C DP",
+   "url": "https://www.amazon.in/dp/B0DKNY8H2C"
+  },
+  {
    "key": "27G80SH",
    "generic": false,
    "source": "Amazon.in",
@@ -82,14 +82,14 @@
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
   },
   {
-   "key": "MAG341CQP",
+   "key": "PG27AQDM",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 67600,
+   "price": 81849,
    "risky": false,
-   "title": "MSI MAG 341CQP QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 1800R, 3440 x 1440 QD-OLED Panel, 175Hz / 0.03ms, 99% DCI-P3, ΔE≤2, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C DP",
-   "url": "https://www.amazon.in/dp/B0DKNY8H2C"
+   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
+   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
    "key": "XG2738",
@@ -122,6 +122,16 @@
    "url": "https://www.amazon.in/dp/B0FJFT8FM1"
   },
   {
+   "key": "PG32UCDM",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 153399,
+   "risky": false,
+   "title": "ASUS ROG Swift 32” 4K OLED Gaming Monitor (PG32UCDM) - UHD (3840 x 2160), QD-OLED, 240Hz, 0.03ms, G-SYNC Compatible, Custom Heatsink, Graphene Film, 99% DCI-P3, True 10-bit, 90W USB-C",
+   "url": "https://www.amazon.in/dp/B0D6GFLPFL"
+  },
+  {
    "key": "AW2725DF",
    "generic": false,
    "source": "Amazon.in",
@@ -130,16 +140,6 @@
    "risky": false,
    "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment",
    "url": "https://www.amazon.in/dp/B0CZSGWLD5"
-  },
-  {
-   "key": "MPG341CQPX",
-   "generic": false,
-   "source": "Amazon.in · other sellers",
-   "retailer": "amazoninothersellers",
-   "price": 103900,
-   "risky": false,
-   "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W) [New · Amazeo My Pride]",
-   "url": "https://www.amazon.in/dp/B0DKNZSP3Q?aod=1&offer=0"
   },
   {
    "key": "AG276QZD2",
@@ -762,6 +762,16 @@
    "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
   },
   {
+   "key": "LEGION27Q-10",
+   "generic": false,
+   "source": "BuyHatke · Flipkart",
+   "retailer": "flipkart",
+   "price": 40999,
+   "risky": false,
+   "title": "Lenovo Legion 67.31 cm (27 inch) Quad HD OLED Panel Gaming Monitor (Legion 27Q-10)",
+   "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
+  },
+  {
    "key": "27G50SF",
    "generic": false,
    "source": "BuyHatke · Flipkart",
@@ -1012,16 +1022,6 @@
    "url": "https://www.amazon.in/dp/B0GXVHF621"
   },
   {
-   "key": "39GX900A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 99500,
-   "risky": false,
-   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
-   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
-  },
-  {
    "key": "MAG321UPX",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1030,6 +1030,16 @@
    "risky": false,
    "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
    "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+  },
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 99500,
+   "risky": false,
+   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
+   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
    "key": "27G50SF",
@@ -1062,16 +1072,6 @@
    "url": "https://www.amazon.in/dp/B0BSLPJP2L"
   },
   {
-   "key": "Q27GAZD",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 158402,
-   "risky": false,
-   "title": "AOC Q27GAZD 27\" QD OLED Gaming Monitor, QHD 2560x1440, 240Hz 0.03ms, 1x HDMI 2.0 x1, 1 Display Port, G-Sync Compatible, Console Gaming, Zero Brightness Point [sold by # Global Hub]",
-   "url": "https://www.amazon.in/dp/B0FTS1KC43"
-  },
-  {
    "key": "XG27AQDMG",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1082,14 +1082,24 @@
    "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
-   "key": "LEGION27Q-10",
+   "key": "Q27GAZD",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 158402,
+   "risky": false,
+   "title": "AOC Q27GAZD 27\" QD OLED Gaming Monitor, QHD 2560x1440, 240Hz 0.03ms, 1x HDMI 2.0 x1, 1 Display Port, G-Sync Compatible, Console Gaming, Zero Brightness Point [sold by # Global Hub]",
+   "url": "https://www.amazon.in/dp/B0FTS1KC43"
+  },
+  {
+   "key": "AG276QZD2",
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 40999,
+   "price": 59999,
    "risky": false,
-   "title": "Lenovo Legion 67.31 cm (27 inch) Quad HD OLED Panel Gaming Monitor (Legion 27Q-10)",
-   "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
+   "title": "AOC 68.58 cm (27 inch) Quad HD LED Backlit OLED Panel with USB Hub,HDMI 2.0, HDR400 Gaming Monitor (AG276QZD2)",
+   "url": "https://www.flipkart.com/aoc-68-58-cm-27-inch-quad-hd-led-backlit-oled-panel-usb-hub-hdmi-2-0-hdr400-gaming-monitor-ag276qzd2/p/itmaa64aa607ec96"
   },
   {
    "key": "27G61SH",
