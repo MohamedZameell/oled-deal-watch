@@ -1598,7 +1598,7 @@
    "model": "G61SH",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-19"
+   "seen": "2026-11-21"
   },
   "samsung odyssey g8 g80sh ls27hg800swxxl 27 inch uhd 4k silver gaming monitor": {
    "kind": "monitor",
@@ -1895,6 +1895,14 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-21"
+  },
+  "samsung odyssey oled g5 ls27fg502swxxl 27 inch monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": null,
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-21"
   }
  },
  "posts": {
@@ -1935,5 +1943,5 @@
   }
  },
  "day": "2026-11-21",
- "calls": 2
+ "calls": 3
 }
