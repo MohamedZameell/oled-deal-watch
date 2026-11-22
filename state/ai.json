@@ -1903,6 +1903,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-22"
+  },
+  "samsung ls49dg910swxxl- 32:9 odyssey g9 -1800r curve 124.46 cm (49 inch) curved dqhd oled panel gaming monitor (dual qhd 5120x1440|dci 99%|oled safeguard hdr10+|has|hdmi,dp,usb-c,nvidia g-sync)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG910SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-22"
   }
  },
  "posts": {
@@ -1943,5 +1951,5 @@
   }
  },
  "day": "2026-11-22",
- "calls": 0
+ "calls": 1
 }
