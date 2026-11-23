@@ -236,7 +236,11 @@
       "kind": "reddit",
       "needDealWords": true,
       "urls": [
-        "https://www.reddit.com/r/IndianGaming+IndiaTech+IndianPCHardware+indiadeals/new/.rss?limit=100"
+        "https://www.reddit.com/r/IndianGaming/new/.rss?limit=100",
+        "https://www.reddit.com/r/IndiaTech/new/.rss?limit=100",
+        "https://www.reddit.com/r/IndianPCHardware/new/.rss?limit=100",
+        "https://www.reddit.com/r/indiadeals/new/.rss?limit=100",
+        "https://www.reddit.com/r/buildapcsalesindia/new/.rss?limit=100"
       ]
     },
     {
