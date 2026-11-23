@@ -1,5 +1,5 @@
 {
- "t": "2026-11-23T02:52:24.641Z",
+ "t": "2026-11-23T03:07:29.185Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -150,6 +150,16 @@
    "risky": false,
    "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
    "url": "https://www.amazon.in/dp/B0D7HHPW2W"
+  },
+  {
+   "key": "~SAMSUNG 49\" 5K 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 99894,
+   "risky": false,
+   "title": "Samsung 49\" (124.4cm) Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD 5120 x 1440|240Hz|0.03ms|DCI 99%|OLED Safeguard|FreeSync Premium Pro|G-Sync + Logitech C920 HD Pro Webcam",
+   "url": "https://www.amazon.in/dp/B0HDSK5WMF"
   },
   {
    "key": "AG276QZD2",
@@ -770,16 +780,6 @@
    "risky": false,
    "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
-  },
-  {
-   "key": "32GS95UV",
-   "generic": false,
-   "source": "LG India",
-   "retailer": "lgindia",
-   "price": 110999,
-   "risky": false,
-   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
-   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
   },
   {
    "key": "LEGION27Q-10",
