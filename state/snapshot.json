@@ -1,5 +1,5 @@
 {
- "t": "2026-11-23T20:39:14.027Z",
+ "t": "2026-11-23T20:54:15.562Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -930,6 +930,16 @@
    "risky": false,
    "title": "Legion 27Q-10 OLED 67.31cms (26.5) Monitor",
    "url": "https://www.lenovo.com/in/en/p/accessories-and-software/monitors/gaming/67e1gac1in"
+  },
+  {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 81999,
+   "risky": false,
+   "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
   },
   {
    "key": "LEGION27Q-10",
