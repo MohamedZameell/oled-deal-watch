@@ -1919,6 +1919,14 @@
    "cond": "new",
    "size": 34,
    "seen": "2026-11-23"
+  },
+  "msi mag 321upx qd-oled, 32\" 4k uhd quantum dot oled gaming monitor, 3840 x 2160, 0.03ms, 240hz, true black hdr 400, 90w usb type c, hdmi, dp port": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "321UPX",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-23"
   }
  },
  "posts": {
@@ -1959,5 +1967,5 @@
   }
  },
  "day": "2026-11-23",
- "calls": 1
+ "calls": 2
 }
