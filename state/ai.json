@@ -1062,7 +1062,7 @@
    "model": "32GS95UV",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-23"
+   "seen": "2026-11-24"
   },
   "samsung odyssey g6 27\" qd-oled gaming monitor 240hz ls27hg612swxxl": {
    "kind": "monitor",
@@ -1590,7 +1590,7 @@
    "model": "AW3423DWF",
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-21"
+   "seen": "2026-11-24"
   },
   "samsung odyssey g6 g61sh ls27hg612swxxl qhd 27 inch gaming monitor": {
    "kind": "monitor",
@@ -1918,7 +1918,7 @@
    "model": null,
    "cond": "new",
    "size": 34,
-   "seen": "2026-11-23"
+   "seen": "2026-11-24"
   },
   "msi mag 321upx qd-oled, 32\" 4k uhd quantum dot oled gaming monitor, 3840 x 2160, 0.03ms, 240hz, true black hdr 400, 90w usb type c, hdmi, dp port": {
    "kind": "monitor",
@@ -1927,6 +1927,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-23"
+  },
+  "asus proart display 32” 4k hdr qd-oled professional monitor (pa32ucdm) - uhd, ultra-slim, 240hz, 0.1ms, auto calibration, dolby vision, 99% dci-p3, δe<1, thunderbolt 4, calman ready": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PA32UCDM",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -1967,5 +1975,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 0
+ "calls": 1
 }
