@@ -1943,6 +1943,14 @@
    "cond": "new",
    "size": 26.5,
    "seen": "2026-11-24"
+  },
+  "dell s3225qc 31.6 inch 4k qd-oled 120hz monitor with dolby vision, usb-c 90w and 5 speakers": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "S322 5QC",
+   "cond": "new",
+   "size": 31.6,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -1983,5 +1991,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 2
+ "calls": 3
 }
