@@ -1150,7 +1150,7 @@
    "model": null,
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-17"
+   "seen": "2026-11-24"
   },
   "msi mag341cqp qd-oled 34\" curved gaming monitor, 3440 x 1440 (uwqhd), 0.03ms response time, 175hz, true black hdr 400, hdmi, dp port, usb type-c, tilt, height adjustable": {
    "kind": "monitor",
@@ -1951,6 +1951,46 @@
    "cond": "new",
    "size": 31.6,
    "seen": "2026-11-24"
+  },
+  "dell alienware aw3225qf 32 inch 4k 240hz curved qd-oled gaming monitor with dolby vision": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3225QF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-24"
+  },
+  "dell alienware aw2725d 27 inch qhd 280hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725D",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "dell alienware aw2725q 27 inch 4k 240hz qd-oled gaming monitor with dolby vision": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725Q",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "dell alienware aw2726dm 27 inch qhd 240hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2726DM",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "dell alienware aw2725df 27 inch qhd 360hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725DF",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -1991,5 +2031,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 3
+ "calls": 4
 }
