@@ -2079,6 +2079,14 @@
    "cond": "new",
    "size": 49,
    "seen": "2026-11-24"
+  },
+  "samsung smart monitor m9 m90sf 32 inch 4k uhd 165hz oled smart monitor with camera | ls32fm900swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "M90SF",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -2119,5 +2127,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 7
+ "calls": 8
 }
