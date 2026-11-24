@@ -2023,6 +2023,22 @@
    "cond": "new",
    "size": 26.5,
    "seen": "2026-11-24"
+  },
+  "msi mag 341cqp qd-oled 34 inch uwqhd 175hz 1800r curved oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "341CQP",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-24"
+  },
+  "msi mpg 341cqpx qd-oled 34 inch uwqhd 240hz 1800r curved oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "341CQPX",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -2063,5 +2079,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 5
+ "calls": 6
 }
