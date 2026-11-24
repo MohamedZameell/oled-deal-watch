@@ -1,6 +1,16 @@
 {
- "t": "2026-11-24T08:23:41.367Z",
+ "t": "2026-11-24T08:38:13.592Z",
  "items": [
+  {
+   "key": "XG2738",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 49999,
+   "risky": false,
+   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
+   "url": "https://www.amazon.in/dp/B0GL83RWPV"
+  },
   {
    "key": "AW2726DM",
    "generic": false,
@@ -62,16 +72,6 @@
    "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
-   "key": "XG27ACDMS",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 66839,
-   "risky": false,
-   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
-   "url": "https://www.amazon.in/dp/B0FQV3222X"
-  },
-  {
    "key": "MAG341CQP",
    "generic": false,
    "source": "Amazon.in",
@@ -92,6 +92,16 @@
    "url": "https://www.amazon.in/dp/B0HFNBWVHV"
   },
   {
+   "key": "XG27ACDMS",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 66839,
+   "risky": false,
+   "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
+   "url": "https://www.amazon.in/dp/B0FQV3222X"
+  },
+  {
    "key": "27G80SH",
    "generic": false,
    "source": "Amazon.in",
@@ -100,16 +110,6 @@
    "risky": false,
    "title": "Samsung Odyssey OLED G8 Gaming Monitor (27\") 4K UHD, 240 Hz, 0.03ms(GTG), G-Sync, FreeSync Premium Pro, DP, HDMI, USB Ports, Height, Tilt, Swivel, Pivot Adjust Stand, (LS27HG800SWXXL, Silver)",
    "url": "https://www.amazon.in/dp/B0H41XJ8JF"
-  },
-  {
-   "key": "XG2738",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 49999,
-   "risky": false,
-   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
-   "url": "https://www.amazon.in/dp/B0GL83RWPV"
   },
   {
    "key": "MPG341CQPX",
@@ -140,6 +140,16 @@
    "risky": false,
    "title": "MSI MAG 321UPX QD-OLED 31.5 Inch 4K UHD Flat Gaming Monitor - 3840 x 2160 Quantum Dot OLED Panel, 240Hz / 0.03ms, 99% DCI-P3, DisplayHDR True Black 400, KVM - DP 1.4a, HDMI 2.1, USB Type-C",
    "url": "https://www.amazon.in/dp/B0BSLKDLMV"
+  },
+  {
+   "key": "27GS95QE",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 79999,
+   "risky": false,
+   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
+   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "39GX900A",
@@ -1010,16 +1020,6 @@
    "risky": false,
    "title": "MSI 86.36 cm (34 inch) Curved Full HD IPS Panel Gaming Monitor (MAG341CQP QD OLED)",
    "url": "https://www.flipkart.com/msi-86-36-cm-34-inch-curved-full-hd-ips-panel-gaming-monitor-mag341cqp-qd-oled/p/itm245c3bdefede3"
-  },
-  {
-   "key": "27GS95QE",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79999,
-   "risky": false,
-   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
-   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "AW2725D",
