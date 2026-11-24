@@ -1935,6 +1935,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-24"
+  },
+  "aoc agon pro ag276qzd2 26.5 inch qhd 240hz qd-oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AG276QZD2",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -1975,5 +1983,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 1
+ "calls": 2
 }
