@@ -2039,6 +2039,46 @@
    "cond": "new",
    "size": 34,
    "seen": "2026-11-24"
+  },
+  "samsung odyssey oled g6 g61sh 27 inch qhd 240hz qd-oled gaming monitor | ls27hg612swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "samsung odyssey oled g6 g61sd 27 inch qhd 240hz qd-oled gaming monitor | ls27dg610swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27DG610SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "samsung odyssey oled g8 g81sf 27 inch 4k uhd 240hz oled gaming monitor | ls27fg810swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG810SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "samsung odyssey oled g5 g50sf 27 inch qhd 180hz qd-oled gaming monitor | ls27fg502swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27FG502SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-24"
+  },
+  "samsung odyssey oled g9 g93sd 49 inch dqhd 240hz oled curved gaming monitor | ls49dg930swxxl": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS49DG930SWXXL",
+   "cond": "new",
+   "size": 49,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -2079,5 +2119,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 6
+ "calls": 7
 }
