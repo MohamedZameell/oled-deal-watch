@@ -2087,6 +2087,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-24"
+  },
+  "samsung odyssey g7 g73sh ls32hg730swxxl 32 inch uhd 4k gaming monitor": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": "G73SH LS32HG730SWXXL",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -2127,5 +2135,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 8
+ "calls": 9
 }
