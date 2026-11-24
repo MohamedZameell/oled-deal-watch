@@ -1991,6 +1991,38 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-24"
+  },
+  "alienware aw3425dw 34 inch wqhd curved qd-oled gaming monitor 240hz with displayhdr true black 400": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW3425DW",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-24"
+  },
+  "asus rog swift oled pg32ucdm3 31.5 inch 4k 240hz qd-oled gaming monitor with displayport 2.1": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG32UCDM3",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-24"
+  },
+  "asus rog strix oled xg32ucwg 31.5 inch 4k 165hz woled dual mode gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "XG32UCWG",
+   "cond": "new",
+   "size": 31.5,
+   "seen": "2026-11-24"
+  },
+  "asus rog swift oled pg27aqwp-w 26.5 inch qhd 540hz tandem oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "PG27AQWP-W",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-24"
   }
  },
  "posts": {
@@ -2031,5 +2063,5 @@
   }
  },
  "day": "2026-11-24",
- "calls": 4
+ "calls": 5
 }
