@@ -2127,6 +2127,14 @@
    "cond": "new",
    "size": 34,
    "seen": "2026-11-25"
+  },
+  "samsung ls27hg612swxxl-odyssey qd-oled g6 68.58 cm (27 inch) quad hd oled panel gaming monitor (2560 x 1440 |height adjust|pantone validated|glarefree|truebright 300| free sync)": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-25"
   }
  },
  "posts": {
@@ -2167,5 +2175,5 @@
   }
  },
  "day": "2026-11-25",
- "calls": 4
+ "calls": 5
 }
