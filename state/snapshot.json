@@ -1,5 +1,5 @@
 {
- "t": "2026-11-25T09:39:16.099Z",
+ "t": "2026-11-25T09:54:07.737Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -782,6 +782,16 @@
    "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
   },
   {
+   "key": "32GS95UV",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 110999,
+   "risky": false,
+   "title": "32 (80 cm) UltraGear™ Dual-Mode OLED gaming monitor | 4K UHD, 0.03ms (GtG), DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/gaming/32gs95uv-b/"
+  },
+  {
    "key": "LEGION27Q-10",
    "generic": false,
    "source": "BuyHatke · Flipkart",
@@ -844,7 +854,7 @@
   {
    "key": "AW2726DM",
    "generic": false,
-   "source": "BuyHatke · Flipkart",
+   "source": "Flipkart",
    "retailer": "flipkart",
    "price": 40549,
    "risky": false,
@@ -894,7 +904,7 @@
   {
    "key": "XG32UCWG",
    "generic": false,
-   "source": "BuyHatke · Flipkart",
+   "source": "Flipkart",
    "retailer": "flipkart",
    "price": 106990,
    "risky": false,
@@ -1012,16 +1022,6 @@
    "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
-   "key": "XG27AQDMG",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 113844,
-   "risky": false,
-   "title": "ASUS ROG Strix 27\" 1440P OLED Gaming Monitor (XG27AQDMG) - QHD, Bright OLED, 240Hz, 0.03ms, Custom Heatsink, Anti-Flicker, Uniform Brightness, G-SYNC Compatible, DCI-P3 [sold by NewMediaStores]",
-   "url": "https://www.amazon.in/dp/B0CZWM44QP"
-  },
-  {
    "key": "AI MOBIUZEX271QZ",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1030,6 +1030,16 @@
    "risky": false,
    "title": "BenQ MOBIUZ EX271QZ 27”(Smartchoice) 2K QHD 3rd Gen QD-OLED 500Hz Gaming Monitor| 0.03ms GtG|HDMI 2.1, DP 1.4|USB-C|99% DCI-P3|AMD FreeSync Premium Pro|Height,Swivel, Tilt Adjustable(White)",
    "url": "https://www.amazon.in/dp/B0GXVHF621"
+  },
+  {
+   "key": "XG27AQDMG",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 113844,
+   "risky": false,
+   "title": "ASUS ROG Strix 27\" 1440P OLED Gaming Monitor (XG27AQDMG) - QHD, Bright OLED, 240Hz, 0.03ms, Custom Heatsink, Anti-Flicker, Uniform Brightness, G-SYNC Compatible, DCI-P3 [sold by NewMediaStores]",
+   "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
    "key": "27G50SF",
