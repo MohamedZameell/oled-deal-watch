@@ -2143,6 +2143,14 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-26"
+  },
+  "alienware aw2725d 27\" (68.58 cm) qd-oled gaming monitor with 280hz refresh rate, 0.03ms response, nvidia g-sync compatible, hdcp supported, interstellar indigo design & adjustable stand [new · tech junction]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AW2725D",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-26"
   }
  },
  "posts": {
@@ -2183,5 +2191,5 @@
   }
  },
  "day": "2026-11-26",
- "calls": 2
+ "calls": 3
 }
