@@ -1726,7 +1726,7 @@
    "model": "LS32HG800SW",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-23"
+   "seen": "2026-11-26"
   },
   "maxx electronics a type maxx digital signage 81.28 cm (32 inch) full hd led backlit oled panel monitor (maxx 32 inch indoor digital signage standee)": {
    "kind": "monitor",
@@ -2199,5 +2199,5 @@
   }
  },
  "day": "2026-11-26",
- "calls": 31
+ "calls": 32
 }
