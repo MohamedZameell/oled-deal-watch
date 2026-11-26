@@ -1,6 +1,16 @@
 {
- "t": "2026-11-26T08:10:10.151Z",
+ "t": "2026-11-26T08:29:05.057Z",
  "items": [
+  {
+   "key": "AI 69D0GACBIN",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 80599,
+   "risky": false,
+   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
+   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
+  },
   {
    "key": "AW2726DM",
    "generic": false,
@@ -52,16 +62,6 @@
    "url": "https://www.amazon.in/dp/B0DYVNZR13"
   },
   {
-   "key": "AI 69D0GACBIN",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 80599,
-   "risky": false,
-   "title": "Lenovo Legion Pro 32UD-10 31.5\" 4K UHD (3840x2160) OLED Gaming Monitor, 240Hz, 0.03ms, DisplayHDR True Black 400, FreeSync Premium Pro, 99% DCI-P3, USB-C PD, HDMI 2.1, 69D0GACBIN",
-   "url": "https://www.amazon.in/dp/B0HFNBWVHV"
-  },
-  {
    "key": "MAG341CQP",
    "generic": false,
    "source": "Amazon.in",
@@ -72,14 +72,14 @@
    "url": "https://www.amazon.in/dp/B0DKNY8H2C"
   },
   {
-   "key": "XG2738",
+   "key": "PG27AQDM",
    "generic": false,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 49499,
+   "price": 81849,
    "risky": false,
-   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
-   "url": "https://www.amazon.in/dp/B0GL83RWPV"
+   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
+   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
    "key": "XG27ACDMS",
@@ -90,6 +90,16 @@
    "risky": false,
    "title": "ASUS ROG Strix OLED XG27ACDMS Gaming Monitor ― 27-inch (26.5-inch viewable) 1440p QD-OLED Panel, 280 Hz, 0.03 ms, Custom heatsink, Neo Proximity Sensor, OLED Care Pro, G-SYNC® Compatible, 99% DCI-P3",
    "url": "https://www.amazon.in/dp/B0FQV3222X"
+  },
+  {
+   "key": "XG2738",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 49499,
+   "risky": false,
+   "title": "ViewSonic XG2738-2K-OLED 27-inch QHD QD-OLED Gaming Monitor | 240Hz Refresh Rate | 0.03ms GTG | HDR10 | Ergonomic Adjustable Stand| AMD FreeSync | NVIDIA G-SYNC Compatible | HDMI",
+   "url": "https://www.amazon.in/dp/B0GL83RWPV"
   },
   {
    "key": "27G61SH",
@@ -120,16 +130,6 @@
    "risky": false,
    "title": "Alienware-AW3225QF 80.01cm (32\") 4K QD-OLED Gaming Monitor, Screen Coating: Anti-Reflection, Color Support: 1.07 Billion, Response Time: 0.03ms(typical), Ports: 1x DP1.4, 2x HDMI 2.1, 5x USB 3.2 Gen 1",
    "url": "https://www.amazon.in/dp/B0CVQGSRZ9"
-  },
-  {
-   "key": "PG27AQDM",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 81849,
-   "risky": false,
-   "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
-   "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
    "key": "AW2725D",
@@ -902,6 +902,16 @@
    "url": "https://www.lenovo.com/in/en/p/accessories-and-software/monitors/gaming/67e1gac1in"
   },
   {
+   "key": "27GX790A",
+   "generic": false,
+   "source": "LG India",
+   "retailer": "lgindia",
+   "price": 81999,
+   "risky": false,
+   "title": "LG UltraGear™ 27 (68.58 cm) OLED 480Hz QHD Gaming Monitor | 0.03ms (GtG), DP 2.1, DisplayHDR True Black 400",
+   "url": "https://www.lg.com/in/monitors/ultragear-gaming-oled-monitors/27gx790a-b/"
+  },
+  {
    "key": "LEGION27Q-10",
    "generic": false,
    "source": "BuyHatke · Flipkart",
@@ -1142,16 +1152,6 @@
    "url": "https://www.amazon.in/dp/B0CZWM44QP"
   },
   {
-   "key": "AW2725DF",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 95990,
-   "risky": false,
-   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment [sold by ShopForBest]",
-   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
-  },
-  {
    "key": "27G50SF",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1160,6 +1160,16 @@
    "risky": false,
    "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
+  },
+  {
+   "key": "AW2725DF",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 95990,
+   "risky": false,
+   "title": "Alienware AW2725DF - OLED Gaming Monitor - 26.7\" Quantom-Dot WQHD (2560 x 1440) 360Hz 0.03Ms Display, AMD FreeSync Premium Pro, HDMI/DP/USB 3.2 Gen1, Height/Tilt Adjustment [sold by ShopForBest]",
+   "url": "https://www.amazon.in/dp/B0CZSGWLD5"
   },
   {
    "key": "MAG321UP",
