@@ -1,5 +1,5 @@
 {
- "t": "2026-11-26T18:25:39.218Z",
+ "t": "2026-11-26T18:39:13.050Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -110,6 +110,26 @@
    "risky": false,
    "title": "ASUS ROG Swift 27”1440P OLED DSC Gaming Monitor (PG27AQDM) - QHD (2560x1440), 240Hz, 0.03ms, G-SYNC Compatible, Anti-Glare Micro-Texture Coating, 99% DCI-P3, True 10-bit, DisplayPort,Black",
    "url": "https://www.amazon.in/dp/B0C32SVFDQ"
+  },
+  {
+   "key": "~SAMSUNG 27\" QHD 240Hz",
+   "generic": true,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 50963,
+   "risky": false,
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync + Logitech C920 HD Pro Webcam",
+   "url": "https://www.amazon.in/dp/B0HDSDG9RL"
+  },
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 99500,
+   "risky": false,
+   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
+   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
    "key": "AW3225QF",
@@ -1072,6 +1092,16 @@
    "url": "https://www.flipkart.com/msi-80-01-cm-32-inch-full-hd-ips-panel-gaming-monitor-mag321upx-qd-oled/p/itm143c6bef559cb"
   },
   {
+   "key": "49G93SD",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 96400,
+   "risky": false,
+   "title": "Samsung Odyssey G9 124.46 cm (49 inch) Curved DQHD LED Backlit OLED Panel with HDR10+, Quantum Dot, 1800R Curvature, AMD Free Sync Compatible, Height Adjustable Stand Gaming Monitor (LS49DG930SWXXL)",
+   "url": "https://www.flipkart.com/samsung-odyssey-g9-124-46-cm-49-inch-curved-dqhd-led-backlit-oled-panel-hdr10-quantum-dot-1800r-curvature-amd-free-sync-compatible-height-adjustable-stand-gaming-monitor-ls49dg930swxxl/p/itm8c0efde93177a"
+  },
+  {
    "key": "XG27AQDMG",
    "generic": false,
    "source": "Amazon (direct)",
@@ -1102,14 +1132,14 @@
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
   },
   {
-   "key": "49G93SD",
+   "key": "AW2725Q",
    "generic": false,
    "source": "Flipkart",
    "retailer": "flipkart",
-   "price": 96400,
+   "price": 85500,
    "risky": false,
-   "title": "Samsung Odyssey G9 124.46 cm (49 inch) Curved DQHD LED Backlit OLED Panel with HDR10+, Quantum Dot, 1800R Curvature, AMD Free Sync Compatible, Height Adjustable Stand Gaming Monitor (LS49DG930SWXXL)",
-   "url": "https://www.flipkart.com/samsung-odyssey-g9-124-46-cm-49-inch-curved-dqhd-led-backlit-oled-panel-hdr10-quantum-dot-1800r-curvature-amd-free-sync-compatible-height-adjustable-stand-gaming-monitor-ls49dg930swxxl/p/itm8c0efde93177a"
+   "title": "DELL AW Series 68.58 cm (27 inch) 4K Ultra HD OLED Panel Gaming Monitor (AW2725Q)",
+   "url": "https://www.flipkart.com/dell-aw-series-68-58-cm-27-inch-4k-ultra-hd-oled-panel-gaming-monitor-aw2725q/p/itmb308225441cb3"
   },
   {
    "key": "27G80SH",
@@ -1140,16 +1170,6 @@
    "risky": false,
    "title": "Gigabyte Aorus CO49DQ 49 inch DQHD Gaming Monitor",
    "url": "https://www.smartprix.com/monitors/gigabyte-aorus-co49dq-49-inch-dqhd-gaming-ppd1r8yp2fcz"
-  },
-  {
-   "key": "39GX900A",
-   "generic": false,
-   "source": "Smartprix · Amazon",
-   "retailer": "amazon",
-   "price": 99500,
-   "risky": false,
-   "title": "LG UltraGear 39GX900A 39 inch WQHD Gaming Monitor",
-   "url": "https://www.smartprix.com/monitors/lg-ultragear-39gx900a-39-inch-wqhd-gaming-ppd1jyw8h682"
   },
   {
    "key": "32GS95UV",
