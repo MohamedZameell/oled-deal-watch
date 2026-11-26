@@ -2159,6 +2159,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-26"
+  },
+  "lenovo legion pro 34wd-10| 34\" 240hz wqhd oled curved gaming monitor|0.03ms, usb-c docking 140w pd,2xhdmi+dp, rj45|tilt,swivel,height stand|ai smart sensors|2x5w speakers|kvm switch| 67c9uac1in": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "67C9UAC1IN",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-26"
   }
  },
  "posts": {
@@ -2199,5 +2207,5 @@
   }
  },
  "day": "2026-11-26",
- "calls": 40
+ "calls": 41
 }
