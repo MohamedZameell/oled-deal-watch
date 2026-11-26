@@ -1,5 +1,5 @@
 {
- "t": "2026-11-26T22:40:38.520Z",
+ "t": "2026-11-26T22:54:12.332Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -140,6 +140,16 @@
    "risky": false,
    "title": "Alienware-AW3225QF 80.01cm (32\") 4K QD-OLED Gaming Monitor, Screen Coating: Anti-Reflection, Color Support: 1.07 Billion, Response Time: 0.03ms(typical), Ports: 1x DP1.4, 2x HDMI 2.1, 5x USB 3.2 Gen 1",
    "url": "https://www.amazon.in/dp/B0CVQGSRZ9"
+  },
+  {
+   "key": "27GS95QE",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 79999,
+   "risky": false,
+   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
+   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "AG276QZD2",
@@ -1090,16 +1100,6 @@
    "risky": false,
    "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
-  },
-  {
-   "key": "27GS95QE",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 79999,
-   "risky": false,
-   "title": "LG 27 inch Ultragear OLED QHD Gaming Monitor(2560 x 1440) 240Hz, 0.03ms, G-Sync Compatible, AMD FreeSync™, 1.5M:1 Contrast Ratio, HDR True Black 400, virtually Borderless,Height, Pivot,Tilt,27GS95QE",
-   "url": "https://www.amazon.in/dp/B0D7HHPW2W"
   },
   {
    "key": "AI MOBIUZEX271QZ",
