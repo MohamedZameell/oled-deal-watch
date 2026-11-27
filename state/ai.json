@@ -1654,7 +1654,7 @@
    "model": "LS27HG612SW",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-25"
+   "seen": "2026-11-27"
   },
   "80 cm (32) odyssey oled g8 g80sh 4k 240hz gaming monitor ls32hg800sw": {
    "kind": "monitor",
@@ -2207,5 +2207,5 @@
   }
  },
  "day": "2026-11-27",
- "calls": 51
+ "calls": 52
 }
