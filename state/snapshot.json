@@ -1,5 +1,5 @@
 {
- "t": "2026-11-27T12:09:36.925Z",
+ "t": "2026-11-27T12:24:42.198Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -12,16 +12,6 @@
    "url": "https://www.amazon.in/dp/B0GYG3VLMR"
   },
   {
-   "key": "AW2725D",
-   "generic": false,
-   "source": "Amazon.in",
-   "retailer": "amazon",
-   "price": 57499,
-   "risky": false,
-   "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
-   "url": "https://www.amazon.in/dp/B0FHB4KWBF"
-  },
-  {
    "key": "27G61SH",
    "generic": false,
    "source": "Amazon.in",
@@ -30,6 +20,16 @@
    "risky": false,
    "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor QHD 240 Hz -LS27HG612SWXXL",
    "url": "https://www.amazon.in/dp/B0GGBK4YD8"
+  },
+  {
+   "key": "AW2725D",
+   "generic": false,
+   "source": "Amazon.in",
+   "retailer": "amazon",
+   "price": 57499,
+   "risky": false,
+   "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand",
+   "url": "https://www.amazon.in/dp/B0FHB4KWBF"
   },
   {
    "key": "27GX790A",
@@ -170,36 +170,6 @@
    "risky": false,
    "title": "Alienware AW2725D 27\" (68.58 cm) QD-OLED Gaming Monitor with 280Hz Refresh Rate, 0.03ms Response, NVIDIA G-SYNC Compatible, HDCP Supported, Interstellar Indigo Design & Adjustable Stand [New · tech junction]",
    "url": "https://www.amazon.in/dp/B0FHB4KWBF?aod=1&offer=0"
-  },
-  {
-   "key": "AG276QZD2",
-   "generic": false,
-   "source": "Vedant Computers",
-   "retailer": "vedantcomputers",
-   "price": 43500,
-   "risky": false,
-   "title": "AOC AG276QZD2 27Inch QD-OLED WQHD 280Hz Gaming Monitor",
-   "url": "https://www.vedantcomputers.com/aoc-27inch-ag276qzd2?search=oled%20monitor"
-  },
-  {
-   "key": "AW2726DM",
-   "generic": false,
-   "source": "Vedant Computers",
-   "retailer": "vedantcomputers",
-   "price": 38490,
-   "risky": false,
-   "title": "Dell Alienware 27 AW2726DM 240Hz QD-OLED WQHD Gaming Monitor",
-   "url": "https://www.vedantcomputers.com/dell-27inch-aw2726dm?search=oled%20monitor"
-  },
-  {
-   "key": "CO49DQ",
-   "generic": false,
-   "source": "Vedant Computers",
-   "retailer": "vedantcomputers",
-   "price": 92490,
-   "risky": false,
-   "title": "Gigabyte Aorus CO49DQ 49-Inch DQHD OLED 144Hz HDR Gaming Monitor",
-   "url": "https://www.vedantcomputers.com/gigabyte-aorus-49-inch-co49dq?search=oled%20monitor"
   },
   {
    "key": "AG276QZD2",
@@ -952,16 +922,6 @@
    "url": "https://www.flipkart.com/lenovo-legion-67-31-cm-27-inch-quad-hd-oled-panel-gaming-monitor-legion-27q-10/p/itmc2c0c1b865de4"
   },
   {
-   "key": "39GX900A",
-   "generic": false,
-   "source": "Amazon (direct)",
-   "retailer": "amazon",
-   "price": 99500,
-   "risky": false,
-   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
-   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
-  },
-  {
    "key": "27G50SF",
    "generic": false,
    "source": "Amazon (direct)",
@@ -970,6 +930,16 @@
    "risky": false,
    "title": "Samsung 27\" Odyssey QD-OLED G5 Gaming Monitor (Smartchoice) |QHD 2560 x 1440|180 Hz|0.03ms|Pantone-Validated|G-Sync|Free Sync|Glarefree|Ports-DP,HDMI,",
    "url": "https://www.amazon.in/dp/B0G12R9WG3"
+  },
+  {
+   "key": "39GX900A",
+   "generic": false,
+   "source": "Amazon (direct)",
+   "retailer": "amazon",
+   "price": 99500,
+   "risky": false,
+   "title": "LG 39GX900A Smartchoice 99cm (39 Inch) Ultragear OLED (3440x1440) Curved Gaming Monitor, 240Hz, 0.03ms(GtG), NVIDIA G-Sync, AMD FreeSync Premium Pro, HDMI X 2, DP, USB-C, Tilt/Height/Swivel Adjustable",
+   "url": "https://www.amazon.in/dp/B0GMQCNYZ1"
   },
   {
    "key": "AI MOBIUZEX271QZ",
