@@ -1150,7 +1150,7 @@
    "model": null,
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-24"
+   "seen": "2026-11-27"
   },
   "msi mag341cqp qd-oled 34\" curved gaming monitor, 3440 x 1440 (uwqhd), 0.03ms response time, 175hz, true black hdr 400, hdmi, dp port, usb type-c, tilt, height adjustable": {
    "kind": "monitor",
@@ -2207,5 +2207,5 @@
   }
  },
  "day": "2026-11-27",
- "calls": 8
+ "calls": 9
 }
