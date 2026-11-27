@@ -2167,6 +2167,14 @@
    "cond": "new",
    "size": 34,
    "seen": "2026-11-26"
+  },
+  "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw [student/business]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG612SW",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-27"
   }
  },
  "posts": {
@@ -2207,5 +2215,5 @@
   }
  },
  "day": "2026-11-27",
- "calls": 60
+ "calls": 61
 }
