@@ -2110,7 +2110,7 @@
    "model": "G61SH",
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-25"
+   "seen": "2026-11-27"
   },
   "samsung 27\" odyssey qd-oled g6 gaming monitor qhd 240 hz -ls27hg612swxxl": {
    "kind": "monitor",
@@ -2207,5 +2207,5 @@
   }
  },
  "day": "2026-11-27",
- "calls": 58
+ "calls": 59
 }
