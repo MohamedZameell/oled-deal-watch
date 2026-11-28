@@ -1,5 +1,5 @@
 {
- "t": "2026-11-28T10:39:12.926Z",
+ "t": "2026-11-28T10:54:17.151Z",
  "items": [
   {
    "key": "AW2726DM",
@@ -132,14 +132,14 @@
    "url": "https://www.amazon.in/dp/B0C32SVFDQ"
   },
   {
-   "key": "~SAMSUNG 49\" 5K 240Hz",
+   "key": "~SAMSUNG 27\" QHD 240Hz",
    "generic": true,
    "source": "Amazon.in",
    "retailer": "amazon",
-   "price": 99448,
+   "price": 49848,
    "risky": false,
-   "title": "Samsung 49\" (124.4cm) Odyssey OLED G9 Curved Gaming Monitor (Smartchoice) Dual QHD 5120 x 1440|240Hz|0.03ms|DCI 99%|OLED Safeguard|FreeSync Premium Pro|G-Sync + Logitech C920 HD Pro Webcam",
-   "url": "https://www.amazon.in/dp/B0HDSK5WMF"
+   "title": "Samsung 27\" Odyssey QD-OLED G6 Gaming Monitor(Smartchoice) | QHD 2560 x 1440| 240 Hz| 0.03ms | Ergonomic Stand | Pantone Validated| Glarefree | TrueBright 300| G-Sync + Logitech C920 HD Pro Webcam",
+   "url": "https://www.amazon.in/dp/B0HDSDG9RL"
   },
   {
    "key": "39GX900A",
@@ -170,6 +170,46 @@
    "risky": false,
    "title": "MSI MPG 341CQPX QD-OLED 34 Inch 2K UWQHD Curved Gaming Monitor - 3440 x 1440(21:9) QD-OLED Panel, 240Hz / 0.03ms, 99.3% DCI-P3, ΔE≤2, DisplayHDR True Black 400, DP 1.4a, HDMI 2.1, USB Type C(PD:98W) [New · Amazeo My Pride]",
    "url": "https://www.amazon.in/dp/B0DKNZSP3Q?aod=1&offer=0"
+  },
+  {
+   "key": "AG276QZD2",
+   "generic": false,
+   "source": "Vedant Computers",
+   "retailer": "vedantcomputers",
+   "price": 43500,
+   "risky": false,
+   "title": "AOC AG276QZD2 27Inch QD-OLED WQHD 280Hz Gaming Monitor",
+   "url": "https://www.vedantcomputers.com/aoc-27inch-ag276qzd2?search=oled%20monitor"
+  },
+  {
+   "key": "AW2726DM",
+   "generic": false,
+   "source": "Vedant Computers",
+   "retailer": "vedantcomputers",
+   "price": 38490,
+   "risky": false,
+   "title": "Dell Alienware 27 AW2726DM 240Hz QD-OLED WQHD Gaming Monitor",
+   "url": "https://www.vedantcomputers.com/dell-27inch-aw2726dm?search=oled%20monitor"
+  },
+  {
+   "key": "CO49DQ",
+   "generic": false,
+   "source": "Vedant Computers",
+   "retailer": "vedantcomputers",
+   "price": 92490,
+   "risky": false,
+   "title": "Gigabyte Aorus CO49DQ 49-Inch DQHD OLED 144Hz HDR Gaming Monitor",
+   "url": "https://www.vedantcomputers.com/gigabyte-aorus-49-inch-co49dq?search=oled%20monitor"
+  },
+  {
+   "key": "MAG321UP",
+   "generic": false,
+   "source": "Vedant Computers",
+   "retailer": "vedantcomputers",
+   "price": 93270,
+   "risky": false,
+   "title": "MSI MAG 321UP QD-OLED X24 32 Inch QD-OLED UHD 240Hz Gaming Monitor",
+   "url": "https://www.vedantcomputers.com/msi-32inch-mag-321up-qd-oled-x24?search=oled%20monitor"
   },
   {
    "key": "AG276QZD2",
@@ -822,16 +862,6 @@
    "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g5-g50sf-27-inch-180hz-oled-qhd-ls27fg502swxxl/"
   },
   {
-   "key": "49G93SD",
-   "generic": false,
-   "source": "Samsung India · Samsung.com",
-   "retailer": "samsungindiasamsung",
-   "price": 91599,
-   "risky": false,
-   "title": "1.24 m (49) Odyssey OLED G9 2K DQHD Gaming Monitor with 240Hz refresh rate LS49DG930SW",
-   "url": "https://www.samsung.com/in/monitors/gaming/odyssey-oled-g9-g93sd-49-inch-oled-dual-qhd-ls49dg930swxxl/"
-  },
-  {
    "key": "49G91SD",
    "generic": false,
    "source": "Samsung India · Samsung.com",
@@ -1042,6 +1072,26 @@
    "url": "https://www.flipkart.com/samsung-odyssey-g9-86-36-cm-34-inch-curved-uwqhd-oled-panel-hdr10-gaming-speaker-iot-hub-voice-assistants-height-adjustable-stand-neo-quantum-processor-safeguard-smart-gaming-monitor-ls34bg850swxxl/p/itmf481c09b6ef26"
   },
   {
+   "key": "AI S322",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 68299,
+   "risky": false,
+   "title": "DELL S Series 81.28 cm (32 inch) 4K Ultra HD OLED Panel with AI-enhanced 3D Spatial Audio, 99% DCI-P3, 1,500,000:1, 1000 nits, 5 Speakers, Ergo, Integrated USB Hub,2 USB Type-C (90w upstream,15w downstream) Monitor (S3225QC)",
+   "url": "https://www.flipkart.com/dell-s-series-81-28-cm-32-inch-4k-ultra-hd-oled-panel-ai-enhanced-3d-spatial-audio-99-dci-p3-1-500-000-1-1000-nits-5-speakers-ergo-integrated-usb-hub-2-type-c-90w-upstream-15w-downstream-monitor-s3225qc/p/itm1df1c13a53515"
+  },
+  {
+   "key": "XG27AQDMES",
+   "generic": false,
+   "source": "Flipkart",
+   "retailer": "flipkart",
+   "price": 55999,
+   "risky": false,
+   "title": "ASUS ROG Strix 67.31 cm (27 inch) Quad HD IPS Panel Gaming Monitor (ROG Strix OLED XG27AQDMES gaming monitor 27-inch 1440p QD-OLED, 240 Hz)",
+   "url": "https://www.flipkart.com/asus-rog-strix-67-31-cm-27-inch-quad-hd-ips-panel-gaming-monitor-rog-oled-xg27aqdmes-27-inch-1440p-qd-oled-240-hz/p/itma58efde4943f3"
+  },
+  {
    "key": "AG276QZD2",
    "generic": false,
    "source": "Flipkart",
@@ -1060,16 +1110,6 @@
    "risky": false,
    "title": "ASUS ROG Series 68.58 cm (27 Inch) Full HD OLED Panel with custom heatsink, intelligent voltage optimization, uniform brightness, DisplayWidget Center, anti-glare Gaming Monitor (PG27AQDM)",
    "url": "https://www.flipkart.com/asus-rog-series-68-58-cm-27-inch-full-hd-oled-panel-custom-heatsink-intelligent-voltage-optimization-uniform-brightness-displaywidget-center-anti-glare-gaming-monitor-pg27aqdm/p/itmfe1473bbb0a30"
-  },
-  {
-   "key": "AI S322",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 68299,
-   "risky": false,
-   "title": "DELL S Series 81.28 cm (32 inch) 4K Ultra HD OLED Panel with AI-enhanced 3D Spatial Audio, 99% DCI-P3, 1,500,000:1, 1000 nits, 5 Speakers, Ergo, Integrated USB Hub,2 USB Type-C (90w upstream,15w downstream) Monitor (S3225QC)",
-   "url": "https://www.flipkart.com/dell-s-series-81-28-cm-32-inch-4k-ultra-hd-oled-panel-ai-enhanced-3d-spatial-audio-99-dci-p3-1-500-000-1-1000-nits-5-speakers-ergo-integrated-usb-hub-2-type-c-90w-upstream-15w-downstream-monitor-s3225qc/p/itm1df1c13a53515"
   },
   {
    "key": "39GX900A",
@@ -1110,16 +1150,6 @@
    "risky": false,
    "title": "MSI 80.01 cm (32 inch) Full HD IPS Panel Gaming Monitor (MAG321UPX QD OLED)",
    "url": "https://www.flipkart.com/msi-80-01-cm-32-inch-full-hd-ips-panel-gaming-monitor-mag321upx-qd-oled/p/itm143c6bef559cb"
-  },
-  {
-   "key": "XG27AQDMES",
-   "generic": false,
-   "source": "Flipkart",
-   "retailer": "flipkart",
-   "price": 55999,
-   "risky": false,
-   "title": "ASUS ROG Strix 67.31 cm (27 inch) Quad HD IPS Panel Gaming Monitor (ROG Strix OLED XG27AQDMES gaming monitor 27-inch 1440p QD-OLED, 240 Hz)",
-   "url": "https://www.flipkart.com/asus-rog-strix-67-31-cm-27-inch-quad-hd-ips-panel-gaming-monitor-rog-oled-xg27aqdmes-27-inch-1440p-qd-oled-240-hz/p/itma58efde4943f3"
   },
   {
    "key": "27G61SH",
