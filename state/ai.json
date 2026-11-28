@@ -2223,6 +2223,46 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-28"
+  },
+  "lg ultragear 32gs95uv-b 32 inch 4k uhd 240hz oled dual mode gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 32GS95UV-B",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-28"
+  },
+  "lg ultragear 27gx790a-b 26.5 inch qhd 480hz oled gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 27GX790A-B",
+   "cond": "new",
+   "size": 26.5,
+   "seen": "2026-11-28"
+  },
+  "lg ultragear 39gx900a-b 39 inch wqhd 240hz oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 39GX900A-B",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-28"
+  },
+  "lg ultragear 34gs95qe-b 34 inch wqhd 240hz oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 34GS95QE-B",
+   "cond": "new",
+   "size": 34,
+   "seen": "2026-11-28"
+  },
+  "lg ultragear 39gs95qe-b 39 inch wqhd 240hz oled curved gaming monitor": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "UltraGear 39GS95QE-B",
+   "cond": "new",
+   "size": 39,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2263,5 +2303,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 71
+ "calls": 72
 }
