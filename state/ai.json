@@ -2279,6 +2279,14 @@
    "cond": "new",
    "size": 26.5,
    "seen": "2026-11-28"
+  },
+  "gigabyte aorus fo27q3 27 inch qhd 360hz qd-oled gaming monitor with kvm": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO27Q3",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2319,5 +2327,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 82
+ "calls": 83
 }
