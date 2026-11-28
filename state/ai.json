@@ -2263,6 +2263,14 @@
    "cond": "new",
    "size": 39,
    "seen": "2026-11-28"
+  },
+  "lg ultrafine oled pro 32ep950-b 32 inch 4k uhd oled monitor with usb-c 90w": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "32EP950-B",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2303,5 +2311,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 72
+ "calls": 73
 }
