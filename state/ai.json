@@ -1062,7 +1062,7 @@
    "model": "32GS95UV",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-24"
+   "seen": "2026-11-28"
   },
   "samsung odyssey g6 27\" qd-oled gaming monitor 240hz ls27hg612swxxl": {
    "kind": "monitor",
@@ -2263,5 +2263,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 65
+ "calls": 66
 }
