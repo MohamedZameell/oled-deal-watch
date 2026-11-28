@@ -846,7 +846,7 @@
    "model": "Dual-Mode",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-27"
+   "seen": "2026-11-28"
   },
   "alienware aw2726dm (smartchoice) 26.5\" qd oled monitor|99% dci-p3,0.03ms gtg,240hz|amd freesync premium|hdmi*2,dp 1.4|infinite contrast, 200cd/m2(typi": {
    "kind": "monitor",
@@ -1222,7 +1222,7 @@
    "model": null,
    "cond": "new",
    "size": 49,
-   "seen": "2026-11-27"
+   "seen": "2026-11-28"
   },
   "samsung 27\" odyssey qd-oled g6 gaming monitor(smartchoice) | qhd 2560 x 1440| 240 hz| 0.03ms | ergonomic stand | pantone validated| glarefree | truebright 300| g-sync + logitech c920 hd pro webcam": {
    "kind": "monitor",
@@ -1230,7 +1230,7 @@
    "model": null,
    "cond": "new",
    "size": 27,
-   "seen": "2026-11-27"
+   "seen": "2026-11-28"
   },
   "msi mag 321up qd-oled 31.5 inch 4k uhd gaming monitor - 3840x2160 quantum dot oled panel, 165hz,0.03ms,dci-p3, displayhdr true black 400 - dp 1.4a, hdmi 2.1(uhd 165hz), usb type-c [new · uniqueclick]": {
    "kind": "monitor",
@@ -2215,5 +2215,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 4
+ "calls": 5
 }
