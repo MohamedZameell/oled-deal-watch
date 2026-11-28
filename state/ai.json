@@ -2191,6 +2191,14 @@
    "cond": "new",
    "size": 27,
    "seen": "2026-11-28"
+  },
+  "1.24 m (49) odyssey oled g9 2k dqhd gaming monitor with 240hz refresh rate ls49dg930sw [student/business]": {
+   "kind": "monitor",
+   "panel": "unknown",
+   "model": null,
+   "cond": "unknown",
+   "size": null,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2231,5 +2239,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 40
+ "calls": 41
 }
