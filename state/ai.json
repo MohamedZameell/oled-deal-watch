@@ -1662,7 +1662,7 @@
    "model": "LS32HG800SW",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-26"
+   "seen": "2026-11-28"
   },
   "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw [student]": {
    "kind": "monitor",
@@ -1694,7 +1694,7 @@
    "model": "LS32HG800SW",
    "cond": "new",
    "size": 32,
-   "seen": "2026-11-26"
+   "seen": "2026-11-28"
   },
   "68.5 cm (27) odyssey oled g6 g61sh qhd 240hz gaming monitor ls27hg612sw [corporate]": {
    "kind": "monitor",
@@ -2215,5 +2215,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 25
+ "calls": 26
 }
