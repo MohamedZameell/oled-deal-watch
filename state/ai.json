@@ -2215,6 +2215,14 @@
    "cond": "new",
    "size": 86,
    "seen": "2026-11-28"
+  },
+  "gigabyte aorus fo32u2p 32\" (31.5\") oled, 3840 x 2160 (uhd), 240hz, 0.03 ms (gtg), freesync premium pro, hdr true black 400, kvm": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "AORUS FO32U2P",
+   "cond": "new",
+   "size": 32,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2255,5 +2263,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 48
+ "calls": 49
 }
