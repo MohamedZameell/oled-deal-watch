@@ -2183,6 +2183,14 @@
    "cond": "new",
    "size": 32,
    "seen": "2026-11-28"
+  },
+  "samsung odyssey oled g8 gaming monitor (27\") 4k uhd, 240 hz, 0.03ms(gtg), g-sync, freesync premium pro, dp, hdmi, usb ports, height, tilt, swivel, pivot adjust stand, (ls27hg800swxxl, silver) [sold by clicktech retail private ltd]": {
+   "kind": "monitor",
+   "panel": "oled",
+   "model": "LS27HG800SWXXL",
+   "cond": "new",
+   "size": 27,
+   "seen": "2026-11-28"
   }
  },
  "posts": {
@@ -2223,5 +2231,5 @@
   }
  },
  "day": "2026-11-28",
- "calls": 32
+ "calls": 33
 }
